@@ -1,0 +1,969 @@
+
+hwlibs/src/alt_interrupt.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.get_current_cpu_num:
+
+00000000 <get_current_cpu_num>:
+   0:	ee10 0fb0 	mrc	15, 0, r0, cr0, cr0, {5}
+   4:	b2c0      	uxtb	r0, r0
+   6:	4770      	bx	lr
+
+Disassembly of section .text.alt_int_global_uninit:
+
+00000000 <alt_int_global_uninit>:
+   0:	2000      	movs	r0, #0
+   2:	4770      	bx	lr
+
+Disassembly of section .text.alt_int_global_enable:
+
+00000000 <alt_int_global_enable>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_global_enable+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f043 0301 	orr.w	r3, r3, #1
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_global_disable:
+
+00000000 <alt_int_global_disable>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_global_disable+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f023 0301 	bic.w	r3, r3, #1
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_global_init:
+
+00000000 <alt_int_global_init>:
+   0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+   2:	4b23      	ldr	r3, [pc, #140]	; (90 <alt_int_global_init+0x90>)
+   4:	ee9f 1f10 	mrc	15, 4, r1, cr15, cr0, {0}
+   8:	f501 5280 	add.w	r2, r1, #4096	; 0x1000
+   c:	4821      	ldr	r0, [pc, #132]	; (94 <alt_int_global_init+0x94>)
+   e:	601a      	str	r2, [r3, #0]
+  10:	f501 7280 	add.w	r2, r1, #256	; 0x100
+  14:	4b20      	ldr	r3, [pc, #128]	; (98 <alt_int_global_init+0x98>)
+  16:	4c21      	ldr	r4, [pc, #132]	; (9c <alt_int_global_init+0x9c>)
+  18:	601a      	str	r2, [r3, #0]
+  1a:	f241 0304 	movw	r3, #4100	; 0x1004
+  1e:	58cb      	ldr	r3, [r1, r3]
+  20:	f3c3 1242 	ubfx	r2, r3, #5, #3
+  24:	f003 031f 	and.w	r3, r3, #31
+  28:	3201      	adds	r2, #1
+  2a:	3301      	adds	r3, #1
+  2c:	6002      	str	r2, [r0, #0]
+  2e:	015b      	lsls	r3, r3, #5
+  30:	4a1b      	ldr	r2, [pc, #108]	; (a0 <alt_int_global_init+0xa0>)
+  32:	481c      	ldr	r0, [pc, #112]	; (a4 <alt_int_global_init+0xa4>)
+  34:	6013      	str	r3, [r2, #0]
+  36:	2300      	movs	r3, #0
+  38:	461a      	mov	r2, r3
+  3a:	f840 2033 	str.w	r2, [r0, r3, lsl #3]
+  3e:	eb00 05c3 	add.w	r5, r0, r3, lsl #3
+  42:	551a      	strb	r2, [r3, r4]
+  44:	3301      	adds	r3, #1
+  46:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  4a:	606a      	str	r2, [r5, #4]
+  4c:	d1f5      	bne.n	3a <alt_int_global_init+0x3a>
+  4e:	f7ff fffe 	bl	0 <alt_int_global_init>
+  52:	4812      	ldr	r0, [pc, #72]	; (9c <alt_int_global_init+0x9c>)
+  54:	f501 5388 	add.w	r3, r1, #4352	; 0x1100
+  58:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
+  5c:	f501 5189 	add.w	r1, r1, #4384	; 0x1120
+  60:	2601      	movs	r6, #1
+  62:	601d      	str	r5, [r3, #0]
+  64:	2200      	movs	r2, #0
+  66:	681f      	ldr	r7, [r3, #0]
+  68:	fa06 f402 	lsl.w	r4, r6, r2
+  6c:	423c      	tst	r4, r7
+  6e:	bf1e      	ittt	ne
+  70:	5c84      	ldrbne	r4, [r0, r2]
+  72:	f044 0401 	orrne.w	r4, r4, #1
+  76:	5484      	strbne	r4, [r0, r2]
+  78:	3201      	adds	r2, #1
+  7a:	2a20      	cmp	r2, #32
+  7c:	d1f4      	bne.n	68 <alt_int_global_init+0x68>
+  7e:	f8c3 5080 	str.w	r5, [r3, #128]	; 0x80
+  82:	3304      	adds	r3, #4
+  84:	428b      	cmp	r3, r1
+  86:	f100 0020 	add.w	r0, r0, #32
+  8a:	d1ea      	bne.n	62 <alt_int_global_init+0x62>
+  8c:	2000      	movs	r0, #0
+  8e:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+	...
+
+Disassembly of section .text.alt_int_global_enable_ns:
+
+00000000 <alt_int_global_enable_ns>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_global_enable_ns+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f043 0302 	orr.w	r3, r3, #2
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_global_disable_ns:
+
+00000000 <alt_int_global_disable_ns>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_global_disable_ns+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f023 0302 	bic.w	r3, r3, #2
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_global_enable_all:
+
+00000000 <alt_int_global_enable_all>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_global_enable_all+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f043 0303 	orr.w	r3, r3, #3
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_global_disable_all:
+
+00000000 <alt_int_global_disable_all>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_global_disable_all+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f023 0303 	bic.w	r3, r3, #3
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_dist_secure_enable:
+
+00000000 <alt_int_dist_secure_enable>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	b510      	push	{r4, lr}
+   4:	d814      	bhi.n	30 <alt_int_dist_secure_enable+0x30>
+   6:	4b0c      	ldr	r3, [pc, #48]	; (38 <alt_int_dist_secure_enable+0x38>)
+   8:	5c1b      	ldrb	r3, [r3, r0]
+   a:	07db      	lsls	r3, r3, #31
+   c:	d510      	bpl.n	30 <alt_int_dist_secure_enable+0x30>
+   e:	4b0b      	ldr	r3, [pc, #44]	; (3c <alt_int_dist_secure_enable+0x3c>)
+  10:	0944      	lsrs	r4, r0, #5
+  12:	2101      	movs	r1, #1
+  14:	f000 001f 	and.w	r0, r0, #31
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	fa01 f000 	lsl.w	r0, r1, r0
+  1e:	3380      	adds	r3, #128	; 0x80
+  20:	f853 2024 	ldr.w	r2, [r3, r4, lsl #2]
+  24:	ea22 0000 	bic.w	r0, r2, r0
+  28:	f843 0024 	str.w	r0, [r3, r4, lsl #2]
+  2c:	2000      	movs	r0, #0
+  2e:	bd10      	pop	{r4, pc}
+  30:	f06f 0008 	mvn.w	r0, #8
+  34:	bd10      	pop	{r4, pc}
+  36:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_secure_disable:
+
+00000000 <alt_int_dist_secure_disable>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	b510      	push	{r4, lr}
+   4:	d813      	bhi.n	2e <alt_int_dist_secure_disable+0x2e>
+   6:	4b0b      	ldr	r3, [pc, #44]	; (34 <alt_int_dist_secure_disable+0x34>)
+   8:	5c1b      	ldrb	r3, [r3, r0]
+   a:	07db      	lsls	r3, r3, #31
+   c:	d50f      	bpl.n	2e <alt_int_dist_secure_disable+0x2e>
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <alt_int_dist_secure_disable+0x38>)
+  10:	0941      	lsrs	r1, r0, #5
+  12:	f000 001f 	and.w	r0, r0, #31
+  16:	681a      	ldr	r2, [r3, #0]
+  18:	2301      	movs	r3, #1
+  1a:	fa03 f000 	lsl.w	r0, r3, r0
+  1e:	3280      	adds	r2, #128	; 0x80
+  20:	f852 4021 	ldr.w	r4, [r2, r1, lsl #2]
+  24:	4320      	orrs	r0, r4
+  26:	f842 0021 	str.w	r0, [r2, r1, lsl #2]
+  2a:	2000      	movs	r0, #0
+  2c:	bd10      	pop	{r4, pc}
+  2e:	f06f 0008 	mvn.w	r0, #8
+  32:	bd10      	pop	{r4, pc}
+	...
+
+Disassembly of section .text.alt_int_dist_is_secure:
+
+00000000 <alt_int_dist_is_secure>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d813      	bhi.n	2c <alt_int_dist_is_secure+0x2c>
+   4:	4b0c      	ldr	r3, [pc, #48]	; (38 <alt_int_dist_is_secure+0x38>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	07db      	lsls	r3, r3, #31
+   a:	d512      	bpl.n	32 <alt_int_dist_is_secure+0x32>
+   c:	4b0b      	ldr	r3, [pc, #44]	; (3c <alt_int_dist_is_secure+0x3c>)
+   e:	0942      	lsrs	r2, r0, #5
+  10:	f000 001f 	and.w	r0, r0, #31
+  14:	681b      	ldr	r3, [r3, #0]
+  16:	3380      	adds	r3, #128	; 0x80
+  18:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  1c:	2301      	movs	r3, #1
+  1e:	fa03 f000 	lsl.w	r0, r3, r0
+  22:	4210      	tst	r0, r2
+  24:	bf0c      	ite	eq
+  26:	4618      	moveq	r0, r3
+  28:	2000      	movne	r0, #0
+  2a:	4770      	bx	lr
+  2c:	f06f 0008 	mvn.w	r0, #8
+  30:	4770      	bx	lr
+  32:	2001      	movs	r0, #1
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_enable:
+
+00000000 <alt_int_dist_enable>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d811      	bhi.n	28 <alt_int_dist_enable+0x28>
+   4:	4b0a      	ldr	r3, [pc, #40]	; (30 <alt_int_dist_enable+0x30>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	07db      	lsls	r3, r3, #31
+   a:	d50d      	bpl.n	28 <alt_int_dist_enable+0x28>
+   c:	4b09      	ldr	r3, [pc, #36]	; (34 <alt_int_dist_enable+0x34>)
+   e:	0941      	lsrs	r1, r0, #5
+  10:	2201      	movs	r2, #1
+  12:	f000 001f 	and.w	r0, r0, #31
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	fa02 f000 	lsl.w	r0, r2, r0
+  1c:	f503 7380 	add.w	r3, r3, #256	; 0x100
+  20:	f843 0021 	str.w	r0, [r3, r1, lsl #2]
+  24:	2000      	movs	r0, #0
+  26:	4770      	bx	lr
+  28:	f06f 0008 	mvn.w	r0, #8
+  2c:	4770      	bx	lr
+  2e:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_disable:
+
+00000000 <alt_int_dist_disable>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d811      	bhi.n	28 <alt_int_dist_disable+0x28>
+   4:	4b0a      	ldr	r3, [pc, #40]	; (30 <alt_int_dist_disable+0x30>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	07db      	lsls	r3, r3, #31
+   a:	d50d      	bpl.n	28 <alt_int_dist_disable+0x28>
+   c:	4b09      	ldr	r3, [pc, #36]	; (34 <alt_int_dist_disable+0x34>)
+   e:	0941      	lsrs	r1, r0, #5
+  10:	2201      	movs	r2, #1
+  12:	f000 001f 	and.w	r0, r0, #31
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	fa02 f000 	lsl.w	r0, r2, r0
+  1c:	f503 73c0 	add.w	r3, r3, #384	; 0x180
+  20:	f843 0021 	str.w	r0, [r3, r1, lsl #2]
+  24:	2000      	movs	r0, #0
+  26:	4770      	bx	lr
+  28:	f06f 0008 	mvn.w	r0, #8
+  2c:	4770      	bx	lr
+  2e:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_is_enabled:
+
+00000000 <alt_int_dist_is_enabled>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d815      	bhi.n	30 <alt_int_dist_is_enabled+0x30>
+   4:	4b0d      	ldr	r3, [pc, #52]	; (3c <alt_int_dist_is_enabled+0x3c>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	f013 0301 	ands.w	r3, r3, #1
+   c:	d013      	beq.n	36 <alt_int_dist_is_enabled+0x36>
+   e:	4b0c      	ldr	r3, [pc, #48]	; (40 <alt_int_dist_is_enabled+0x40>)
+  10:	0942      	lsrs	r2, r0, #5
+  12:	f000 001f 	and.w	r0, r0, #31
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	f503 7380 	add.w	r3, r3, #256	; 0x100
+  1c:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  20:	2301      	movs	r3, #1
+  22:	fa03 f000 	lsl.w	r0, r3, r0
+  26:	4210      	tst	r0, r2
+  28:	bf14      	ite	ne
+  2a:	4618      	movne	r0, r3
+  2c:	2000      	moveq	r0, #0
+  2e:	4770      	bx	lr
+  30:	f06f 0008 	mvn.w	r0, #8
+  34:	4770      	bx	lr
+  36:	4618      	mov	r0, r3
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_pending_set:
+
+00000000 <alt_int_dist_pending_set>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d813      	bhi.n	2c <alt_int_dist_pending_set+0x2c>
+   4:	4b0b      	ldr	r3, [pc, #44]	; (34 <alt_int_dist_pending_set+0x34>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	07db      	lsls	r3, r3, #31
+   a:	d50f      	bpl.n	2c <alt_int_dist_pending_set+0x2c>
+   c:	280f      	cmp	r0, #15
+   e:	d90d      	bls.n	2c <alt_int_dist_pending_set+0x2c>
+  10:	4b09      	ldr	r3, [pc, #36]	; (38 <alt_int_dist_pending_set+0x38>)
+  12:	0941      	lsrs	r1, r0, #5
+  14:	2201      	movs	r2, #1
+  16:	f000 001f 	and.w	r0, r0, #31
+  1a:	681b      	ldr	r3, [r3, #0]
+  1c:	fa02 f000 	lsl.w	r0, r2, r0
+  20:	f503 7300 	add.w	r3, r3, #512	; 0x200
+  24:	f843 0021 	str.w	r0, [r3, r1, lsl #2]
+  28:	2000      	movs	r0, #0
+  2a:	4770      	bx	lr
+  2c:	f06f 0008 	mvn.w	r0, #8
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_pending_clear:
+
+00000000 <alt_int_dist_pending_clear>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d813      	bhi.n	2c <alt_int_dist_pending_clear+0x2c>
+   4:	4b0b      	ldr	r3, [pc, #44]	; (34 <alt_int_dist_pending_clear+0x34>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	07db      	lsls	r3, r3, #31
+   a:	d50f      	bpl.n	2c <alt_int_dist_pending_clear+0x2c>
+   c:	280f      	cmp	r0, #15
+   e:	d90d      	bls.n	2c <alt_int_dist_pending_clear+0x2c>
+  10:	4b09      	ldr	r3, [pc, #36]	; (38 <alt_int_dist_pending_clear+0x38>)
+  12:	0941      	lsrs	r1, r0, #5
+  14:	2201      	movs	r2, #1
+  16:	f000 001f 	and.w	r0, r0, #31
+  1a:	681b      	ldr	r3, [r3, #0]
+  1c:	fa02 f000 	lsl.w	r0, r2, r0
+  20:	f503 7320 	add.w	r3, r3, #640	; 0x280
+  24:	f843 0021 	str.w	r0, [r3, r1, lsl #2]
+  28:	2000      	movs	r0, #0
+  2a:	4770      	bx	lr
+  2c:	f06f 0008 	mvn.w	r0, #8
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_is_pending:
+
+00000000 <alt_int_dist_is_pending>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d815      	bhi.n	30 <alt_int_dist_is_pending+0x30>
+   4:	4b0d      	ldr	r3, [pc, #52]	; (3c <alt_int_dist_is_pending+0x3c>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	f013 0301 	ands.w	r3, r3, #1
+   c:	d013      	beq.n	36 <alt_int_dist_is_pending+0x36>
+   e:	4b0c      	ldr	r3, [pc, #48]	; (40 <alt_int_dist_is_pending+0x40>)
+  10:	0942      	lsrs	r2, r0, #5
+  12:	f000 001f 	and.w	r0, r0, #31
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	f503 7300 	add.w	r3, r3, #512	; 0x200
+  1c:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  20:	2301      	movs	r3, #1
+  22:	fa03 f000 	lsl.w	r0, r3, r0
+  26:	4210      	tst	r0, r2
+  28:	bf14      	ite	ne
+  2a:	4618      	movne	r0, r3
+  2c:	2000      	moveq	r0, #0
+  2e:	4770      	bx	lr
+  30:	f06f 0008 	mvn.w	r0, #8
+  34:	4770      	bx	lr
+  36:	4618      	mov	r0, r3
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_is_active:
+
+00000000 <alt_int_dist_is_active>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d815      	bhi.n	30 <alt_int_dist_is_active+0x30>
+   4:	4b0d      	ldr	r3, [pc, #52]	; (3c <alt_int_dist_is_active+0x3c>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	f013 0301 	ands.w	r3, r3, #1
+   c:	d013      	beq.n	36 <alt_int_dist_is_active+0x36>
+   e:	4b0c      	ldr	r3, [pc, #48]	; (40 <alt_int_dist_is_active+0x40>)
+  10:	0942      	lsrs	r2, r0, #5
+  12:	f000 001f 	and.w	r0, r0, #31
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	f503 7340 	add.w	r3, r3, #768	; 0x300
+  1c:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  20:	2301      	movs	r3, #1
+  22:	fa03 f000 	lsl.w	r0, r3, r0
+  26:	4210      	tst	r0, r2
+  28:	bf14      	ite	ne
+  2a:	4618      	movne	r0, r3
+  2c:	2000      	moveq	r0, #0
+  2e:	4770      	bx	lr
+  30:	f06f 0008 	mvn.w	r0, #8
+  34:	4770      	bx	lr
+  36:	4618      	mov	r0, r3
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_priority_get:
+
+00000000 <alt_int_dist_priority_get>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d80c      	bhi.n	1e <alt_int_dist_priority_get+0x1e>
+   4:	4b07      	ldr	r3, [pc, #28]	; (24 <alt_int_dist_priority_get+0x24>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	f013 0301 	ands.w	r3, r3, #1
+   c:	bf1f      	itttt	ne
+   e:	4b06      	ldrne	r3, [pc, #24]	; (28 <alt_int_dist_priority_get+0x28>)
+  10:	681b      	ldrne	r3, [r3, #0]
+  12:	f503 6380 	addne.w	r3, r3, #1024	; 0x400
+  16:	5c1b      	ldrbne	r3, [r3, r0]
+  18:	2000      	movs	r0, #0
+  1a:	600b      	str	r3, [r1, #0]
+  1c:	4770      	bx	lr
+  1e:	f06f 0008 	mvn.w	r0, #8
+  22:	4770      	bx	lr
+	...
+
+Disassembly of section .text.alt_int_dist_priority_set:
+
+00000000 <alt_int_dist_priority_set>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d80d      	bhi.n	20 <alt_int_dist_priority_set+0x20>
+   4:	4b08      	ldr	r3, [pc, #32]	; (28 <alt_int_dist_priority_set+0x28>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	07db      	lsls	r3, r3, #31
+   a:	d509      	bpl.n	20 <alt_int_dist_priority_set+0x20>
+   c:	29ff      	cmp	r1, #255	; 0xff
+   e:	d807      	bhi.n	20 <alt_int_dist_priority_set+0x20>
+  10:	4b06      	ldr	r3, [pc, #24]	; (2c <alt_int_dist_priority_set+0x2c>)
+  12:	b2c9      	uxtb	r1, r1
+  14:	681b      	ldr	r3, [r3, #0]
+  16:	f503 6380 	add.w	r3, r3, #1024	; 0x400
+  1a:	5419      	strb	r1, [r3, r0]
+  1c:	2000      	movs	r0, #0
+  1e:	4770      	bx	lr
+  20:	f06f 0008 	mvn.w	r0, #8
+  24:	4770      	bx	lr
+  26:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_target_get:
+
+00000000 <alt_int_dist_target_get>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d80c      	bhi.n	1e <alt_int_dist_target_get+0x1e>
+   4:	4b07      	ldr	r3, [pc, #28]	; (24 <alt_int_dist_target_get+0x24>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	f013 0301 	ands.w	r3, r3, #1
+   c:	bf1f      	itttt	ne
+   e:	4b06      	ldrne	r3, [pc, #24]	; (28 <alt_int_dist_target_get+0x28>)
+  10:	681b      	ldrne	r3, [r3, #0]
+  12:	f503 6300 	addne.w	r3, r3, #2048	; 0x800
+  16:	5c1b      	ldrbne	r3, [r3, r0]
+  18:	2000      	movs	r0, #0
+  1a:	600b      	str	r3, [r1, #0]
+  1c:	4770      	bx	lr
+  1e:	f06f 0008 	mvn.w	r0, #8
+  22:	4770      	bx	lr
+	...
+
+Disassembly of section .text.alt_int_dist_target_set:
+
+00000000 <alt_int_dist_target_set>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d81e      	bhi.n	42 <alt_int_dist_target_set+0x42>
+   4:	4b10      	ldr	r3, [pc, #64]	; (48 <alt_int_dist_target_set+0x48>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	07db      	lsls	r3, r3, #31
+   a:	d51a      	bpl.n	42 <alt_int_dist_target_set+0x42>
+   c:	4a0f      	ldr	r2, [pc, #60]	; (4c <alt_int_dist_target_set+0x4c>)
+   e:	2301      	movs	r3, #1
+  10:	6812      	ldr	r2, [r2, #0]
+  12:	fa03 f202 	lsl.w	r2, r3, r2
+  16:	428a      	cmp	r2, r1
+  18:	d809      	bhi.n	2e <alt_int_dist_target_set+0x2e>
+  1a:	ee10 2fb0 	mrc	15, 0, r2, cr0, cr0, {5}
+  1e:	b2d2      	uxtb	r2, r2
+  20:	4093      	lsls	r3, r2
+  22:	4299      	cmp	r1, r3
+  24:	bf14      	ite	ne
+  26:	f06f 0008 	mvnne.w	r0, #8
+  2a:	2000      	moveq	r0, #0
+  2c:	4770      	bx	lr
+  2e:	281f      	cmp	r0, #31
+  30:	d907      	bls.n	42 <alt_int_dist_target_set+0x42>
+  32:	4b07      	ldr	r3, [pc, #28]	; (50 <alt_int_dist_target_set+0x50>)
+  34:	b2c9      	uxtb	r1, r1
+  36:	681b      	ldr	r3, [r3, #0]
+  38:	f503 6300 	add.w	r3, r3, #2048	; 0x800
+  3c:	5419      	strb	r1, [r3, r0]
+  3e:	2000      	movs	r0, #0
+  40:	4770      	bx	lr
+  42:	f06f 0008 	mvn.w	r0, #8
+  46:	4770      	bx	lr
+	...
+
+Disassembly of section .text.alt_int_dist_trigger_get:
+
+00000000 <alt_int_dist_trigger_get>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	d821      	bhi.n	48 <alt_int_dist_trigger_get+0x48>
+   4:	4b12      	ldr	r3, [pc, #72]	; (50 <alt_int_dist_trigger_get+0x50>)
+   6:	5c1b      	ldrb	r3, [r3, r0]
+   8:	f013 0301 	ands.w	r3, r3, #1
+   c:	d103      	bne.n	16 <alt_int_dist_trigger_get+0x16>
+   e:	2204      	movs	r2, #4
+  10:	600a      	str	r2, [r1, #0]
+  12:	2000      	movs	r0, #0
+  14:	4770      	bx	lr
+  16:	280f      	cmp	r0, #15
+  18:	d802      	bhi.n	20 <alt_int_dist_trigger_get+0x20>
+  1a:	2302      	movs	r3, #2
+  1c:	600b      	str	r3, [r1, #0]
+  1e:	e7f8      	b.n	12 <alt_int_dist_trigger_get+0x12>
+  20:	4b0c      	ldr	r3, [pc, #48]	; (54 <alt_int_dist_trigger_get+0x54>)
+  22:	0902      	lsrs	r2, r0, #4
+  24:	f000 000f 	and.w	r0, r0, #15
+  28:	0040      	lsls	r0, r0, #1
+  2a:	681b      	ldr	r3, [r3, #0]
+  2c:	3001      	adds	r0, #1
+  2e:	f503 6340 	add.w	r3, r3, #3072	; 0xc00
+  32:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+  36:	2201      	movs	r2, #1
+  38:	fa02 f000 	lsl.w	r0, r2, r0
+  3c:	4018      	ands	r0, r3
+  3e:	f04f 0300 	mov.w	r3, #0
+  42:	d1eb      	bne.n	1c <alt_int_dist_trigger_get+0x1c>
+  44:	600a      	str	r2, [r1, #0]
+  46:	4770      	bx	lr
+  48:	f06f 0008 	mvn.w	r0, #8
+  4c:	4770      	bx	lr
+  4e:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_dist_trigger_set:
+
+00000000 <alt_int_dist_trigger_set>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	b510      	push	{r4, lr}
+   4:	d838      	bhi.n	78 <alt_int_dist_trigger_set+0x78>
+   6:	4b24      	ldr	r3, [pc, #144]	; (98 <alt_int_dist_trigger_set+0x98>)
+   8:	5c1b      	ldrb	r3, [r3, r0]
+   a:	07db      	lsls	r3, r3, #31
+   c:	d534      	bpl.n	78 <alt_int_dist_trigger_set+0x78>
+   e:	280f      	cmp	r0, #15
+  10:	d806      	bhi.n	20 <alt_int_dist_trigger_set+0x20>
+  12:	3902      	subs	r1, #2
+  14:	2901      	cmp	r1, #1
+  16:	bf8c      	ite	hi
+  18:	f06f 0008 	mvnhi.w	r0, #8
+  1c:	2000      	movls	r0, #0
+  1e:	bd10      	pop	{r4, pc}
+  20:	f000 030f 	and.w	r3, r0, #15
+  24:	2903      	cmp	r1, #3
+  26:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  2a:	ea4f 1410 	mov.w	r4, r0, lsr #4
+  2e:	f103 0301 	add.w	r3, r3, #1
+  32:	d11e      	bne.n	72 <alt_int_dist_trigger_set+0x72>
+  34:	2828      	cmp	r0, #40	; 0x28
+  36:	d922      	bls.n	7e <alt_int_dist_trigger_set+0x7e>
+  38:	282f      	cmp	r0, #47	; 0x2f
+  3a:	d90b      	bls.n	54 <alt_int_dist_trigger_set+0x54>
+  3c:	2838      	cmp	r0, #56	; 0x38
+  3e:	d91e      	bls.n	7e <alt_int_dist_trigger_set+0x7e>
+  40:	283f      	cmp	r0, #63	; 0x3f
+  42:	d907      	bls.n	54 <alt_int_dist_trigger_set+0x54>
+  44:	2845      	cmp	r0, #69	; 0x45
+  46:	d91a      	bls.n	7e <alt_int_dist_trigger_set+0x7e>
+  48:	f1a0 0246 	sub.w	r2, r0, #70	; 0x46
+  4c:	2a01      	cmp	r2, #1
+  4e:	d901      	bls.n	54 <alt_int_dist_trigger_set+0x54>
+  50:	2887      	cmp	r0, #135	; 0x87
+  52:	d911      	bls.n	78 <alt_int_dist_trigger_set+0x78>
+  54:	4a11      	ldr	r2, [pc, #68]	; (9c <alt_int_dist_trigger_set+0x9c>)
+  56:	2001      	movs	r0, #1
+  58:	fa00 f303 	lsl.w	r3, r0, r3
+  5c:	6812      	ldr	r2, [r2, #0]
+  5e:	f502 6240 	add.w	r2, r2, #3072	; 0xc00
+  62:	f852 1024 	ldr.w	r1, [r2, r4, lsl #2]
+  66:	ea21 0303 	bic.w	r3, r1, r3
+  6a:	f842 3024 	str.w	r3, [r2, r4, lsl #2]
+  6e:	2000      	movs	r0, #0
+  70:	bd10      	pop	{r4, pc}
+  72:	b121      	cbz	r1, 7e <alt_int_dist_trigger_set+0x7e>
+  74:	2901      	cmp	r1, #1
+  76:	d0ed      	beq.n	54 <alt_int_dist_trigger_set+0x54>
+  78:	f06f 0008 	mvn.w	r0, #8
+  7c:	bd10      	pop	{r4, pc}
+  7e:	4a07      	ldr	r2, [pc, #28]	; (9c <alt_int_dist_trigger_set+0x9c>)
+  80:	6811      	ldr	r1, [r2, #0]
+  82:	2201      	movs	r2, #1
+  84:	fa02 f303 	lsl.w	r3, r2, r3
+  88:	f501 6140 	add.w	r1, r1, #3072	; 0xc00
+  8c:	f851 0024 	ldr.w	r0, [r1, r4, lsl #2]
+  90:	4303      	orrs	r3, r0
+  92:	f841 3024 	str.w	r3, [r1, r4, lsl #2]
+  96:	e7ea      	b.n	ffffffd8 <get_current_cpu_num+0xffffffd8>
+	...
+
+Disassembly of section .text.alt_int_sgi_trigger:
+
+00000000 <alt_int_sgi_trigger>:
+   0:	b530      	push	{r4, r5, lr}
+   2:	4c13      	ldr	r4, [pc, #76]	; (50 <alt_int_sgi_trigger+0x50>)
+   4:	6825      	ldr	r5, [r4, #0]
+   6:	2401      	movs	r4, #1
+   8:	40ac      	lsls	r4, r5
+   a:	4294      	cmp	r4, r2
+   c:	d906      	bls.n	1c <alt_int_sgi_trigger+0x1c>
+   e:	280f      	cmp	r0, #15
+  10:	d804      	bhi.n	1c <alt_int_sgi_trigger+0x1c>
+  12:	2901      	cmp	r1, #1
+  14:	d005      	beq.n	22 <alt_int_sgi_trigger+0x22>
+  16:	d318      	bcc.n	4a <alt_int_sgi_trigger+0x4a>
+  18:	2902      	cmp	r1, #2
+  1a:	d013      	beq.n	44 <alt_int_sgi_trigger+0x44>
+  1c:	f06f 0008 	mvn.w	r0, #8
+  20:	bd30      	pop	{r4, r5, pc}
+  22:	f04f 7180 	mov.w	r1, #16777216	; 0x1000000
+  26:	2b00      	cmp	r3, #0
+  28:	4b0a      	ldr	r3, [pc, #40]	; (54 <alt_int_sgi_trigger+0x54>)
+  2a:	ea40 4002 	orr.w	r0, r0, r2, lsl #16
+  2e:	bf14      	ite	ne
+  30:	2400      	movne	r4, #0
+  32:	f44f 4400 	moveq.w	r4, #32768	; 0x8000
+  36:	681b      	ldr	r3, [r3, #0]
+  38:	4308      	orrs	r0, r1
+  3a:	4320      	orrs	r0, r4
+  3c:	f8c3 0f00 	str.w	r0, [r3, #3840]	; 0xf00
+  40:	2000      	movs	r0, #0
+  42:	bd30      	pop	{r4, r5, pc}
+  44:	f04f 7100 	mov.w	r1, #33554432	; 0x2000000
+  48:	e7ed      	b.n	26 <alt_int_sgi_trigger+0x26>
+  4a:	2100      	movs	r1, #0
+  4c:	e7eb      	b.n	26 <alt_int_sgi_trigger+0x26>
+  4e:	bf00      	nop
+	...
+
+Disassembly of section .text.alt_int_cpu_init:
+
+00000000 <alt_int_cpu_init>:
+   0:	ee10 0fb0 	mrc	15, 0, r0, cr0, cr0, {5}
+   4:	f010 00ff 	ands.w	r0, r0, #255	; 0xff
+   8:	d116      	bne.n	38 <alt_int_cpu_init+0x38>
+   a:	f44f 3280 	mov.w	r2, #65536	; 0x10000
+   e:	f3ef 8300 	mrs	r3, CPSR
+  12:	f04f 01d2 	mov.w	r1, #210	; 0xd2
+  16:	f381 8100 	msr	CPSR_c, r1
+  1a:	4695      	mov	sp, r2
+  1c:	f383 8100 	msr	CPSR_c, r3
+  20:	ee11 3f10 	mrc	15, 0, r3, cr1, cr0, {0}
+  24:	f423 5300 	bic.w	r3, r3, #8192	; 0x2000
+  28:	ee01 3f10 	mcr	15, 0, r3, cr1, cr0, {0}
+  2c:	4b04      	ldr	r3, [pc, #16]	; (40 <alt_int_cpu_init+0x40>)
+  2e:	22ff      	movs	r2, #255	; 0xff
+  30:	681b      	ldr	r3, [r3, #0]
+  32:	605a      	str	r2, [r3, #4]
+  34:	6098      	str	r0, [r3, #8]
+  36:	4770      	bx	lr
+  38:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_uninit:
+
+00000000 <alt_int_cpu_uninit>:
+   0:	2000      	movs	r0, #0
+   2:	4770      	bx	lr
+
+Disassembly of section .text.alt_int_cpu_enable:
+
+00000000 <alt_int_cpu_enable>:
+   0:	4b04      	ldr	r3, [pc, #16]	; (14 <alt_int_cpu_enable+0x14>)
+   2:	681a      	ldr	r2, [r3, #0]
+   4:	6813      	ldr	r3, [r2, #0]
+   6:	f043 0301 	orr.w	r3, r3, #1
+   a:	6013      	str	r3, [r2, #0]
+   c:	b662      	cpsie	i
+   e:	2000      	movs	r0, #0
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_disable:
+
+00000000 <alt_int_cpu_disable>:
+   0:	4b04      	ldr	r3, [pc, #16]	; (14 <alt_int_cpu_disable+0x14>)
+   2:	681a      	ldr	r2, [r3, #0]
+   4:	6813      	ldr	r3, [r2, #0]
+   6:	f023 0301 	bic.w	r3, r3, #1
+   a:	6013      	str	r3, [r2, #0]
+   c:	b672      	cpsid	i
+   e:	2000      	movs	r0, #0
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_enable_ns:
+
+00000000 <alt_int_cpu_enable_ns>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_cpu_enable_ns+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f043 0302 	orr.w	r3, r3, #2
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_disable_ns:
+
+00000000 <alt_int_cpu_disable_ns>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_cpu_disable_ns+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f023 0302 	bic.w	r3, r3, #2
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_enable_all:
+
+00000000 <alt_int_cpu_enable_all>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_cpu_enable_all+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f043 0303 	orr.w	r3, r3, #3
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_disable_all:
+
+00000000 <alt_int_cpu_disable_all>:
+   0:	4b03      	ldr	r3, [pc, #12]	; (10 <alt_int_cpu_disable_all+0x10>)
+   2:	2000      	movs	r0, #0
+   4:	681a      	ldr	r2, [r3, #0]
+   6:	6813      	ldr	r3, [r2, #0]
+   8:	f023 0303 	bic.w	r3, r3, #3
+   c:	6013      	str	r3, [r2, #0]
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_config_get:
+
+00000000 <alt_int_cpu_config_get>:
+   0:	4b08      	ldr	r3, [pc, #32]	; (24 <alt_int_cpu_config_get+0x24>)
+   2:	b510      	push	{r4, lr}
+   4:	681b      	ldr	r3, [r3, #0]
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	b110      	cbz	r0, 10 <alt_int_cpu_config_get+0x10>
+   a:	f3c3 1400 	ubfx	r4, r3, #4, #1
+   e:	7004      	strb	r4, [r0, #0]
+  10:	b111      	cbz	r1, 18 <alt_int_cpu_config_get+0x18>
+  12:	f3c3 00c0 	ubfx	r0, r3, #3, #1
+  16:	7008      	strb	r0, [r1, #0]
+  18:	b112      	cbz	r2, 20 <alt_int_cpu_config_get+0x20>
+  1a:	f3c3 0380 	ubfx	r3, r3, #2, #1
+  1e:	7013      	strb	r3, [r2, #0]
+  20:	2000      	movs	r0, #0
+  22:	bd10      	pop	{r4, pc}
+  24:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_config_set:
+
+00000000 <alt_int_cpu_config_set>:
+   0:	4b0c      	ldr	r3, [pc, #48]	; (34 <alt_int_cpu_config_set+0x34>)
+   2:	b510      	push	{r4, lr}
+   4:	681c      	ldr	r4, [r3, #0]
+   6:	6823      	ldr	r3, [r4, #0]
+   8:	b150      	cbz	r0, 20 <alt_int_cpu_config_set+0x20>
+   a:	f043 0310 	orr.w	r3, r3, #16
+   e:	b151      	cbz	r1, 26 <alt_int_cpu_config_set+0x26>
+  10:	f043 0308 	orr.w	r3, r3, #8
+  14:	b152      	cbz	r2, 2c <alt_int_cpu_config_set+0x2c>
+  16:	f043 0304 	orr.w	r3, r3, #4
+  1a:	6023      	str	r3, [r4, #0]
+  1c:	2000      	movs	r0, #0
+  1e:	bd10      	pop	{r4, pc}
+  20:	f023 0310 	bic.w	r3, r3, #16
+  24:	e7f3      	b.n	e <alt_int_cpu_config_set+0xe>
+  26:	f023 0308 	bic.w	r3, r3, #8
+  2a:	e7f3      	b.n	14 <alt_int_cpu_config_set+0x14>
+  2c:	f023 0304 	bic.w	r3, r3, #4
+  30:	e7f3      	b.n	1a <alt_int_cpu_config_set+0x1a>
+  32:	bf00      	nop
+  34:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_priority_mask_get:
+
+00000000 <alt_int_cpu_priority_mask_get>:
+   0:	4b01      	ldr	r3, [pc, #4]	; (8 <alt_int_cpu_priority_mask_get+0x8>)
+   2:	681b      	ldr	r3, [r3, #0]
+   4:	6858      	ldr	r0, [r3, #4]
+   6:	4770      	bx	lr
+   8:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_priority_mask_set:
+
+00000000 <alt_int_cpu_priority_mask_set>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	bf9f      	itttt	ls
+   4:	4b03      	ldrls	r3, [pc, #12]	; (14 <alt_int_cpu_priority_mask_set+0x14>)
+   6:	681b      	ldrls	r3, [r3, #0]
+   8:	6058      	strls	r0, [r3, #4]
+   a:	2000      	movls	r0, #0
+   c:	bf88      	it	hi
+   e:	f06f 0008 	mvnhi.w	r0, #8
+  12:	4770      	bx	lr
+  14:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_binary_point_get:
+
+00000000 <alt_int_cpu_binary_point_get>:
+   0:	4b01      	ldr	r3, [pc, #4]	; (8 <alt_int_cpu_binary_point_get+0x8>)
+   2:	681b      	ldr	r3, [r3, #0]
+   4:	6898      	ldr	r0, [r3, #8]
+   6:	4770      	bx	lr
+   8:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_binary_point_set:
+
+00000000 <alt_int_cpu_binary_point_set>:
+   0:	2807      	cmp	r0, #7
+   2:	bf9f      	itttt	ls
+   4:	4b03      	ldrls	r3, [pc, #12]	; (14 <alt_int_cpu_binary_point_set+0x14>)
+   6:	681b      	ldrls	r3, [r3, #0]
+   8:	6098      	strls	r0, [r3, #8]
+   a:	2000      	movls	r0, #0
+   c:	bf88      	it	hi
+   e:	f06f 0008 	mvnhi.w	r0, #8
+  12:	4770      	bx	lr
+  14:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_binary_point_get_ns:
+
+00000000 <alt_int_cpu_binary_point_get_ns>:
+   0:	4b01      	ldr	r3, [pc, #4]	; (8 <alt_int_cpu_binary_point_get_ns+0x8>)
+   2:	681b      	ldr	r3, [r3, #0]
+   4:	69d8      	ldr	r0, [r3, #28]
+   6:	4770      	bx	lr
+   8:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_cpu_binary_point_set_ns:
+
+00000000 <alt_int_cpu_binary_point_set_ns>:
+   0:	2807      	cmp	r0, #7
+   2:	bf9f      	itttt	ls
+   4:	4b03      	ldrls	r3, [pc, #12]	; (14 <alt_int_cpu_binary_point_set_ns+0x14>)
+   6:	681b      	ldrls	r3, [r3, #0]
+   8:	61d8      	strls	r0, [r3, #28]
+   a:	2000      	movls	r0, #0
+   c:	bf88      	it	hi
+   e:	f06f 0008 	mvnhi.w	r0, #8
+  12:	4770      	bx	lr
+  14:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_isr_register:
+
+00000000 <alt_int_isr_register>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	bf9f      	itttt	ls
+   4:	4b05      	ldrls	r3, [pc, #20]	; (1c <alt_int_isr_register+0x1c>)
+   6:	f843 1030 	strls.w	r1, [r3, r0, lsl #3]
+   a:	eb03 03c0 	addls.w	r3, r3, r0, lsl #3
+   e:	2000      	movls	r0, #0
+  10:	bf8c      	ite	hi
+  12:	f06f 0008 	mvnhi.w	r0, #8
+  16:	605a      	strls	r2, [r3, #4]
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_isr_unregister:
+
+00000000 <alt_int_isr_unregister>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	bf9f      	itttt	ls
+   4:	4a05      	ldrls	r2, [pc, #20]	; (1c <alt_int_isr_unregister+0x1c>)
+   6:	2300      	movls	r3, #0
+   8:	f842 3030 	strls.w	r3, [r2, r0, lsl #3]
+   c:	eb02 02c0 	addls.w	r2, r2, r0, lsl #3
+  10:	bf96      	itet	ls
+  12:	4618      	movls	r0, r3
+  14:	f06f 0008 	mvnhi.w	r0, #8
+  18:	6053      	strls	r3, [r2, #4]
+  1a:	4770      	bx	lr
+  1c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_util_cpu_count:
+
+00000000 <alt_int_util_cpu_count>:
+   0:	4b01      	ldr	r3, [pc, #4]	; (8 <alt_int_util_cpu_count+0x8>)
+   2:	6818      	ldr	r0, [r3, #0]
+   4:	4770      	bx	lr
+   6:	bf00      	nop
+   8:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_util_int_count:
+
+00000000 <alt_int_util_int_count>:
+   0:	4b01      	ldr	r3, [pc, #4]	; (8 <alt_int_util_int_count+0x8>)
+   2:	6818      	ldr	r0, [r3, #0]
+   4:	4770      	bx	lr
+   6:	bf00      	nop
+   8:	00000000 	.word	0x00000000
+
+Disassembly of section .text.alt_int_util_cpu_current:
+
+00000000 <alt_int_util_cpu_current>:
+   0:	ee10 3fb0 	mrc	15, 0, r3, cr0, cr0, {5}
+   4:	b2db      	uxtb	r3, r3
+   6:	2001      	movs	r0, #1
+   8:	4098      	lsls	r0, r3
+   a:	4770      	bx	lr
+
+Disassembly of section .text.alt_int_handler_irq:
+
+00000000 <alt_int_handler_irq>:
+   0:	b570      	push	{r4, r5, r6, lr}
+   2:	4c0e      	ldr	r4, [pc, #56]	; (3c <alt_int_handler_irq+0x3c>)
+   4:	6822      	ldr	r2, [r4, #0]
+   6:	68d6      	ldr	r6, [r2, #12]
+   8:	f3c6 0509 	ubfx	r5, r6, #0, #10
+   c:	2dff      	cmp	r5, #255	; 0xff
+   e:	d80b      	bhi.n	28 <alt_int_handler_irq+0x28>
+  10:	4b0b      	ldr	r3, [pc, #44]	; (40 <alt_int_handler_irq+0x40>)
+  12:	f853 2035 	ldr.w	r2, [r3, r5, lsl #3]
+  16:	b122      	cbz	r2, 22 <alt_int_handler_irq+0x22>
+  18:	eb03 05c5 	add.w	r5, r3, r5, lsl #3
+  1c:	4630      	mov	r0, r6
+  1e:	6869      	ldr	r1, [r5, #4]
+  20:	4790      	blx	r2
+  22:	6823      	ldr	r3, [r4, #0]
+  24:	611e      	str	r6, [r3, #16]
+  26:	bd70      	pop	{r4, r5, r6, pc}
+  28:	4806      	ldr	r0, [pc, #24]	; (44 <alt_int_handler_irq+0x44>)
+  2a:	f7ff fffe 	bl	0 <puts>
+  2e:	4628      	mov	r0, r5
+  30:	f7ff fffe 	bl	0 <putHexa32>
+  34:	4804      	ldr	r0, [pc, #16]	; (14 <puts+0x14>)
+  36:	f7ff fffe 	bl	0 <puts>
+  3a:	e7f2      	b.n	ffffffe8 <get_current_cpu_num+0xffffffe8>
+	...
+  48:	00000024 	.word	0x00000024
