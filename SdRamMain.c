@@ -13,7 +13,9 @@
 #define	RSTMGR_PERMODRESET		SOCFPGA_RSTMGR_ADDRESS + 0x14
 #define	RSTMGR_PER2MODRESET		SOCFPGA_RSTMGR_ADDRESS + 0x18
 
-
+#define 	MPU_BASE			0xfffec000
+#define 	ALT_GIC_BASE_CPU	MPU_BASE + 0x0100
+#define 	ALT_DIST_BASE_CPU	MPU_BASE + 0x1000
 
 char		tempBuffer[20];
 
@@ -27,6 +29,19 @@ volatile unsigned int*	thisLedData 	= (unsigned int *)0xFF709000;
 uint32_t 				thisLedValue    =0;
 volatile uint32_t		j;
 int 					iCounter;
+
+static void alt_int_fixup_irq_stack(uint32_t stack_irq)
+{
+    __asm(
+        "mrs r3, CPSR\n"
+        //"msr CPSR_c, #(0x12 | 0x80 | 0x40)\n"		// asm is not happy with this line (no imediate mode in thumb mode)
+        "mov r1, #0xD2\n"
+		"msr CPSR_c, r1\n"
+        "mov sp, %0\n"
+        "msr CPSR_c, r3\n"
+        : : "r" (stack_irq) : "r3"
+        );
+}
 
 static __inline uint32_t get_current_sp(void)
 {
@@ -286,6 +301,9 @@ void SdRamMain(void)
 	puts((char*)"\r\n");
 	
 	
+	alt_int_fixup_irq_stack(0x10000);									// Set IRQ Stack Pointer to 0x10000 -> Fix it !
+	alt_write_word(ALT_GIC_BASE_CPU + 0x4, 0xFF /*priority_mask*/); 	// Set priority mask to 0xFF so IRq are forwarded to CPU /* iccpmr */
+	
 	//timers_demo_main();			
 	//puts("End of timer demo...\n\r");
 	
@@ -304,23 +322,25 @@ void SdRamMain(void)
 	clrbits_le32(RSTMGR_MPUMODRESET, 1 << 1);		// cpu1=b1
 
 	// Clock for private timer is PERIPHCLK
-	volatile uint32_t*		privateTimerLoadValue 		= (uint32_t *)0xFFFEC600;
-	volatile uint32_t*		privateTimerCounter 		= (uint32_t *)0xFFFEC604;
+	//volatile uint32_t*	privateTimerLoadValue 		= (uint32_t *)0xFFFEC600;
+	//volatile uint32_t*	privateTimerCounter 		= (uint32_t *)0xFFFEC604;
 	volatile uint32_t*		privateTimerControl 		= (uint32_t *)0xFFFEC608;
 	//volatile uint32_t*	privateTimerStatus 			= (uint32_t *)0xFFFEC60C;
 	
 	// set load value for private timer
-	*privateTimerLoadValue 	= 500000000;			// 1s if clock is 200 MHz
+	//*privateTimerLoadValue 			=  500000000;			// 1s if clock is 200 MHz
+	//*privateTimerLoadValue 			= 2500000000;			
 	// si ok, faire un essai avec writel()
-	// writel(500000000, 0xFFFEC600);
+	writel(1000000000, 0xFFFEC600);
 	
 	// start private timer
-	*privateTimerControl	= 3;					// start the timer without IRQ (=7 for IRQ)
-													// b0 = Enable
+	//*privateTimerControl	= 3;					// start the timer without IRQ (=7 for IRQ)
+	*privateTimerControl	= 7;					// b0 = Enable
 													// b1 = 1 -> Auto (loop) / 0 -> Once
 													// b2 = IRQ (=1 IRQ is generated when value goes to 0)
 													// if IRQ is ON, interrupt ID29	is pending
 													// (when occurs) in Interrupt Distributor		
+	
 	
 	while(1)
 	{
@@ -335,15 +355,6 @@ void SdRamMain(void)
 		//GP_Timer_Interrupt_Fired=false;
 		
 		//#if false
-		ui64InitialValue = get_ticks();
-
-		while(1)
-		{
-			uint64_t ui64ThisTickValue = get_ticks();
-			if(ui64InitialValue-ui64ThisTickValue>=5000000)	break;
-		}
-
-		iCounter++;
 
 		// on fait par IRQ timer
 		// if(1==iLed)
@@ -361,23 +372,38 @@ void SdRamMain(void)
 		
 		// next line to be modified (as % implies division and therfore lib.a)
 		//if(iCounter%10=0)	
-		if(iCounter>=10)	
-		{
-			ui64InitialValue 						=get_ticks();
-			unsigned int uiCurrentPrivateTimerValue =readl(0xFFFEC604);
+		//if(iCounter>=10)	
+		//{
+		//	ui64InitialValue 							=get_ticks();
+			unsigned int uiCurrentPrivateTimerValue 	=readl(0xFFFEC604);
+			unsigned int uiCurrentPrivateTimerStatus 	=readl(0xFFFEC60C);
 	
-			puts((char*)"OSC1TIMER0 =");
-			putHexa64(ui64InitialValue);
-			puts((char*)" - PRIVATETIMER =");
-			putHexa32(*privateTimerCounter);
-			puts((char*)" (");
+		//	puts((char*)"OSC1TIMER0 =");
+		//	putHexa64(ui64InitialValue);
+		//	puts((char*)" - PRIVATETIMER =");
+			puts((char*)"PRIVATETIMER=");
+			//putHexa32(*privateTimerCounter);
+			//puts((char*)" (");
 			putHexa32(uiCurrentPrivateTimerValue);
-			puts((char*)") - Alive and kicking...\n\r");
+			puts((char*)" - ");
+			putHexa32(uiCurrentPrivateTimerStatus);
+			//puts((char*)") - Alive and kicking...\n\r");
+			//puts((char*)" - Alive and kicking.\n\r");
+			puts((char*)"\n\r");
 			
-			iCounter =0;
-		}
+		//	iCounter =0;
+		//}
 		//#endif
 		
+		ui64InitialValue = get_ticks();
+
+		while(1)
+		{
+			uint64_t ui64ThisTickValue = get_ticks();
+			if(ui64InitialValue-ui64ThisTickValue>=5000000)	break;
+		}
+
+		iCounter++;
 		
 	}
 }
