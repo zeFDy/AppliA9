@@ -210,7 +210,13 @@ void 		Cpu1Code(void)
 			//putc('l');
 		}
 		
-		if(uiMainCounter%100==0)	puts("CORE1 kicks !\r\n");
+		// next line to be modified (as % implies division and therfore lib.a)
+		//if(uiMainCounter%100==0)	puts("CORE1 kicks !\r\n");
+		if(uiMainCounter>=100)	
+		{
+			puts("CORE1 kicks !\r\n");
+			uiMainCounter =0;
+		}
 	}
 }
 
@@ -351,7 +357,9 @@ void SdRamMain(void)
 		// 	//putc('H');
 		// }
 		
-		if(iCounter%10==0)	
+		// next line to be modified (as % implies division and therfore lib.a)
+		//if(iCounter%10=0)	
+		if(iCounter>=10)	
 		{
 			ui64InitialValue 						=get_ticks();
 			unsigned int uiCurrentPrivateTimerValue =readl(0xFFFEC604);
@@ -363,6 +371,8 @@ void SdRamMain(void)
 			puts((char*)" (");
 			putHexa32(uiCurrentPrivateTimerValue);
 			puts((char*)") - Alive and kicking...\n\r");
+			
+			iCounter =0;
 		}
 		//#endif
 		
