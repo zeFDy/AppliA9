@@ -45,7 +45,133 @@ static __inline uint32_t get_current_core_num(void)
     __asm("MRC p15, 0, %0,          c0, c0, 5" : "=r" (affinity));
     return affinity & 0xFF;
 }
-void 		Cpu1Code()
+
+
+uint64_t  get_ticks(void)
+{
+	// semble etre OSC1TIMER0
+	unsigned int uiCurrentValue =	readl(CONFIG_SYS_TIMERBASE + 0x04);
+			
+	/* increment tbu if tbl has rolled over */
+	if (uiCurrentValue > timerValueLow)
+		timerValueHigh--;
+
+	timerValueLow = uiCurrentValue;	
+
+	uint64_t	ui64returnValue = (uint64_t)(((uint64_t)timerValueHigh << 32) | timerValueLow);
+	return 		ui64returnValue;
+}
+
+void putc(char c)
+{
+	volatile unsigned int*	Uart0_lsr 		= (unsigned int *)0xFFC02014;
+	//#define UART_LSR_THRE 0x20
+
+	//while ((serial_in(&com_port->lsr) & UART_LSR_THRE) == 0)
+	while((*Uart0_lsr & 0x20)==0)	;	// check xmit empty
+	
+	volatile unsigned int*	Uart0Data = (unsigned int *)0xFFC02000;
+	*Uart0Data = (unsigned int) (c);
+
+}
+
+void PutNible(uint8_t ucNibble)
+{
+	ucNibble = ucNibble + 0x30;
+	if(ucNibble>0x39)	ucNibble+=0x07;	// 0x41 ('A') - 0x3A (>'9')
+
+	putc((char)ucNibble);
+}
+
+void PutByte(uint8_t ucByte)
+{
+	unsigned char ucCarac = 0;
+
+	ucCarac = (ucByte >> 4 ) & 0x0F;
+	PutNible((char)ucCarac);
+
+	ucCarac = ucByte & 0x0F;
+	PutNible((char)ucCarac);
+}
+
+void putHexa32(uint32_t uiNumber)
+{
+	putc((char)'0');
+	putc((char)'x');
+	PutByte((uiNumber >> 24) & 0xFF);
+	PutByte((uiNumber >> 16) & 0xFF);
+	PutByte((uiNumber >>  8) & 0xFF);
+	PutByte( uiNumber        & 0xFF);
+}
+
+void putHexa64(uint64_t ullNumber)
+{
+	putc((char)'0');
+	putc((char)'x');
+
+	PutByte((ullNumber >> 56) & 0xFF);
+	PutByte((ullNumber >> 48) & 0xFF);
+	PutByte((ullNumber >> 40) & 0xFF);
+	PutByte((ullNumber >> 32) & 0xFF);
+	
+	PutByte((ullNumber >> 24) & 0xFF);
+	PutByte((ullNumber >> 16) & 0xFF);
+	PutByte((ullNumber >>  8) & 0xFF);
+	PutByte( ullNumber        & 0xFF);
+}
+
+void puts(char *caMessage)
+{
+	while(*caMessage!=0)
+	{
+		putc(*caMessage++);
+	}
+}
+
+void HexDump(uint8_t* pucStartAddr, unsigned int uiSize)
+{
+	char c = 0;
+	
+	for(unsigned int 	uiCounter =0;
+						uiCounter<uiSize;
+						uiCounter+=16)
+	{
+		putHexa32((uint32_t)pucStartAddr + uiCounter);
+		puts(" - ");
+		//memset(tempBuffer, 0, 20);
+		for(int itempBufferCounter =0;
+				itempBufferCounter <20;
+				itempBufferCounter++)
+		{
+			tempBuffer[itempBufferCounter]=0;	
+		}
+
+		for(unsigned int 	uiLineCounter=0;
+							uiLineCounter<16;
+							uiLineCounter++)
+		{
+			if(uiCounter+uiLineCounter<= uiSize)
+			{
+				c = (char)pucStartAddr[uiCounter+uiLineCounter];
+				PutByte(c);
+				putc(' ');
+				if(c<32||c>'z')	tempBuffer[uiLineCounter]='.';
+				else 			tempBuffer[uiLineCounter]=c;
+			}	
+			else
+			{
+				puts("   ");
+				tempBuffer[uiLineCounter] = ' ';
+			}
+		}
+
+		puts("- ");
+		puts(tempBuffer);
+		puts("\n\r");
+	}
+}
+
+void 		Cpu1Code(void)
 {
 	uint32_t	uiMainCounter =0;
 	
@@ -88,136 +214,14 @@ void 		Cpu1Code()
 	}
 }
 
-uint64_t  get_ticks(void)
-{
-	unsigned int uiCurrentValue =	readl(CONFIG_SYS_TIMERBASE + 0x04);
-			
-	/* increment tbu if tbl has rolled over */
-	if (uiCurrentValue > timerValueLow)
-		timerValueHigh--;
-
-	timerValueLow = uiCurrentValue;	
-
-	uint64_t	ui64returnValue = (uint64_t)(((uint64_t)timerValueHigh << 32) | timerValueLow);
-	return 		ui64returnValue;
-}
-
-void putc(char c)
-{
-	volatile unsigned int*	Uart0_lsr 		= (unsigned int *)0xFFC02014;
-	//#define UART_LSR_THRE 0x20
-
-	//while ((serial_in(&com_port->lsr) & UART_LSR_THRE) == 0)
-	while((*Uart0_lsr & 0x20)==0)	;	// check xmit empty
-	
-	volatile unsigned int*	Uart0Data = (unsigned int *)0xFFC02000;
-	*Uart0Data = (unsigned int) (c);
-
-}
-
-void PutNible(unsigned char ucNibble)
-{
-	ucNibble = ucNibble + 0x30;
-	if(ucNibble>0x39)	ucNibble+=0x07;	// 0x41 ('A') - 0x3A (>'9')
-
-	putc(ucNibble);
-}
-
-void PutByte(unsigned char ucByte)
-{
-	unsigned char ucCarac = 0;
-
-	ucCarac = (ucByte >> 4 ) & 0x0F;
-	PutNible(ucCarac);
-
-	ucCarac = ucByte & 0x0F;
-	PutNible(ucCarac);
-}
-
-void putHexa32(unsigned int uiNumber)
-{
-	putc('0');
-	putc('x');
-	PutByte((uiNumber >> 24) & 0xFF);
-	PutByte((uiNumber >> 16) & 0xFF);
-	PutByte((uiNumber >>  8) & 0xFF);
-	PutByte( uiNumber        & 0xFF);
-}
-
-void putHexa64(unsigned long long ullNumber)
-{
-	putc('0');
-	putc('x');
-
-	PutByte((ullNumber >> 56) & 0xFF);
-	PutByte((ullNumber >> 48) & 0xFF);
-	PutByte((ullNumber >> 40) & 0xFF);
-	PutByte((ullNumber >> 32) & 0xFF);
-	
-	PutByte((ullNumber >> 24) & 0xFF);
-	PutByte((ullNumber >> 16) & 0xFF);
-	PutByte((ullNumber >>  8) & 0xFF);
-	PutByte( ullNumber        & 0xFF);
-}
-
-void puts(char *caMessage)
-{
-	while(*caMessage!=0)
-	{
-		putc(*caMessage++);
-	}
-}
-
-void HexDump(unsigned char* pucStartAddr, unsigned int uiSize)
-{
-	char c = 0;
-	
-	for(unsigned int 	uiCounter =0;
-						uiCounter<uiSize;
-						uiCounter+=16)
-	{
-		putHexa32((unsigned int)pucStartAddr + uiCounter);
-		puts(" - ");
-		//memset(tempBuffer, 0, 20);
-		for(int itempBufferCounter =0;
-				itempBufferCounter <20;
-				itempBufferCounter++)
-		{
-			tempBuffer[itempBufferCounter]=0;	
-		}
-
-		for(unsigned int 	uiLineCounter=0;
-							uiLineCounter<16;
-							uiLineCounter++)
-		{
-			if(uiCounter+uiLineCounter<= uiSize)
-			{
-				c = (char)pucStartAddr[uiCounter+uiLineCounter];
-				PutByte(c);
-				putc(' ');
-				if(c<32||c>'z')	tempBuffer[uiLineCounter]='.';
-				else 			tempBuffer[uiLineCounter]=c;
-			}	
-			else
-			{
-				puts("   ");
-				tempBuffer[uiLineCounter] = ' ';
-			}
-		}
-
-		puts("- ");
-		puts(tempBuffer);
-		puts("\n\r");
-	}
-}
-
-
 void SdRamMain(void)
 {
-	int 		iLed 				=0;
-	int 		iCounter 			=0;
-	uint64_t 	ui64InitialValue 	=0;
+	//volatile uint32_t*	ledData 			=(uint32_t *)0xFF709000;
+	//int 					iLed 				=0;
+	int 					iCounter 			=0;
+	uint64_t 				ui64InitialValue 	=0;
 		
+	// Semble etre OSC1TIMER0	
 	// timer init :
 	#define TIMER_LOAD_VAL		0xFFFFFFFF
 	//writel(TIMER_LOAD_VAL, &timer_base->load_val);
@@ -226,14 +230,13 @@ void SdRamMain(void)
 	writel(TIMER_LOAD_VAL, CONFIG_SYS_TIMERBASE + 0x04);
 	//writel(readl(&timer_base->ctrl) | 0x3, &timer_base->ctrl);
 	// TimerControlReg = 0x03 - Interrupt Disabled + User-defined count mode + Timer Enable 
+	// TimerControlReg = 0x07 - Interrupt Enabled  + User-defined count mode + Timer Enable 
 	writel(readl(CONFIG_SYS_TIMERBASE + 0x08) | 0x3, CONFIG_SYS_TIMERBASE + 0x08);
 	// Je supose qu'avec une valeur de chargement de 0xFFFFFFFF
 	// le timer est downcounter...
 	timerValueHigh	=TIMER_LOAD_VAL;
 	timerValueLow   =TIMER_LOAD_VAL;
 
-
-	volatile unsigned int*	ledData = (unsigned int *)0xFF709000;
 
 	puts("Hello my friend\n\r");
 	puts("Welcome to the other side !\n\r");
@@ -268,25 +271,25 @@ void SdRamMain(void)
 	puts("\n\r");
 
 	uint32_t affinity = get_current_core_num();
-	puts("SdRamMain affinity = 0x");
+	puts((char*)"SdRamMain affinity = 0x");
 	PutByte((uint8_t)affinity);
-	puts("\r\n");
+	puts((char*)"\r\n");
 	if(affinity==0)	puts("RUNNING ON CORE0\r\n");
-	puts("SP=");
+	puts((char*)"SP=");
 	putHexa32(get_current_sp());
-	puts("\r\n");
+	puts((char*)"\r\n");
 	
 	
 	//timers_demo_main();			
 	//puts("End of timer demo...\n\r");
 	
 	// lever de reset du Core1
-	volatile unsigned int*	cpu1startaddr 		= (unsigned int *)0xFFD080C4;
-	volatile unsigned int*	mpumodrst 			= (unsigned int *)0xFFD05010;
+	volatile uint32_t*		cpu1startaddr 		= (uint32_t *)0xFFD080C4;
+	//volatile uint32_t*	mpumodrst 			= (uint32_t *)0xFFD05010;
 	
 	// cpu1 start
 	//*cpu1startaddr = 0x0000010C;
-	*cpu1startaddr = Cpu1CodeStart;
+	*cpu1startaddr = (uint32_t)Cpu1CodeStart;
 	
 	//unsigned int mpumodrstValue = *mpumodrst;
 	//*mpumodrst = mpumodrstValue & 0xFFFFFFFD;
@@ -294,6 +297,22 @@ void SdRamMain(void)
 	//unreset cpu1
 	clrbits_le32(RSTMGR_MPUMODRESET, 1 << 1);		// cpu1=b1
 
+	// Clock for private timer is PERIPHCLK
+	volatile uint32_t*		privateTimerLoadValue 		= (uint32_t *)0xFFFEC600;
+	volatile uint32_t*		privateTimerCounter 		= (uint32_t *)0xFFFEC604;
+	volatile uint32_t*		privateTimerControl 		= (uint32_t *)0xFFFEC608;
+	//volatile uint32_t*	privateTimerStatus 			= (uint32_t *)0xFFFEC60C;
+	
+	// set load value for private timer
+	*privateTimerLoadValue 	= 500000000;			// 1s if clock is 200 MHz
+	// si ok, faire un essai avec writel()
+	// writel(500000000, 0xFFFEC600);
+	
+	// start private timer
+	*privateTimerControl	= 3;					// start the timer without IRQ (=7 for IRQ)
+													// b0 = Enable
+													// b1 = 1 -> Auto (loop) / 0 -> Once
+													// b2 = IRQ (=1 IRQ is generated when value goes to 0)			
 	
 	while(1)
 	{
@@ -334,15 +353,23 @@ void SdRamMain(void)
 		
 		if(iCounter%10==0)	
 		{
-			ui64InitialValue 	=get_ticks();
+			ui64InitialValue 						=get_ticks();
+			unsigned int uiCurrentPrivateTimerValue =readl(0xFFFEC604);
+	
+			puts((char*)"OSC1TIMER0 =");
 			putHexa64(ui64InitialValue);
-			puts(" - Alive and kicking...\n\r");
+			puts((char*)" - PRIVATETIMER =");
+			putHexa32(*privateTimerCounter);
+			puts((char*)" (");
+			putHexa32(uiCurrentPrivateTimerValue);
+			puts((char*)") - Alive and kicking...\n\r");
 		}
 		//#endif
 		
 		
 	}
 }
+
 
 //#if false
 void alt_int_handler_irq(void)
