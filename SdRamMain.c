@@ -318,7 +318,9 @@ void SdRamMain(void)
 	*privateTimerControl	= 3;					// start the timer without IRQ (=7 for IRQ)
 													// b0 = Enable
 													// b1 = 1 -> Auto (loop) / 0 -> Once
-													// b2 = IRQ (=1 IRQ is generated when value goes to 0)			
+													// b2 = IRQ (=1 IRQ is generated when value goes to 0)
+													// if IRQ is ON, interrupt ID29	is pending
+													// (when occurs) in Interrupt Distributor		
 	
 	while(1)
 	{
