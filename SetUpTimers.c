@@ -45,6 +45,8 @@
 
 //void alt_int_handler_irq(void);
 
+// 1ms for private timer period
+#define PRIVATETIMERTICKVALUE	1
 
 #define TIMER_LOAD_VALUE 32000
 
@@ -73,18 +75,39 @@
 //volatile bool Global_Timer_Interrupt_Fired    = false;
 //volatile bool GP_Timer_Interrupt_Fired        = false;
 //volatile bool WDOG0_Interrupt_Fired           = false;
-volatile bool Private_Timer_Interrupt_Fired     = false;
+
+volatile bool Private_Timer_Interrupt_Fired_core0     = false;
+volatile bool Private_Timer_Interrupt_Fired_core1     = false;
 
 uint64_t cntr_value[10];
 uint32_t intr_cnt = 0;
 
-uint32_t ledCounter     =0;
-#define		LED_PERIOD_STEP 10
-#define 	LED_PERIOD_MIN	10
-#define 	LED_PERIOD_MAX	250
-uint32_t ledPeriod		=LED_PERIOD_MIN;
-uint32_t ledValue       =0;
-volatile uint32_t timerLoopCount =0;
+uint32_t ledCounter_core0     =0;
+uint32_t ledCounter_core1     =0;
+
+//#define	LED_PERIOD_STEP 10
+//#define 	LED_PERIOD_MIN	10
+//#define 	LED_PERIOD_MAX	250
+//uint32_t 	ledPeriod		=LED_PERIOD_MIN;
+
+uint32_t ledValue_core0       =0;
+uint32_t ledValue_core1       =0;
+
+volatile uint32_t timerLoopCount_core0 =0;
+volatile uint32_t timerLoopCount_core1 =0;
+
+
+
+static __inline uint32_t get_current_core_num(void)
+{
+    uint32_t affinity;
+
+    /* Use the MPIDR. This is only available at PL1 or higher.
+     / See ARMv7, section B4.1.106. */
+    __asm("MRC p15, 0, %0,          c0, c0, 5" : "=r" (affinity));
+    return affinity & 0xFF;
+}
+
 
 /******************************************************************************/
 /*!
@@ -100,22 +123,19 @@ ALT_STATUS_CODE system_init(void)
     puts("INFO: System Initialization.\n\r");
 
     // Initialize global timer
-    //if(status == ALT_E_SUCCESS)
-    //{
-    //    puts("INFO: Setting up Global Timer.\n\r");
-    //    if(!alt_globaltmr_int_is_enabled())
-    //    {
-    //        status = alt_globaltmr_init();
-    //    }
-    //}
-
+    puts("INFO: Setting up Global Timer.\n\r");
+    if(!alt_globaltmr_int_is_enabled())
+    {
+		status = alt_globaltmr_init();
+    }
+    
     // Initialize general purpose timers
     // optionnal pour Private Timer ?
-    if(status == ALT_E_SUCCESS)
-    {
-        puts("INFO: Initializing General Purpose Timers.\n\r");
-        status = alt_gpt_all_tmr_init();
-    }
+    //if(status == ALT_E_SUCCESS)
+    //{
+    //    puts("INFO: Initializing General Purpose Timers.\n\r");
+    //    status = alt_gpt_all_tmr_init();
+    //}
 
     // // Initialize watchdog0 timer
     // if(status == ALT_E_SUCCESS)
@@ -133,13 +153,13 @@ ALT_STATUS_CODE system_init(void)
  *
  * \return      result of the function
  */
-ALT_STATUS_CODE soc_int_setup(void)
+ALT_STATUS_CODE soc_int_setup_core0(void)
 {
     ALT_STATUS_CODE status = ALT_E_SUCCESS;
     //int cpu_target = 0x1; //CPU0 will handle the interrupts
 
-    puts("\n\r");
-    puts("INFO: Interrupt Setup.\n\r");
+    //puts("\n\r");
+    puts("INFO: CORE0: Interrupt Setup.\n\r");
 
     // Initialize global interrupts
     if (status == ALT_E_SUCCESS)
@@ -219,6 +239,55 @@ ALT_STATUS_CODE soc_int_setup(void)
     return status;
 }
 
+ALT_STATUS_CODE soc_int_setup_core1(void)
+{
+    ALT_STATUS_CODE status = ALT_E_SUCCESS;
+    //int cpu_target = 0x1; //CPU0 will handle the interrupts
+
+    //puts("\n\r");
+    puts("INFO: CORE1: Interrupt Setup.\n\r");
+
+    // Initialize global interrupts
+    //if (status == ALT_E_SUCCESS)
+    //{
+    //    status = alt_int_global_init();
+    //}
+
+    // Initialize CPU interrupts
+    //if (status == ALT_E_SUCCESS)
+    //{
+    //    status = alt_int_cpu_init();
+    //}
+
+    // Set interrupt trigger type
+    if (status == ALT_E_SUCCESS)
+    {
+        //status = alt_int_dist_trigger_set(ALT_INT_INTERRUPT_PPI_TIMER_GLOBAL, ALT_INT_TRIGGER_AUTODETECT);
+        status = alt_int_dist_trigger_set(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE, ALT_INT_TRIGGER_AUTODETECT);
+    }
+
+    // Enable interrupt at the distributor level
+    if (status == ALT_E_SUCCESS)
+    {
+        //status = alt_int_dist_enable(ALT_INT_INTERRUPT_PPI_TIMER_GLOBAL);
+        status = alt_int_dist_enable(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE);
+    }
+
+    // Enable CPU interrupts
+    if (status == ALT_E_SUCCESS)
+    {
+        status = alt_int_cpu_enable();
+    }
+
+    // Enable global interrupts
+    //if (status == ALT_E_SUCCESS)
+    //{
+    //    status = alt_int_global_enable();
+    //}
+
+    return status;
+}
+
 ///******************************************************************************/
 ///*!
 // * Global Timer Module ISR Callback
@@ -252,9 +321,9 @@ ALT_STATUS_CODE soc_int_setup(void)
  * \return      none
  */
 
-void private_timer_isr_callback(long unsigned int uliDummy, void* pvDummy)
+void private_timer_isr_callback_core0(long unsigned int uliDummy, void* pvDummy)
 {
-	//volatile unsigned int*	ledData 	= (unsigned int *)0xFF709000;
+	volatile unsigned int*	ledData 	= (unsigned int *)0xFF709000;
     //volatile unsigned int*	Uart0Data 	= (unsigned int *)0xFFC02000;
 	//*Uart0Data = (unsigned int) ('1');
 
@@ -262,36 +331,80 @@ void private_timer_isr_callback(long unsigned int uliDummy, void* pvDummy)
     alt_gpt_int_clear_pending(ALT_GPT_CPU_PRIVATE_TMR);
 
 
-    ledCounter++;
-    if(ledCounter>500)
+    ledCounter_core0++;
+    if(ledCounter_core0>500)
     //if(ledCounter>ledPeriod)
     {
-        timerLoopCount++;
-        ledCounter =0;
-        if(ledValue==1) 
+        timerLoopCount_core0++;
+        ledCounter_core0 =0;
+        if(ledValue_core0==1) 
         {
-            ledValue =0;
-            //*ledData = (unsigned int) (0);
-            puts("HP");
+            ledValue_core0 =0;
+            if(get_current_core_num()==0x00)	*ledData = (unsigned int) (0);
+            if(get_current_core_num()==0x01)	puts("H");
         }
         else            
         {
-            ledValue =1;
- 			//*ledData = (unsigned int) (1 <<24);
-            puts("LP");
+            ledValue_core0 =1;
+ 			if(get_current_core_num()==0x00)	*ledData = (unsigned int) (1 <<24);
+            if(get_current_core_num()==0x01)	puts("L");
         }
 		
 		//ledPeriod = ledPeriod + LED_PERIOD_STEP;
 		//if(ledPeriod>LED_PERIOD_MAX)		ledPeriod = LED_PERIOD_MIN;
     }
 
-    if(timerLoopCount>5)
+    if(timerLoopCount_core0>10)
     {
         // Notify main thread
-        puts("\n\rPrivate Timer Notify main thread\n\r");
+        puts("\n\rCORE0 : Private Timer Notify main thread\n\r");
         //putc('N');
-        Private_Timer_Interrupt_Fired = true;  // let main loop wait
-        timerLoopCount =0;
+        Private_Timer_Interrupt_Fired_core0 = true;  // let main loop wait
+        timerLoopCount_core0 =0;
+    }
+
+}
+
+void private_timer_isr_callback_core1(long unsigned int uliDummy, void* pvDummy)
+{
+	volatile unsigned int*	ledData 	= (unsigned int *)0xFF709000;
+    //volatile unsigned int*	Uart0Data 	= (unsigned int *)0xFFC02000;
+	//*Uart0Data = (unsigned int) ('1');
+
+    // Clear interrupt source don't care about the return value
+    alt_gpt_int_clear_pending(ALT_GPT_CPU_PRIVATE_TMR);
+
+
+    ledCounter_core1++;
+    if(ledCounter_core1>500)
+    //if(ledCounter>ledPeriod)
+    {
+        timerLoopCount_core1++;
+        ledCounter_core1 =0;
+        if(ledValue_core1==1) 
+        {
+            ledValue_core1 =0;
+            if(get_current_core_num()==0x00)	*ledData = (unsigned int) (0);
+            if(get_current_core_num()==0x01)	puts("H");
+        }
+        else            
+        {
+            ledValue_core1 =1;
+ 			if(get_current_core_num()==0x00)	*ledData = (unsigned int) (1 <<24);
+            if(get_current_core_num()==0x01)	puts("L");
+        }
+		
+		//ledPeriod = ledPeriod + LED_PERIOD_STEP;
+		//if(ledPeriod>LED_PERIOD_MAX)		ledPeriod = LED_PERIOD_MIN;
+    }
+
+    if(timerLoopCount_core1>10)
+    {
+        // Notify main thread
+        puts("\n\CORE1 : Private Timer Notify main thread\n\r");
+        //putc('N');
+        Private_Timer_Interrupt_Fired_core1 = true;  // let main loop wait
+        timerLoopCount_core1 =0;
     }
 
 }
@@ -554,18 +667,18 @@ void private_timer_isr_callback(long unsigned int uliDummy, void* pvDummy)
 //     return status;
 // }
 
-ALT_STATUS_CODE private_timer_setup(void)
+ALT_STATUS_CODE private_timer_setup_core0(void)
 {
     ALT_STATUS_CODE status = ALT_E_SUCCESS;
-    Private_Timer_Interrupt_Fired = false;
+    Private_Timer_Interrupt_Fired_core0 = false;
 
     puts("\n\r");
-    puts("INFO: Private Timer Demo.\n\r");
+    puts("INFO: CORE0: Private Timer Setup.\n\r");
 
     // Set Private Timer to free-running was one-shot
     if(status == ALT_E_SUCCESS)
     {
-        puts("INFO: Setting Private Timer mode.\n\r");
+        puts("INFO: CORE0: Setting Private Timer mode.\n\r");
         //status = alt_gpt_mode_set(ALT_GPT_SP_TMR1, ALT_GPT_RESTART_MODE_ONESHOT);
         status = alt_gpt_mode_set(ALT_GPT_CPU_PRIVATE_TMR, ALT_GPT_RESTART_MODE_PERIODIC);
    }
@@ -573,11 +686,31 @@ ALT_STATUS_CODE private_timer_setup(void)
     // Load SP Timer 1 value
     if(status == ALT_E_SUCCESS)
     {
-        puts("INFO: Setting Private Timer count value.\n\r");
+        puts("INFO: CORE0: Setting Private Timer count value.\n\r");
         //status = alt_gpt_counter_set(ALT_GPT_SP_TMR1, 1024);
         //status = alt_gpt_counter_set(ALT_GPT_SP_TMR1, 65535);
         // #define CONFIG_HPS_CLK_L4_SP_HZ 100000000
-        status = alt_gpt_counter_set(ALT_GPT_CPU_PRIVATE_TMR, 1000000000);        
+		
+		// periph clk semble etre 100MHz
+		// period du timer = LoadValue / 100000000 si prescaler = 0
+		
+		
+		/*
+		alt_freq_t periphClk = 0;
+		alt_clk_freq_get(ALT_CLK_MPU_PERIPH ,&periphClk); 
+		// -> periphClk = 200MHz
+		
+		double timerPeriod = PRIVATETIMERTICKVALUE * 0.001;
+		uint32_t uiLoadVal = (timerPeriod * periphClk) -1;
+		puts("INFO: periphClk=");
+		putHexa32(periphClk);
+		puts("\r\nINFO: uiLoadVal=");
+        putHexa32(uiLoadVal);
+		puts("\r\n");
+        */
+		
+		uint32_t uiLoadVal = 199999;	// if periphClk is still 200MHz
+		status = alt_gpt_counter_set(ALT_GPT_CPU_PRIVATE_TMR, uiLoadVal /*100000*/ /*1000000000*/);        
     }
 
     //uint32_t timer_val = alt_gpt_curtime_millisecs_get(ALT_GPT_SP_TMR1);
@@ -585,25 +718,25 @@ ALT_STATUS_CODE private_timer_setup(void)
     //putHexa32(timer_val);
     //puts("Hz.\n\r");
 
-    timerLoopCount =0;
+    timerLoopCount_core0 =0;
 
     // Register timer ISR
     if (status == ALT_E_SUCCESS)
     {
-        status = alt_int_isr_register(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE, private_timer_isr_callback, NULL);
+        status = alt_int_isr_register(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE, private_timer_isr_callback_core0, NULL);
     }
 
     // Enable interrupt SP Timer 1
     if(status == ALT_E_SUCCESS)
     {
-        puts("INFO: Enabling Private Timer Interrupt.\n\r");
+        puts("INFO: CORE0: Enabling Private Timer Interrupt.\n\r");
         status = alt_gpt_int_enable(ALT_GPT_CPU_PRIVATE_TMR);
     }
 
     // Set Private Timer to start running
     if(status == ALT_E_SUCCESS)
     {
-        puts("INFO: Starting Private Timer.\n\r");
+        puts("INFO: CORE0: Starting Private Timer.\n\r");
         status = alt_gpt_tmr_start(ALT_GPT_CPU_PRIVATE_TMR);                
         //puts("done.\n\r");
     }
@@ -645,53 +778,159 @@ ALT_STATUS_CODE private_timer_setup(void)
     return status;
 }
 
-///******************************************************************************/
-///*!
-// * Demo the Global Timer Functions
-// *
-// * \return      result of the function
-// */
-//ALT_STATUS_CODE timers_demo_global_timer_demo(void)
-//{
-//    ALT_STATUS_CODE status = ALT_E_SUCCESS;
-//    uint64_t overhead, cntr_value_diff;
+ALT_STATUS_CODE private_timer_setup_core1(void)
+{
+    ALT_STATUS_CODE status = ALT_E_SUCCESS;
+    Private_Timer_Interrupt_Fired_core1 = false;
+
+    puts("\n\r");
+    puts("INFO: Private Timer Setup Core1.\n\r");
+
+    // Set Private Timer to free-running was one-shot
+    if(status == ALT_E_SUCCESS)
+    {
+        puts("INFO: CORE1: Setting Private Timer mode.\n\r");
+        //status = alt_gpt_mode_set(ALT_GPT_SP_TMR1, ALT_GPT_RESTART_MODE_ONESHOT);
+        status = alt_gpt_mode_set(ALT_GPT_CPU_PRIVATE_TMR, ALT_GPT_RESTART_MODE_PERIODIC);
+   }
+
+    // Load SP Timer 1 value
+    if(status == ALT_E_SUCCESS)
+    {
+        puts("INFO: CORE1: Setting Private Timer count value.\n\r");
+        //status = alt_gpt_counter_set(ALT_GPT_SP_TMR1, 1024);
+        //status = alt_gpt_counter_set(ALT_GPT_SP_TMR1, 65535);
+        // #define CONFIG_HPS_CLK_L4_SP_HZ 100000000
+		
+		// periph clk semble etre 100MHz
+		// period du timer = LoadValue / 100000000 si prescaler = 0
+		
+		
+		/*
+		alt_freq_t periphClk = 0;
+		alt_clk_freq_get(ALT_CLK_MPU_PERIPH ,&periphClk); 
+		// -> periphClk = 200MHz
+		
+		double timerPeriod = PRIVATETIMERTICKVALUE * 0.001;
+		uint32_t uiLoadVal = (timerPeriod * periphClk) -1;
+		puts("INFO: periphClk=");
+		putHexa32(periphClk);
+		puts("\r\nINFO: uiLoadVal=");
+        putHexa32(uiLoadVal);
+		puts("\r\n");
+        */
+		
+		uint32_t uiLoadVal = 199999;	// if periphClk is still 200MHz
+		status = alt_gpt_counter_set(ALT_GPT_CPU_PRIVATE_TMR, uiLoadVal /*100000*/ /*1000000000*/);        
+    }
+
+    //uint32_t timer_val = alt_gpt_curtime_millisecs_get(ALT_GPT_SP_TMR1);
+    //puts("INFO: SP Timer1 Time to zero in milliseconds is ");
+    //putHexa32(timer_val);
+    //puts("Hz.\n\r");
+
+    timerLoopCount_core1 =0;
+
+    // Register timer ISR
+    if (status == ALT_E_SUCCESS)
+    {
+        status = alt_int_isr_register(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE, private_timer_isr_callback_core1, NULL);
+    }
+
+    // Enable interrupt SP Timer 1
+    if(status == ALT_E_SUCCESS)
+    {
+        puts("INFO: CORE1: Enabling Private Timer Interrupt.\n\r");
+        status = alt_gpt_int_enable(ALT_GPT_CPU_PRIVATE_TMR);
+    }
+
+    // Set Private Timer to start running
+    if(status == ALT_E_SUCCESS)
+    {
+        puts("INFO: CORE1: Starting Private Timer.\n\r");
+        status = alt_gpt_tmr_start(ALT_GPT_CPU_PRIVATE_TMR);                
+        //puts("done.\n\r");
+    }
+
+    // // Set SP Timer 1 to start running (this routine returns true, false or bad arg)
+    // if(status == ALT_E_SUCCESS)
+    // {
+    //     puts("INFO: Checking if SP Timer 1 is running.\n\r");
+    //     status = alt_gpt_tmr_is_running(ALT_GPT_SP_TMR1);
+    //     if(alt_gpt_tmr_is_running(ALT_GPT_SP_TMR1) == ALT_E_TRUE)
+    //     {
+    //         status = ALT_E_SUCCESS;
+    //         puts("INFO: SP Timer 1 is running.\n\r");
+    //     }
+    //     else
+    //     {
+    //         status = ALT_E_ERROR;
+    //         puts("FAIL: SP Timer 1 is not running.\n\r");
+    //     }
+    // }
+
+    // if(status == ALT_E_SUCCESS)
+    // {
+    //     puts("INFO: Waiting for Private Timer Interrupt.\n\r");
+    //     while (GP_Timer_Interrupt_Fired==false)
+    //     {
+        
+    //     }
+
+    //     //while(1)
+    //     //{
+    //     //
+    //     //}
+
+    //     //status = alt_gpt_int_disable(ALT_GPT_SP_TMR1);
+    //     puts("\n\rINFO: SP Timer1 Interrupt Fired.\n\r");
+    // }
+
+    return status;
+}
+
+
+/******************************************************************************/
+/*!
+ * Global Timer Functions
+ *
+ * \return      result of the function
+ */
+ALT_STATUS_CODE global_timer_setup(void)
+{
+    ALT_STATUS_CODE status = ALT_E_SUCCESS;
+    uint64_t overhead, cntr_value_diff;
+
+    //puts("\n\r");
+    puts("INFO: Global Timer Setup.\n\r");
+
+    // Start Global Timer
+    if(status == ALT_E_SUCCESS)
+    {
+        puts("INFO: Starting Global Timer.\n\r");
+        status = alt_globaltmr_start();
+    }
+
+    // Get Global counter value
+//  if(status == ALT_E_SUCCESS)
+//  {
+//      puts("INFO: Measuring for loop time.\n\r");
+//      cntr_value[1] = alt_globaltmr_get64();
+//      cntr_value[2] = alt_globaltmr_get64();
+//      overhead = cntr_value[2] - cntr_value[1];
 //
-//    puts("\n\r");
-//    puts("INFO: Global Timer Demo.\n\r");
+//      cntr_value[1] = alt_globaltmr_get64();
+//      for (volatile int cntr = 1; cntr <= 511; cntr ++ )
+//      {
+//      }
+//      cntr_value[2] = alt_globaltmr_get64();
+//      cntr_value_diff = cntr_value[2] - cntr_value[1] - overhead;
+//      puts("INFO: For loop time elapsed = ");
+//      putHexa64(cntr_value_diff);
+//      puts("Hz.\n\r");
 //
-//    // Start Global Timer
-//    if(status == ALT_E_SUCCESS)
-//    {
-//        puts("INFO: Starting Global Timer.\n\r");
-//        status = alt_globaltmr_start();
-//    }
-//
-//    // Register Global Timer ISR
-//    if (status == ALT_E_SUCCESS)
-//    {
-//        status = alt_int_isr_register(ALT_INT_INTERRUPT_PPI_TIMER_GLOBAL, timers_demo_glbl_timer_isr_callback, NULL);
-//    }
-//
-//    // Get Global counter value
-//    if(status == ALT_E_SUCCESS)
-//    {
-//        puts("INFO: Measuring for loop time.\n\r");
-//        cntr_value[1] = alt_globaltmr_get64();
-//        cntr_value[2] = alt_globaltmr_get64();
-//        overhead = cntr_value[2] - cntr_value[1];
-//
-//        cntr_value[1] = alt_globaltmr_get64();
-//        for (volatile int cntr = 1; cntr <= 511; cntr ++ )
-//        {
-//        }
-//        cntr_value[2] = alt_globaltmr_get64();
-//        cntr_value_diff = cntr_value[2] - cntr_value[1] - overhead;
-//        puts("INFO: For loop time elapsed = ");
-//        putHexa64(cntr_value_diff);
-//        puts("Hz.\n\r");
-//
-//    }
-//
+//  }
+
 //    // Set Global Timer autoinc value
 //    if(status == ALT_E_SUCCESS)
 //    {
@@ -711,41 +950,10 @@ ALT_STATUS_CODE private_timer_setup(void)
 //    {
 //        status = alt_globaltmr_autoinc_mode_start();
 //    }
-//
-//    // if(status == ALT_E_SUCCESS)
-//    // {
-//    //     status = alt_globaltmr_comp_mode_start();
-//    // }
-//
-//    // // Turn on Global Timer Interrupt
-//    // if(status == ALT_E_SUCCESS)
-//    // {
-//    //     puts("INFO: Enabling Global Timer Interrupts.\n\r");
-//    //     status = alt_globaltmr_int_enable();
-//    // }
-//
-//    // if(status == ALT_E_SUCCESS)
-//    // {
-//    //     while (!Global_Timer_Interrupt_Fired)
-//    //     {
-//    //     }
-//
-//    //     status = alt_globaltmr_int_disable();
-//    //     // Display the deltas between the interrupts
-//    //     puts("INFO: Global Timer Interrupt Deltas.\n\r");
-//    //     for (int i = 1; i <10; i++)
-//    //     {
-//    //         //printf("INFO: Global Timer Comparator Interrupt Delta %i = %" PRIu64".\n\r", i, cntr_value[i] - cntr_value[i-1]);
-//    //         puts("INFO: Global Timer Comparator Interrupt Delta ");
-//    //         putHexa64(i);
-//    //         puts(" = ");
-//    //         putHexa64(cntr_value[i] - cntr_value[i-1]);
-//    //         puts("Hz.\n\r");
-//    //     }
-//    // }
-//
-//    return status;
-//}
+
+
+    return status;
+}
 
 ///******************************************************************************/
 ///*!
@@ -983,7 +1191,7 @@ ALT_STATUS_CODE private_timer_setup(void)
  * Main entry point
  *
  */
-int timers_init(void)
+int timers_init_Core0(void)
 {
     ALT_STATUS_CODE status = ALT_E_SUCCESS;
 
@@ -1010,62 +1218,55 @@ int timers_init(void)
         status = system_init();
     }
 
-    // Setup Interrupt
+    // Setup Interrupt (for private timer)
     if(status == ALT_E_SUCCESS)
     {
-        status = soc_int_setup();
+        status = soc_int_setup_core0();
     }
-
-//    // Timer0 set to free running
-//    if(status == ALT_E_SUCCESS)
-//    {
-//        status = timers_demo_timer0_freerun_demo();
-//    }
 
     // Private Timer set
     if(status == ALT_E_SUCCESS)
     {
-        status = private_timer_setup();
+        status = private_timer_setup_core0();
     }
 
-//  // Use Global timer to measure code snippet
-//  if(status == ALT_E_SUCCESS)
-//  {
-//      status = timers_demo_global_timer_demo();
-//  }
-//
-//    // Demo CPU0 Watchdog
-//    if(status == ALT_E_SUCCESS)
-//    {
-//        status = timers_demo_watch_dog_demo();
-//    }
-//
-//    // Cleanup Interrupt
-//    if(status == ALT_E_SUCCESS)
-//    {
-//        status = timers_demo_soc_int_cleanup();
-//    }
-//
-//    // System uninit
-//    if(status == ALT_E_SUCCESS)
-//    {
-//        status = timers_demo_system_uninit();
-//    }
-//
-//    // Report status
-//    if (status == ALT_E_SUCCESS)
-//    {
-//        puts("\n\rRESULT: All tests successful.\n\r");
-//        return 0;
-//    }
-//    else
-//    {
-//        puts("\n\rRESULT: Some failures detected.\n\r");
-//        return 1;
-//    }
+	// Use Global timer to measure code snippet & ticks (delay...)
+	if(status == ALT_E_SUCCESS)
+	{
+		  status = global_timer_setup();
+	}
 
 	return 0;
 }
+
+int timers_init_Core1(void)
+{
+    ALT_STATUS_CODE status = ALT_E_SUCCESS;
+
+	
+    // System init
+    //if(status == ALT_E_SUCCESS)
+    //{
+    //    status = system_init();
+    //}
+
+    // Setup Interrupt (for private timer)
+    if(status == ALT_E_SUCCESS)
+    {
+        status = soc_int_setup_core1();
+    }
+
+    // Private Timer set
+    if(status == ALT_E_SUCCESS)
+    {
+        status = private_timer_setup_core1();
+    }
+
+	
+	return 0;
+}
+
+
 
 
 

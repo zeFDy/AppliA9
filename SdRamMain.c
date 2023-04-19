@@ -30,7 +30,9 @@ volatile uint32_t		j;
 int 					iCounter;
 
 // from SetUpTimers.c
-int timers_init(void);
+int timers_init_Core0(void);
+int timers_init_Core1(void);
+
 
 #if false
 static void alt_int_fixup_irq_stack(uint32_t stack_irq)
@@ -94,6 +96,8 @@ void 		Cpu1Code(void)
 	puts("SP=");
 	putHexa32(get_current_sp());
 	puts("\r\n");
+	//puts("Do not forget to setup private timer for Core1 !\r\n");
+	timers_init_Core1();			
 	
 	while(1)
 	{
@@ -106,23 +110,28 @@ void 		Cpu1Code(void)
 
 		uiMainCounter++;
 		
+		#if false
 		if(thisLedValue==1) 
 		{
 			thisLedValue =0;
-			*thisLedData = (unsigned int) (0);
-			//putc('h');
+			//*thisLedData = (unsigned int) (0);
+			putc('h');
 		}
 		else            
 		{
 			thisLedValue =1;
-			*thisLedData = (unsigned int) (1 <<24);
-			//putc('l');
+			//*thisLedData = (unsigned int) (1 <<24);
+			putc('l');
 		}
+		#endif
 		
 		// next line to be modified (as % implies division and therfore lib.a)
 		//if(uiMainCounter%100==0)	puts("CORE1 kicks !\r\n");
-		if(uiMainCounter>=100)	
+		if(uiMainCounter>=10)	
 		{
+			//puts((char*)"\r\nCore1-GLOBALTIMER=");
+			//putHexa64(alt_globaltmr_get64());
+			//puts((char*)"\r\n");
 			puts("CORE1 kicks !\r\n");
 			uiMainCounter =0;
 		}
@@ -198,7 +207,7 @@ void SdRamMain(void)
 	//alt_int_fixup_irq_stack(0x10000);								// Set IRQ Stack Pointer to 0x10000 -> Fix it !
 	//writel(0xFF /*priority_mask*/, ALT_GIC_BASE_CPU + 0x4); 		// Set priority mask to 0xFF so IRq are forwarded to CPU /* iccpmr */
 	
-	timers_init();			
+	timers_init_Core0();			
 	//puts("End of timer init...\n\r");
 	
 	// lever de reset du Core1
@@ -265,29 +274,33 @@ void SdRamMain(void)
 		// 	//putc('H');
 		// }
 		
+		//puts((char*)"\r\Core0-GLOBALTIMER=");
+		//putHexa64(alt_globaltmr_get64());
+		
 		// next line to be modified (as % implies division and therfore lib.a)
 		//if(iCounter%10=0)	
-		//if(iCounter>=10)	
-		//{
+		if(iCounter>=10)	
+		{
 		//	ui64InitialValue 							=get_ticks();
-			unsigned int uiCurrentPrivateTimerValue 	=readl(0xFFFEC604);
-			unsigned int uiCurrentPrivateTimerStatus 	=readl(0xFFFEC60C);
+		//	unsigned int uiCurrentPrivateTimerValue 	=readl(0xFFFEC604);
+		//	unsigned int uiCurrentPrivateTimerStatus 	=readl(0xFFFEC60C);
 	
 		//	puts((char*)"OSC1TIMER0 =");
 		//	putHexa64(ui64InitialValue);
 		//	puts((char*)" - PRIVATETIMER =");
-			puts((char*)"PRIVATETIMER=");
+		//	puts((char*)"PRIVATETIMER=");
 			//putHexa32(*privateTimerCounter);
 			//puts((char*)" (");
-			putHexa32(uiCurrentPrivateTimerValue);
-			puts((char*)" - ");
-			putHexa32(uiCurrentPrivateTimerStatus);
+		//	putHexa32(uiCurrentPrivateTimerValue);
+			//puts((char*)" - ");
+			//putHexa32(uiCurrentPrivateTimerStatus);
 			//puts((char*)") - Alive and kicking...\n\r");
 			//puts((char*)" - Alive and kicking.\n\r");
-			puts((char*)"\n\r");
+			puts("CORE0 kicks !\r\n");
+			//puts((char*)"\n\r");
 			
-		//	iCounter =0;
-		//}
+			iCounter =0;
+		}
 		//#endif
 		
         #if false

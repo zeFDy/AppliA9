@@ -279,9 +279,11 @@ irq_SdRamPart:	push {r0-r7, lr}
 		//ldr r1, LedData	/* LedData port in memory */
 		//str r0, [r1, #0]
 
-		ldr r0, UartValue	/* 'U' */
-		ldr r1, UartData	/* UartData port in memory */
-		str r0, [r1, #0]
+		//ldr r0, UartValue	/* 'U' */
+		//ldr r1, UartData	/* UartData port in memory */
+		//str r0, [r1, #0]
+		
+		// les IRQ passent par ici 
 		
 		/*
 		bx 	lr
