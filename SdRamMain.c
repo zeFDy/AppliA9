@@ -215,6 +215,7 @@ void SdRamMain(void)
 	//unreset cpu1
 	clrbits_le32(RSTMGR_MPUMODRESET, 1 << 1);		// cpu1=b1
 
+    #if false
 	// Clock for private timer is PERIPHCLK
 	//volatile uint32_t*	privateTimerLoadValue 		= (uint32_t *)0xFFFEC600;
 	//volatile uint32_t*	privateTimerCounter 		= (uint32_t *)0xFFFEC604;
@@ -234,7 +235,7 @@ void SdRamMain(void)
 													// b2 = IRQ (=1 IRQ is generated when value goes to 0)
 													// if IRQ is ON, interrupt ID29	is pending
 													// (when occurs) in Interrupt Distributor		
-	
+	#endif
 	
 	while(1)
 	{
