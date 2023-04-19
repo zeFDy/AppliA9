@@ -6,168 +6,154 @@ Disassembly of section .text.alt_globaltmr_is_running:
 
 00000000 <alt_globaltmr_is_running>:
    0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_globaltmr_is_running+0xc>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	f000 0001 	and.w	r0, r0, #1
-   8:	4770      	bx	lr
-   a:	bf00      	nop
-   c:	fffec208 	.word	0xfffec208
+   2:	f8d3 0208 	ldr.w	r0, [r3, #520]	; 0x208
+   6:	f000 0001 	and.w	r0, r0, #1
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_uninit:
 
 00000000 <alt_globaltmr_uninit>:
-   0:	4a06      	ldr	r2, [pc, #24]	; (1c <alt_globaltmr_uninit+0x1c>)
+   0:	4b08      	ldr	r3, [pc, #32]	; (24 <alt_globaltmr_uninit+0x24>)
    2:	2000      	movs	r0, #0
-   4:	6813      	ldr	r3, [r2, #0]
-   6:	f023 030e 	bic.w	r3, r3, #14
-   a:	6013      	str	r3, [r2, #0]
-   c:	2201      	movs	r2, #1
-   e:	4b04      	ldr	r3, [pc, #16]	; (20 <alt_globaltmr_uninit+0x20>)
-  10:	6018      	str	r0, [r3, #0]
-  12:	6058      	str	r0, [r3, #4]
-  14:	6098      	str	r0, [r3, #8]
-  16:	f843 2c04 	str.w	r2, [r3, #-4]
-  1a:	4770      	bx	lr
-  1c:	fffec208 	.word	0xfffec208
-  20:	fffec210 	.word	0xfffec210
+   4:	f8d3 2208 	ldr.w	r2, [r3, #520]	; 0x208
+   8:	f022 020e 	bic.w	r2, r2, #14
+   c:	f8c3 2208 	str.w	r2, [r3, #520]	; 0x208
+  10:	f8c3 0210 	str.w	r0, [r3, #528]	; 0x210
+  14:	2201      	movs	r2, #1
+  16:	f8c3 0214 	str.w	r0, [r3, #532]	; 0x214
+  1a:	f8c3 0218 	str.w	r0, [r3, #536]	; 0x218
+  1e:	f8c3 220c 	str.w	r2, [r3, #524]	; 0x20c
+  22:	4770      	bx	lr
+  24:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_init:
 
 00000000 <alt_globaltmr_init>:
    0:	b508      	push	{r3, lr}
    2:	f7ff fffe 	bl	0 <alt_globaltmr_init>
-   6:	2000      	movs	r0, #0
-   8:	4a02      	ldr	r2, [pc, #8]	; (14 <alt_globaltmr_init+0x14>)
-   a:	6813      	ldr	r3, [r2, #0]
-   c:	f043 0301 	orr.w	r3, r3, #1
-  10:	6013      	str	r3, [r2, #0]
-  12:	bd08      	pop	{r3, pc}
-  14:	fffec208 	.word	0xfffec208
+   6:	4a04      	ldr	r2, [pc, #16]	; (18 <alt_globaltmr_init+0x18>)
+   8:	2000      	movs	r0, #0
+   a:	f8d2 3208 	ldr.w	r3, [r2, #520]	; 0x208
+   e:	f043 0301 	orr.w	r3, r3, #1
+  12:	f8c2 3208 	str.w	r3, [r2, #520]	; 0x208
+  16:	bd08      	pop	{r3, pc}
+  18:	fffec000 	.word	0xfffec000
+
+Disassembly of section .text.alt_globaltmr_stop:
+
+00000000 <alt_globaltmr_stop>:
+   0:	4a04      	ldr	r2, [pc, #16]	; (14 <alt_globaltmr_stop+0x14>)
+   2:	2000      	movs	r0, #0
+   4:	f8d2 3208 	ldr.w	r3, [r2, #520]	; 0x208
+   8:	f023 0302 	bic.w	r3, r3, #2
+   c:	f8c2 3208 	str.w	r3, [r2, #520]	; 0x208
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_start:
 
 00000000 <alt_globaltmr_start>:
-   0:	4a03      	ldr	r2, [pc, #12]	; (10 <alt_globaltmr_start+0x10>)
+   0:	4a04      	ldr	r2, [pc, #16]	; (14 <alt_globaltmr_start+0x14>)
    2:	2000      	movs	r0, #0
-   4:	6813      	ldr	r3, [r2, #0]
-   6:	f043 0303 	orr.w	r3, r3, #3
-   a:	6013      	str	r3, [r2, #0]
-   c:	4770      	bx	lr
-   e:	bf00      	nop
-  10:	fffec208 	.word	0xfffec208
+   4:	f8d2 3208 	ldr.w	r3, [r2, #520]	; 0x208
+   8:	f043 0303 	orr.w	r3, r3, #3
+   c:	f8c2 3208 	str.w	r3, [r2, #520]	; 0x208
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_get:
 
 00000000 <alt_globaltmr_get>:
-   0:	b5f0      	push	{r4, r5, r6, r7, lr}
+   0:	b570      	push	{r4, r5, r6, lr}
    2:	b1b0      	cbz	r0, 32 <alt_globaltmr_get+0x32>
    4:	b1a9      	cbz	r1, 32 <alt_globaltmr_get+0x32>
-   6:	2303      	movs	r3, #3
-   8:	4a0b      	ldr	r2, [pc, #44]	; (38 <alt_globaltmr_get+0x38>)
-   a:	4f0c      	ldr	r7, [pc, #48]	; (3c <alt_globaltmr_get+0x3c>)
-   c:	6815      	ldr	r5, [r2, #0]
-   e:	683e      	ldr	r6, [r7, #0]
-  10:	6814      	ldr	r4, [r2, #0]
-  12:	42a5      	cmp	r5, r4
-  14:	d008      	beq.n	28 <alt_globaltmr_get+0x28>
-  16:	3b01      	subs	r3, #1
-  18:	4625      	mov	r5, r4
-  1a:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
-  1e:	d1f6      	bne.n	e <alt_globaltmr_get+0xe>
-  20:	6004      	str	r4, [r0, #0]
+   6:	4c0c      	ldr	r4, [pc, #48]	; (38 <alt_globaltmr_get+0x38>)
+   8:	2303      	movs	r3, #3
+   a:	f8d4 2204 	ldr.w	r2, [r4, #516]	; 0x204
+   e:	4616      	mov	r6, r2
+  10:	f8d4 5200 	ldr.w	r5, [r4, #512]	; 0x200
+  14:	f8d4 2204 	ldr.w	r2, [r4, #516]	; 0x204
+  18:	4296      	cmp	r6, r2
+  1a:	d005      	beq.n	28 <alt_globaltmr_get+0x28>
+  1c:	3b01      	subs	r3, #1
+  1e:	d2f6      	bcs.n	e <alt_globaltmr_get+0xe>
+  20:	6002      	str	r2, [r0, #0]
   22:	2000      	movs	r0, #0
-  24:	600e      	str	r6, [r1, #0]
-  26:	bdf0      	pop	{r4, r5, r6, r7, pc}
+  24:	600d      	str	r5, [r1, #0]
+  26:	bd70      	pop	{r4, r5, r6, pc}
   28:	2b00      	cmp	r3, #0
   2a:	d1f9      	bne.n	20 <alt_globaltmr_get+0x20>
-  2c:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  30:	bdf0      	pop	{r4, r5, r6, r7, pc}
+  2c:	f04f 30ff 	mov.w	r0, #4294967295
+  30:	e7f9      	b.n	26 <alt_globaltmr_get+0x26>
   32:	f06f 0008 	mvn.w	r0, #8
-  36:	bdf0      	pop	{r4, r5, r6, r7, pc}
-  38:	fffec204 	.word	0xfffec204
-  3c:	fffec200 	.word	0xfffec200
+  36:	e7f6      	b.n	26 <alt_globaltmr_get+0x26>
+  38:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_get64:
 
 00000000 <alt_globaltmr_get64>:
-   0:	4a0b      	ldr	r2, [pc, #44]	; (30 <alt_globaltmr_get64+0x30>)
-   2:	2303      	movs	r3, #3
-   4:	480b      	ldr	r0, [pc, #44]	; (34 <alt_globaltmr_get64+0x34>)
-   6:	b530      	push	{r4, r5, lr}
-   8:	6811      	ldr	r1, [r2, #0]
-   a:	6805      	ldr	r5, [r0, #0]
-   c:	6814      	ldr	r4, [r2, #0]
-   e:	42a1      	cmp	r1, r4
-  10:	d008      	beq.n	24 <alt_globaltmr_get64+0x24>
-  12:	3b01      	subs	r3, #1
-  14:	4621      	mov	r1, r4
-  16:	f1b3 3fff 	cmp.w	r3, #4294967295	; 0xffffffff
-  1a:	d1f6      	bne.n	a <alt_globaltmr_get64+0xa>
-  1c:	2000      	movs	r0, #0
-  1e:	4621      	mov	r1, r4
-  20:	4328      	orrs	r0, r5
-  22:	bd30      	pop	{r4, r5, pc}
-  24:	2b00      	cmp	r3, #0
-  26:	d1f9      	bne.n	1c <alt_globaltmr_get64+0x1c>
-  28:	2000      	movs	r0, #0
-  2a:	2100      	movs	r1, #0
-  2c:	bd30      	pop	{r4, r5, pc}
-  2e:	bf00      	nop
-  30:	fffec204 	.word	0xfffec204
-  34:	fffec200 	.word	0xfffec200
+   0:	4b09      	ldr	r3, [pc, #36]	; (28 <alt_globaltmr_get64+0x28>)
+   2:	2003      	movs	r0, #3
+   4:	b510      	push	{r4, lr}
+   6:	f8d3 1204 	ldr.w	r1, [r3, #516]	; 0x204
+   a:	460c      	mov	r4, r1
+   c:	f8d3 2200 	ldr.w	r2, [r3, #512]	; 0x200
+  10:	f8d3 1204 	ldr.w	r1, [r3, #516]	; 0x204
+  14:	428c      	cmp	r4, r1
+  16:	d003      	beq.n	20 <alt_globaltmr_get64+0x20>
+  18:	3801      	subs	r0, #1
+  1a:	d2f6      	bcs.n	a <alt_globaltmr_get64+0xa>
+  1c:	4610      	mov	r0, r2
+  1e:	bd10      	pop	{r4, pc}
+  20:	2800      	cmp	r0, #0
+  22:	d1fb      	bne.n	1c <alt_globaltmr_get64+0x1c>
+  24:	4601      	mov	r1, r0
+  26:	e7fa      	b.n	1e <alt_globaltmr_get64+0x1e>
+  28:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_counter_get_low32:
 
 00000000 <alt_globaltmr_counter_get_low32>:
    0:	4b01      	ldr	r3, [pc, #4]	; (8 <alt_globaltmr_counter_get_low32+0x8>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	4770      	bx	lr
-   6:	bf00      	nop
-   8:	fffec200 	.word	0xfffec200
+   2:	f8d3 0200 	ldr.w	r0, [r3, #512]	; 0x200
+   6:	4770      	bx	lr
+   8:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_counter_get_hi32:
 
 00000000 <alt_globaltmr_counter_get_hi32>:
    0:	4b01      	ldr	r3, [pc, #4]	; (8 <alt_globaltmr_counter_get_hi32+0x8>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	4770      	bx	lr
-   6:	bf00      	nop
-   8:	fffec204 	.word	0xfffec204
+   2:	f8d3 0204 	ldr.w	r0, [r3, #516]	; 0x204
+   6:	4770      	bx	lr
+   8:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_comp_get:
 
 00000000 <alt_globaltmr_comp_get>:
-   0:	b140      	cbz	r0, 14 <alt_globaltmr_comp_get+0x14>
-   2:	b139      	cbz	r1, 14 <alt_globaltmr_comp_get+0x14>
+   0:	b148      	cbz	r0, 16 <alt_globaltmr_comp_get+0x16>
+   2:	b141      	cbz	r1, 16 <alt_globaltmr_comp_get+0x16>
    4:	4b05      	ldr	r3, [pc, #20]	; (1c <alt_globaltmr_comp_get+0x1c>)
-   6:	681b      	ldr	r3, [r3, #0]
-   8:	600b      	str	r3, [r1, #0]
-   a:	4b05      	ldr	r3, [pc, #20]	; (20 <alt_globaltmr_comp_get+0x20>)
-   c:	681b      	ldr	r3, [r3, #0]
-   e:	6003      	str	r3, [r0, #0]
-  10:	2000      	movs	r0, #0
-  12:	4770      	bx	lr
-  14:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  18:	4770      	bx	lr
-  1a:	bf00      	nop
-  1c:	fffec210 	.word	0xfffec210
-  20:	fffec214 	.word	0xfffec214
+   6:	f8d3 2210 	ldr.w	r2, [r3, #528]	; 0x210
+   a:	600a      	str	r2, [r1, #0]
+   c:	f8d3 3214 	ldr.w	r3, [r3, #532]	; 0x214
+  10:	6003      	str	r3, [r0, #0]
+  12:	2000      	movs	r0, #0
+  14:	4770      	bx	lr
+  16:	f04f 30ff 	mov.w	r0, #4294967295
+  1a:	4770      	bx	lr
+  1c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_comp_get64:
 
 00000000 <alt_globaltmr_comp_get64>:
-   0:	4b05      	ldr	r3, [pc, #20]	; (18 <alt_globaltmr_comp_get64+0x18>)
-   2:	2200      	movs	r2, #0
-   4:	6819      	ldr	r1, [r3, #0]
-   6:	460b      	mov	r3, r1
-   8:	4904      	ldr	r1, [pc, #16]	; (1c <alt_globaltmr_comp_get64+0x1c>)
-   a:	6808      	ldr	r0, [r1, #0]
-   c:	ea42 0200 	orr.w	r2, r2, r0
-  10:	4610      	mov	r0, r2
-  12:	4619      	mov	r1, r3
-  14:	4770      	bx	lr
-  16:	bf00      	nop
-  18:	fffec214 	.word	0xfffec214
-  1c:	fffec210 	.word	0xfffec210
+   0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_globaltmr_comp_get64+0xc>)
+   2:	f8d3 1214 	ldr.w	r1, [r3, #532]	; 0x214
+   6:	f8d3 0210 	ldr.w	r0, [r3, #528]	; 0x210
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_remain_get:
 
@@ -182,41 +168,28 @@ Disassembly of section .text.alt_globaltmr_remain_get:
 Disassembly of section .text.alt_globaltmr_comp_mode_start:
 
 00000000 <alt_globaltmr_comp_mode_start>:
-   0:	4a03      	ldr	r2, [pc, #12]	; (10 <alt_globaltmr_comp_mode_start+0x10>)
+   0:	4a04      	ldr	r2, [pc, #16]	; (14 <alt_globaltmr_comp_mode_start+0x14>)
    2:	2000      	movs	r0, #0
-   4:	6813      	ldr	r3, [r2, #0]
-   6:	f043 0302 	orr.w	r3, r3, #2
-   a:	6013      	str	r3, [r2, #0]
-   c:	4770      	bx	lr
-   e:	bf00      	nop
-  10:	fffec208 	.word	0xfffec208
+   4:	f8d2 3208 	ldr.w	r3, [r2, #520]	; 0x208
+   8:	f043 0302 	orr.w	r3, r3, #2
+   c:	f8c2 3208 	str.w	r3, [r2, #520]	; 0x208
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_comp_mode_stop:
 
 00000000 <alt_globaltmr_comp_mode_stop>:
-   0:	4a03      	ldr	r2, [pc, #12]	; (10 <alt_globaltmr_comp_mode_stop+0x10>)
-   2:	2000      	movs	r0, #0
-   4:	6813      	ldr	r3, [r2, #0]
-   6:	f023 0302 	bic.w	r3, r3, #2
-   a:	6013      	str	r3, [r2, #0]
-   c:	4770      	bx	lr
-   e:	bf00      	nop
-  10:	fffec208 	.word	0xfffec208
-
-Disassembly of section .text.alt_globaltmr_stop:
-
-00000000 <alt_globaltmr_stop>:
-   0:	f7ff bffe 	b.w	0 <alt_globaltmr_stop>
+   0:	f7ff bffe 	b.w	0 <alt_globaltmr_comp_mode_stop>
 
 Disassembly of section .text.alt_globaltmr_is_comp_mode:
 
 00000000 <alt_globaltmr_is_comp_mode>:
    0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_globaltmr_is_comp_mode+0xc>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	f3c0 0040 	ubfx	r0, r0, #1, #1
-   8:	4770      	bx	lr
-   a:	bf00      	nop
-   c:	fffec208 	.word	0xfffec208
+   2:	f8d3 0208 	ldr.w	r0, [r3, #520]	; 0x208
+   6:	f3c0 0040 	ubfx	r0, r0, #1, #1
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_comp_set:
 
@@ -227,17 +200,17 @@ Disassembly of section .text.alt_globaltmr_comp_set:
    8:	4604      	mov	r4, r0
    a:	b110      	cbz	r0, 12 <alt_globaltmr_comp_set+0x12>
    c:	f7ff fffe 	bl	0 <alt_globaltmr_comp_set>
-  10:	b940      	cbnz	r0, 24 <alt_globaltmr_comp_set+0x24>
-  12:	4b05      	ldr	r3, [pc, #20]	; (28 <alt_globaltmr_comp_set+0x28>)
-  14:	6019      	str	r1, [r3, #0]
-  16:	605d      	str	r5, [r3, #4]
-  18:	b11c      	cbz	r4, 22 <alt_globaltmr_comp_set+0x22>
-  1a:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
-  1e:	f7ff bffe 	b.w	0 <alt_globaltmr_comp_set>
-  22:	4620      	mov	r0, r4
-  24:	bd38      	pop	{r3, r4, r5, pc}
-  26:	bf00      	nop
-  28:	fffec210 	.word	0xfffec210
+  10:	b950      	cbnz	r0, 28 <alt_globaltmr_comp_set+0x28>
+  12:	4b06      	ldr	r3, [pc, #24]	; (2c <alt_globaltmr_comp_set+0x2c>)
+  14:	f8c3 1210 	str.w	r1, [r3, #528]	; 0x210
+  18:	f8c3 5214 	str.w	r5, [r3, #532]	; 0x214
+  1c:	b11c      	cbz	r4, 26 <alt_globaltmr_comp_set+0x26>
+  1e:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
+  22:	f7ff bffe 	b.w	0 <alt_globaltmr_comp_set>
+  26:	4620      	mov	r0, r4
+  28:	bd38      	pop	{r3, r4, r5, pc}
+  2a:	bf00      	nop
+  2c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_comp_set64:
 
@@ -248,152 +221,150 @@ Disassembly of section .text.alt_globaltmr_comp_set64:
    8:	4604      	mov	r4, r0
    a:	b110      	cbz	r0, 12 <alt_globaltmr_comp_set64+0x12>
    c:	f7ff fffe 	bl	0 <alt_globaltmr_comp_set64>
-  10:	b940      	cbnz	r0, 24 <alt_globaltmr_comp_set64+0x24>
-  12:	4b05      	ldr	r3, [pc, #20]	; (28 <alt_globaltmr_comp_set64+0x28>)
-  14:	601d      	str	r5, [r3, #0]
-  16:	6059      	str	r1, [r3, #4]
-  18:	b11c      	cbz	r4, 22 <alt_globaltmr_comp_set64+0x22>
-  1a:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
-  1e:	f7ff bffe 	b.w	0 <alt_globaltmr_comp_set64>
-  22:	4620      	mov	r0, r4
-  24:	bd38      	pop	{r3, r4, r5, pc}
-  26:	bf00      	nop
-  28:	fffec210 	.word	0xfffec210
+  10:	b950      	cbnz	r0, 28 <alt_globaltmr_comp_set64+0x28>
+  12:	4b06      	ldr	r3, [pc, #24]	; (2c <alt_globaltmr_comp_set64+0x2c>)
+  14:	f8c3 5210 	str.w	r5, [r3, #528]	; 0x210
+  18:	f8c3 1214 	str.w	r1, [r3, #532]	; 0x214
+  1c:	b11c      	cbz	r4, 26 <alt_globaltmr_comp_set64+0x26>
+  1e:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
+  22:	f7ff bffe 	b.w	0 <alt_globaltmr_comp_set64>
+  26:	4620      	mov	r0, r4
+  28:	bd38      	pop	{r3, r4, r5, pc}
+  2a:	bf00      	nop
+  2c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_prescaler_get:
 
 00000000 <alt_globaltmr_prescaler_get>:
    0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_globaltmr_prescaler_get+0xc>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	f3c0 2007 	ubfx	r0, r0, #8, #8
-   8:	4770      	bx	lr
-   a:	bf00      	nop
-   c:	fffec208 	.word	0xfffec208
+   2:	f8d3 0208 	ldr.w	r0, [r3, #520]	; 0x208
+   6:	f3c0 2007 	ubfx	r0, r0, #8, #8
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_prescaler_set:
 
 00000000 <alt_globaltmr_prescaler_set>:
    0:	28ff      	cmp	r0, #255	; 0xff
    2:	bf9f      	itttt	ls
-   4:	4a05      	ldrls	r2, [pc, #20]	; (1c <alt_globaltmr_prescaler_set+0x1c>)
-   6:	6813      	ldrls	r3, [r2, #0]
-   8:	f423 437f 	bicls.w	r3, r3, #65280	; 0xff00
-   c:	ea43 2000 	orrls.w	r0, r3, r0, lsl #8
-  10:	bf9a      	itte	ls
-  12:	6010      	strls	r0, [r2, #0]
-  14:	2000      	movls	r0, #0
-  16:	f06f 0008 	mvnhi.w	r0, #8
-  1a:	4770      	bx	lr
-  1c:	fffec208 	.word	0xfffec208
+   4:	4a06      	ldrls	r2, [pc, #24]	; (20 <alt_globaltmr_prescaler_set+0x20>)
+   6:	f8d2 3208 	ldrls.w	r3, [r2, #520]	; 0x208
+   a:	f423 437f 	bicls.w	r3, r3, #65280	; 0xff00
+   e:	ea43 2000 	orrls.w	r0, r3, r0, lsl #8
+  12:	bf9a      	itte	ls
+  14:	f8c2 0208 	strls.w	r0, [r2, #520]	; 0x208
+  18:	2000      	movls	r0, #0
+  1a:	f06f 0008 	mvnhi.w	r0, #8
+  1e:	4770      	bx	lr
+  20:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_autoinc_set:
 
 00000000 <alt_globaltmr_autoinc_set>:
-   0:	b510      	push	{r4, lr}
-   2:	4604      	mov	r4, r0
+   0:	b508      	push	{r3, lr}
+   2:	4601      	mov	r1, r0
    4:	f7ff fffe 	bl	0 <alt_globaltmr_autoinc_set>
-   8:	4601      	mov	r1, r0
-   a:	b110      	cbz	r0, 12 <alt_globaltmr_autoinc_set+0x12>
-   c:	f7ff fffe 	bl	0 <alt_globaltmr_autoinc_set>
-  10:	b938      	cbnz	r0, 22 <alt_globaltmr_autoinc_set+0x22>
-  12:	4b04      	ldr	r3, [pc, #16]	; (24 <alt_globaltmr_autoinc_set+0x24>)
-  14:	601c      	str	r4, [r3, #0]
-  16:	b119      	cbz	r1, 20 <alt_globaltmr_autoinc_set+0x20>
-  18:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
-  1c:	f7ff bffe 	b.w	0 <alt_globaltmr_autoinc_set>
-  20:	4608      	mov	r0, r1
-  22:	bd10      	pop	{r4, pc}
-  24:	fffec218 	.word	0xfffec218
+   8:	b148      	cbz	r0, 1e <alt_globaltmr_autoinc_set+0x1e>
+   a:	f7ff fffe 	bl	0 <alt_globaltmr_autoinc_set>
+   e:	b948      	cbnz	r0, 24 <alt_globaltmr_autoinc_set+0x24>
+  10:	4b05      	ldr	r3, [pc, #20]	; (28 <alt_globaltmr_autoinc_set+0x28>)
+  12:	f8c3 1218 	str.w	r1, [r3, #536]	; 0x218
+  16:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  1a:	f7ff bffe 	b.w	0 <alt_globaltmr_autoinc_set>
+  1e:	4b02      	ldr	r3, [pc, #8]	; (28 <alt_globaltmr_autoinc_set+0x28>)
+  20:	f8c3 1218 	str.w	r1, [r3, #536]	; 0x218
+  24:	bd08      	pop	{r3, pc}
+  26:	bf00      	nop
+  28:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_autoinc_get:
 
 00000000 <alt_globaltmr_autoinc_get>:
    0:	4b01      	ldr	r3, [pc, #4]	; (8 <alt_globaltmr_autoinc_get+0x8>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	4770      	bx	lr
-   6:	bf00      	nop
-   8:	fffec218 	.word	0xfffec218
+   2:	f8d3 0218 	ldr.w	r0, [r3, #536]	; 0x218
+   6:	4770      	bx	lr
+   8:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_autoinc_mode_start:
 
 00000000 <alt_globaltmr_autoinc_mode_start>:
-   0:	4a03      	ldr	r2, [pc, #12]	; (10 <alt_globaltmr_autoinc_mode_start+0x10>)
+   0:	4a04      	ldr	r2, [pc, #16]	; (14 <alt_globaltmr_autoinc_mode_start+0x14>)
    2:	2000      	movs	r0, #0
-   4:	6813      	ldr	r3, [r2, #0]
-   6:	f043 0308 	orr.w	r3, r3, #8
-   a:	6013      	str	r3, [r2, #0]
-   c:	4770      	bx	lr
-   e:	bf00      	nop
-  10:	fffec208 	.word	0xfffec208
+   4:	f8d2 3208 	ldr.w	r3, [r2, #520]	; 0x208
+   8:	f043 0308 	orr.w	r3, r3, #8
+   c:	f8c2 3208 	str.w	r3, [r2, #520]	; 0x208
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_autoinc_mode_stop:
 
 00000000 <alt_globaltmr_autoinc_mode_stop>:
-   0:	4a03      	ldr	r2, [pc, #12]	; (10 <alt_globaltmr_autoinc_mode_stop+0x10>)
+   0:	4a04      	ldr	r2, [pc, #16]	; (14 <alt_globaltmr_autoinc_mode_stop+0x14>)
    2:	2000      	movs	r0, #0
-   4:	6813      	ldr	r3, [r2, #0]
-   6:	f023 0308 	bic.w	r3, r3, #8
-   a:	6013      	str	r3, [r2, #0]
-   c:	4770      	bx	lr
-   e:	bf00      	nop
-  10:	fffec208 	.word	0xfffec208
+   4:	f8d2 3208 	ldr.w	r3, [r2, #520]	; 0x208
+   8:	f023 0308 	bic.w	r3, r3, #8
+   c:	f8c2 3208 	str.w	r3, [r2, #520]	; 0x208
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_is_autoinc_mode:
 
 00000000 <alt_globaltmr_is_autoinc_mode>:
    0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_globaltmr_is_autoinc_mode+0xc>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	f3c0 00c0 	ubfx	r0, r0, #3, #1
-   8:	4770      	bx	lr
-   a:	bf00      	nop
-   c:	fffec208 	.word	0xfffec208
+   2:	f8d3 0208 	ldr.w	r0, [r3, #520]	; 0x208
+   6:	f3c0 00c0 	ubfx	r0, r0, #3, #1
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_maxcounter_get:
 
 00000000 <alt_globaltmr_maxcounter_get>:
-   0:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+   0:	f04f 30ff 	mov.w	r0, #4294967295
    4:	4770      	bx	lr
 
 Disassembly of section .text.alt_globaltmr_int_disable:
 
 00000000 <alt_globaltmr_int_disable>:
-   0:	4a03      	ldr	r2, [pc, #12]	; (10 <alt_globaltmr_int_disable+0x10>)
+   0:	4a04      	ldr	r2, [pc, #16]	; (14 <alt_globaltmr_int_disable+0x14>)
    2:	2000      	movs	r0, #0
-   4:	6813      	ldr	r3, [r2, #0]
-   6:	f023 0304 	bic.w	r3, r3, #4
-   a:	6013      	str	r3, [r2, #0]
-   c:	4770      	bx	lr
-   e:	bf00      	nop
-  10:	fffec208 	.word	0xfffec208
+   4:	f8d2 3208 	ldr.w	r3, [r2, #520]	; 0x208
+   8:	f023 0304 	bic.w	r3, r3, #4
+   c:	f8c2 3208 	str.w	r3, [r2, #520]	; 0x208
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_int_enable:
 
 00000000 <alt_globaltmr_int_enable>:
-   0:	b508      	push	{r3, lr}
-   2:	f7ff fffe 	bl	0 <alt_globaltmr_int_enable>
-   6:	b130      	cbz	r0, 16 <alt_globaltmr_int_enable+0x16>
-   8:	2000      	movs	r0, #0
-   a:	4a06      	ldr	r2, [pc, #24]	; (24 <alt_globaltmr_int_enable+0x24>)
-   c:	6813      	ldr	r3, [r2, #0]
-   e:	f043 0304 	orr.w	r3, r3, #4
-  12:	6013      	str	r3, [r2, #0]
-  14:	bd08      	pop	{r3, pc}
-  16:	f7ff fffe 	bl	0 <alt_globaltmr_int_enable>
-  1a:	2800      	cmp	r0, #0
-  1c:	d0f4      	beq.n	8 <alt_globaltmr_int_enable+0x8>
-  1e:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  22:	bd08      	pop	{r3, pc}
-  24:	fffec208 	.word	0xfffec208
+   0:	490a      	ldr	r1, [pc, #40]	; (2c <alt_globaltmr_int_enable+0x2c>)
+   2:	b508      	push	{r3, lr}
+   4:	f8d1 3208 	ldr.w	r3, [r1, #520]	; 0x208
+   8:	07db      	lsls	r3, r3, #31
+   a:	d507      	bpl.n	1c <alt_globaltmr_int_enable+0x1c>
+   c:	f8d1 3208 	ldr.w	r3, [r1, #520]	; 0x208
+  10:	2000      	movs	r0, #0
+  12:	f043 0304 	orr.w	r3, r3, #4
+  16:	f8c1 3208 	str.w	r3, [r1, #520]	; 0x208
+  1a:	bd08      	pop	{r3, pc}
+  1c:	f7ff fffe 	bl	0 <alt_globaltmr_int_enable>
+  20:	2800      	cmp	r0, #0
+  22:	d0f3      	beq.n	c <alt_globaltmr_int_enable+0xc>
+  24:	f04f 30ff 	mov.w	r0, #4294967295
+  28:	e7f7      	b.n	1a <alt_globaltmr_int_enable+0x1a>
+  2a:	bf00      	nop
+  2c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_int_is_enabled:
 
 00000000 <alt_globaltmr_int_is_enabled>:
    0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_globaltmr_int_is_enabled+0xc>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	f3c0 0080 	ubfx	r0, r0, #2, #1
-   8:	4770      	bx	lr
-   a:	bf00      	nop
-   c:	fffec208 	.word	0xfffec208
+   2:	f8d3 0208 	ldr.w	r0, [r3, #520]	; 0x208
+   6:	f3c0 0080 	ubfx	r0, r0, #2, #1
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_int_clear_pending:
 
@@ -401,31 +372,29 @@ Disassembly of section .text.alt_globaltmr_int_clear_pending:
    0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_globaltmr_int_clear_pending+0xc>)
    2:	2201      	movs	r2, #1
    4:	2000      	movs	r0, #0
-   6:	601a      	str	r2, [r3, #0]
-   8:	4770      	bx	lr
-   a:	bf00      	nop
-   c:	fffec20c 	.word	0xfffec20c
+   6:	f8c3 220c 	str.w	r2, [r3, #524]	; 0x20c
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_int_is_pending:
 
 00000000 <alt_globaltmr_int_is_pending>:
    0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_globaltmr_int_is_pending+0xc>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	f000 0001 	and.w	r0, r0, #1
-   8:	4770      	bx	lr
-   a:	bf00      	nop
-   c:	fffec20c 	.word	0xfffec20c
+   2:	f8d3 020c 	ldr.w	r0, [r3, #524]	; 0x20c
+   6:	f000 0001 	and.w	r0, r0, #1
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_globaltmr_int_if_pending_clear:
 
 00000000 <alt_globaltmr_int_if_pending_clear>:
-   0:	4a04      	ldr	r2, [pc, #16]	; (14 <alt_globaltmr_int_if_pending_clear+0x14>)
-   2:	6813      	ldr	r3, [r2, #0]
-   4:	f003 0301 	and.w	r3, r3, #1
-   8:	b2d8      	uxtb	r0, r3
-   a:	b10b      	cbz	r3, 10 <alt_globaltmr_int_if_pending_clear+0x10>
-   c:	2301      	movs	r3, #1
-   e:	6013      	str	r3, [r2, #0]
-  10:	4770      	bx	lr
-  12:	bf00      	nop
-  14:	fffec20c 	.word	0xfffec20c
+   0:	4b05      	ldr	r3, [pc, #20]	; (18 <alt_globaltmr_int_if_pending_clear+0x18>)
+   2:	f8d3 220c 	ldr.w	r2, [r3, #524]	; 0x20c
+   6:	f002 0001 	and.w	r0, r2, #1
+   a:	07d2      	lsls	r2, r2, #31
+   c:	bf44      	itt	mi
+   e:	2201      	movmi	r2, #1
+  10:	f8c3 220c 	strmi.w	r2, [r3, #524]	; 0x20c
+  14:	4770      	bx	lr
+  16:	bf00      	nop
+  18:	fffec000 	.word	0xfffec000

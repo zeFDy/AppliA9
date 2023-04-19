@@ -6,468 +6,456 @@ Disassembly of section .text.cpu_wdog_in_gpt_mode:
 
 00000000 <cpu_wdog_in_gpt_mode>:
    0:	4b03      	ldr	r3, [pc, #12]	; (10 <cpu_wdog_in_gpt_mode+0x10>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	f080 0008 	eor.w	r0, r0, #8
-   8:	f3c0 00c0 	ubfx	r0, r0, #3, #1
-   c:	4770      	bx	lr
-   e:	bf00      	nop
-  10:	fffec628 	.word	0xfffec628
+   2:	f8d3 0628 	ldr.w	r0, [r3, #1576]	; 0x628
+   6:	f080 0008 	eor.w	r0, r0, #8
+   a:	f3c0 00c0 	ubfx	r0, r0, #3, #1
+   e:	4770      	bx	lr
+  10:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_ARM_wdog_gpt_mode_set:
 
 00000000 <alt_ARM_wdog_gpt_mode_set>:
-   0:	b510      	push	{r4, lr}
-   2:	4905      	ldr	r1, [pc, #20]	; (18 <alt_ARM_wdog_gpt_mode_set+0x18>)
-   4:	4b05      	ldr	r3, [pc, #20]	; (1c <alt_ARM_wdog_gpt_mode_set+0x1c>)
-   6:	4806      	ldr	r0, [pc, #24]	; (20 <alt_ARM_wdog_gpt_mode_set+0x20>)
-   8:	4c06      	ldr	r4, [pc, #24]	; (24 <alt_ARM_wdog_gpt_mode_set+0x24>)
-   a:	680a      	ldr	r2, [r1, #0]
-   c:	0712      	lsls	r2, r2, #28
-   e:	d400      	bmi.n	12 <alt_ARM_wdog_gpt_mode_set+0x12>
-  10:	bd10      	pop	{r4, pc}
-  12:	6018      	str	r0, [r3, #0]
-  14:	601c      	str	r4, [r3, #0]
-  16:	e7f8      	b.n	a <alt_ARM_wdog_gpt_mode_set+0xa>
-  18:	fffec628 	.word	0xfffec628
-  1c:	fffec634 	.word	0xfffec634
+   0:	4b06      	ldr	r3, [pc, #24]	; (1c <alt_ARM_wdog_gpt_mode_set+0x1c>)
+   2:	4907      	ldr	r1, [pc, #28]	; (20 <alt_ARM_wdog_gpt_mode_set+0x20>)
+   4:	4807      	ldr	r0, [pc, #28]	; (24 <alt_ARM_wdog_gpt_mode_set+0x24>)
+   6:	f8d3 2628 	ldr.w	r2, [r3, #1576]	; 0x628
+   a:	0712      	lsls	r2, r2, #28
+   c:	d400      	bmi.n	10 <alt_ARM_wdog_gpt_mode_set+0x10>
+   e:	4770      	bx	lr
+  10:	f8c3 1634 	str.w	r1, [r3, #1588]	; 0x634
+  14:	f8c3 0634 	str.w	r0, [r3, #1588]	; 0x634
+  18:	e7f5      	b.n	6 <alt_ARM_wdog_gpt_mode_set+0x6>
+  1a:	bf00      	nop
+  1c:	fffec000 	.word	0xfffec000
   20:	12345678 	.word	0x12345678
   24:	87654321 	.word	0x87654321
 
 Disassembly of section .text.alt_ARM_wdog_wdog_mode_set:
 
 00000000 <alt_ARM_wdog_wdog_mode_set>:
-   0:	4a02      	ldr	r2, [pc, #8]	; (c <alt_ARM_wdog_wdog_mode_set+0xc>)
-   2:	6813      	ldr	r3, [r2, #0]
-   4:	f043 0308 	orr.w	r3, r3, #8
-   8:	6013      	str	r3, [r2, #0]
-   a:	4770      	bx	lr
-   c:	fffec628 	.word	0xfffec628
+   0:	4a03      	ldr	r2, [pc, #12]	; (10 <alt_ARM_wdog_wdog_mode_set+0x10>)
+   2:	f8d2 3628 	ldr.w	r3, [r2, #1576]	; 0x628
+   6:	f043 0308 	orr.w	r3, r3, #8
+   a:	f8c2 3628 	str.w	r3, [r2, #1576]	; 0x628
+   e:	4770      	bx	lr
+  10:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_wdog_uninit:
 
 00000000 <alt_wdog_uninit>:
-   0:	4a11      	ldr	r2, [pc, #68]	; (48 <alt_wdog_uninit+0x48>)
+   0:	4a14      	ldr	r2, [pc, #80]	; (54 <alt_wdog_uninit+0x54>)
    2:	b510      	push	{r4, lr}
-   4:	4c11      	ldr	r4, [pc, #68]	; (4c <alt_wdog_uninit+0x4c>)
-   6:	6813      	ldr	r3, [r2, #0]
+   4:	4c14      	ldr	r4, [pc, #80]	; (58 <alt_wdog_uninit+0x58>)
+   6:	6953      	ldr	r3, [r2, #20]
    8:	f043 03c0 	orr.w	r3, r3, #192	; 0xc0
-   c:	6013      	str	r3, [r2, #0]
-   e:	2200      	movs	r2, #0
-  10:	6823      	ldr	r3, [r4, #0]
+   c:	6153      	str	r3, [r2, #20]
+   e:	f8d4 3628 	ldr.w	r3, [r4, #1576]	; 0x628
   12:	f023 0305 	bic.w	r3, r3, #5
-  16:	6023      	str	r3, [r4, #0]
-  18:	4b0d      	ldr	r3, [pc, #52]	; (50 <alt_wdog_uninit+0x50>)
-  1a:	601a      	str	r2, [r3, #0]
-  1c:	2301      	movs	r3, #1
-  1e:	4a0d      	ldr	r2, [pc, #52]	; (54 <alt_wdog_uninit+0x54>)
-  20:	6013      	str	r3, [r2, #0]
-  22:	f842 3c04 	str.w	r3, [r2, #-4]
-  26:	f7ff fffe 	bl	0 <alt_wdog_uninit>
-  2a:	6823      	ldr	r3, [r4, #0]
-  2c:	f423 437f 	bic.w	r3, r3, #65280	; 0xff00
-  30:	f023 030f 	bic.w	r3, r3, #15
-  34:	6023      	str	r3, [r4, #0]
-  36:	f64f 730f 	movw	r3, #65295	; 0xff0f
-  3a:	6822      	ldr	r2, [r4, #0]
-  3c:	421a      	tst	r2, r3
-  3e:	bf14      	ite	ne
-  40:	f04f 30ff 	movne.w	r0, #4294967295	; 0xffffffff
-  44:	2000      	moveq	r0, #0
-  46:	bd10      	pop	{r4, pc}
-  48:	ffd05014 	.word	0xffd05014
-  4c:	fffec628 	.word	0xfffec628
-  50:	fffec620 	.word	0xfffec620
-  54:	fffec630 	.word	0xfffec630
+  16:	f8c4 3628 	str.w	r3, [r4, #1576]	; 0x628
+  1a:	2300      	movs	r3, #0
+  1c:	f8c4 3620 	str.w	r3, [r4, #1568]	; 0x620
+  20:	2301      	movs	r3, #1
+  22:	f8c4 3630 	str.w	r3, [r4, #1584]	; 0x630
+  26:	f8c4 362c 	str.w	r3, [r4, #1580]	; 0x62c
+  2a:	f7ff fffe 	bl	0 <alt_wdog_uninit>
+  2e:	f8d4 3628 	ldr.w	r3, [r4, #1576]	; 0x628
+  32:	f423 437f 	bic.w	r3, r3, #65280	; 0xff00
+  36:	f023 030f 	bic.w	r3, r3, #15
+  3a:	f8c4 3628 	str.w	r3, [r4, #1576]	; 0x628
+  3e:	f64f 730f 	movw	r3, #65295	; 0xff0f
+  42:	f8d4 2628 	ldr.w	r2, [r4, #1576]	; 0x628
+  46:	421a      	tst	r2, r3
+  48:	bf14      	ite	ne
+  4a:	f04f 30ff 	movne.w	r0, #4294967295
+  4e:	2000      	moveq	r0, #0
+  50:	bd10      	pop	{r4, pc}
+  52:	bf00      	nop
+  54:	ffd05000 	.word	0xffd05000
+  58:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_wdog_init:
 
 00000000 <alt_wdog_init>:
    0:	b508      	push	{r3, lr}
    2:	f7ff fffe 	bl	0 <alt_wdog_init>
-   6:	2000      	movs	r0, #0
-   8:	4a05      	ldr	r2, [pc, #20]	; (20 <alt_wdog_init+0x20>)
-   a:	6813      	ldr	r3, [r2, #0]
-   c:	f023 03c0 	bic.w	r3, r3, #192	; 0xc0
-  10:	6013      	str	r3, [r2, #0]
-  12:	f852 3c04 	ldr.w	r3, [r2, #-4]
-  16:	f023 0304 	bic.w	r3, r3, #4
-  1a:	f842 3c04 	str.w	r3, [r2, #-4]
-  1e:	bd08      	pop	{r3, pc}
-  20:	ffd05014 	.word	0xffd05014
+   6:	4b05      	ldr	r3, [pc, #20]	; (1c <alt_wdog_init+0x1c>)
+   8:	2000      	movs	r0, #0
+   a:	695a      	ldr	r2, [r3, #20]
+   c:	f022 02c0 	bic.w	r2, r2, #192	; 0xc0
+  10:	615a      	str	r2, [r3, #20]
+  12:	691a      	ldr	r2, [r3, #16]
+  14:	f022 0204 	bic.w	r2, r2, #4
+  18:	611a      	str	r2, [r3, #16]
+  1a:	bd08      	pop	{r3, pc}
+  1c:	ffd05000 	.word	0xffd05000
 
 Disassembly of section .text.alt_wdog_stop:
 
 00000000 <alt_wdog_stop>:
-   0:	b570      	push	{r4, r5, r6, lr}
-   2:	b928      	cbnz	r0, 10 <alt_wdog_stop+0x10>
-   4:	4a1c      	ldr	r2, [pc, #112]	; (78 <alt_wdog_stop+0x78>)
-   6:	6813      	ldr	r3, [r2, #0]
-   8:	f023 0301 	bic.w	r3, r3, #1
-   c:	6013      	str	r3, [r2, #0]
-   e:	bd70      	pop	{r4, r5, r6, pc}
-  10:	f020 0302 	bic.w	r3, r0, #2
-  14:	2b01      	cmp	r3, #1
-  16:	d115      	bne.n	44 <alt_wdog_stop+0x44>
-  18:	4b18      	ldr	r3, [pc, #96]	; (7c <alt_wdog_stop+0x7c>)
-  1a:	4a19      	ldr	r2, [pc, #100]	; (80 <alt_wdog_stop+0x80>)
-  1c:	4919      	ldr	r1, [pc, #100]	; (84 <alt_wdog_stop+0x84>)
-  1e:	6814      	ldr	r4, [r2, #0]
-  20:	680e      	ldr	r6, [r1, #0]
-  22:	6818      	ldr	r0, [r3, #0]
-  24:	f040 0040 	orr.w	r0, r0, #64	; 0x40
-  28:	6018      	str	r0, [r3, #0]
-  2a:	2008      	movs	r0, #8
-  2c:	3801      	subs	r0, #1
-  2e:	681d      	ldr	r5, [r3, #0]
-  30:	d1fc      	bne.n	2c <alt_wdog_stop+0x2c>
-  32:	681d      	ldr	r5, [r3, #0]
-  34:	f024 0401 	bic.w	r4, r4, #1
-  38:	f025 0540 	bic.w	r5, r5, #64	; 0x40
-  3c:	601d      	str	r5, [r3, #0]
-  3e:	600e      	str	r6, [r1, #0]
-  40:	6014      	str	r4, [r2, #0]
-  42:	bd70      	pop	{r4, r5, r6, pc}
-  44:	2802      	cmp	r0, #2
-  46:	d001      	beq.n	4c <alt_wdog_stop+0x4c>
-  48:	2804      	cmp	r0, #4
-  4a:	d112      	bne.n	72 <alt_wdog_stop+0x72>
-  4c:	4b0b      	ldr	r3, [pc, #44]	; (7c <alt_wdog_stop+0x7c>)
-  4e:	480e      	ldr	r0, [pc, #56]	; (88 <alt_wdog_stop+0x88>)
-  50:	4c0e      	ldr	r4, [pc, #56]	; (8c <alt_wdog_stop+0x8c>)
-  52:	6802      	ldr	r2, [r0, #0]
-  54:	6825      	ldr	r5, [r4, #0]
-  56:	6819      	ldr	r1, [r3, #0]
-  58:	f022 0201 	bic.w	r2, r2, #1
-  5c:	f041 0180 	orr.w	r1, r1, #128	; 0x80
-  60:	6019      	str	r1, [r3, #0]
-  62:	6819      	ldr	r1, [r3, #0]
-  64:	f021 0180 	bic.w	r1, r1, #128	; 0x80
-  68:	6019      	str	r1, [r3, #0]
-  6a:	6025      	str	r5, [r4, #0]
-  6c:	6002      	str	r2, [r0, #0]
-  6e:	2000      	movs	r0, #0
-  70:	bd70      	pop	{r4, r5, r6, pc}
-  72:	f06f 0008 	mvn.w	r0, #8
-  76:	bd70      	pop	{r4, r5, r6, pc}
-  78:	fffec628 	.word	0xfffec628
-  7c:	ffd05014 	.word	0xffd05014
-  80:	ffd02000 	.word	0xffd02000
-  84:	ffd02004 	.word	0xffd02004
-  88:	ffd03000 	.word	0xffd03000
-  8c:	ffd03004 	.word	0xffd03004
+   0:	b510      	push	{r4, lr}
+   2:	b938      	cbnz	r0, 14 <alt_wdog_stop+0x14>
+   4:	4a1e      	ldr	r2, [pc, #120]	; (80 <alt_wdog_stop+0x80>)
+   6:	f8d2 3628 	ldr.w	r3, [r2, #1576]	; 0x628
+   a:	f023 0301 	bic.w	r3, r3, #1
+   e:	f8c2 3628 	str.w	r3, [r2, #1576]	; 0x628
+  12:	bd10      	pop	{r4, pc}
+  14:	f020 0302 	bic.w	r3, r0, #2
+  18:	2b01      	cmp	r3, #1
+  1a:	d119      	bne.n	50 <alt_wdog_stop+0x50>
+  1c:	4b19      	ldr	r3, [pc, #100]	; (84 <alt_wdog_stop+0x84>)
+  1e:	4a1a      	ldr	r2, [pc, #104]	; (88 <alt_wdog_stop+0x88>)
+  20:	6811      	ldr	r1, [r2, #0]
+  22:	6854      	ldr	r4, [r2, #4]
+  24:	6958      	ldr	r0, [r3, #20]
+  26:	f021 0101 	bic.w	r1, r1, #1
+  2a:	f040 0040 	orr.w	r0, r0, #64	; 0x40
+  2e:	6158      	str	r0, [r3, #20]
+  30:	6958      	ldr	r0, [r3, #20]
+  32:	6958      	ldr	r0, [r3, #20]
+  34:	6958      	ldr	r0, [r3, #20]
+  36:	6958      	ldr	r0, [r3, #20]
+  38:	6958      	ldr	r0, [r3, #20]
+  3a:	6958      	ldr	r0, [r3, #20]
+  3c:	6958      	ldr	r0, [r3, #20]
+  3e:	6958      	ldr	r0, [r3, #20]
+  40:	6958      	ldr	r0, [r3, #20]
+  42:	f020 0040 	bic.w	r0, r0, #64	; 0x40
+  46:	6158      	str	r0, [r3, #20]
+  48:	6054      	str	r4, [r2, #4]
+  4a:	6011      	str	r1, [r2, #0]
+  4c:	2000      	movs	r0, #0
+  4e:	e7e0      	b.n	12 <alt_wdog_stop+0x12>
+  50:	2802      	cmp	r0, #2
+  52:	d001      	beq.n	58 <alt_wdog_stop+0x58>
+  54:	2804      	cmp	r0, #4
+  56:	d110      	bne.n	7a <alt_wdog_stop+0x7a>
+  58:	4b0c      	ldr	r3, [pc, #48]	; (8c <alt_wdog_stop+0x8c>)
+  5a:	4a0a      	ldr	r2, [pc, #40]	; (84 <alt_wdog_stop+0x84>)
+  5c:	6819      	ldr	r1, [r3, #0]
+  5e:	685c      	ldr	r4, [r3, #4]
+  60:	6950      	ldr	r0, [r2, #20]
+  62:	f021 0101 	bic.w	r1, r1, #1
+  66:	f040 0080 	orr.w	r0, r0, #128	; 0x80
+  6a:	6150      	str	r0, [r2, #20]
+  6c:	6950      	ldr	r0, [r2, #20]
+  6e:	f020 0080 	bic.w	r0, r0, #128	; 0x80
+  72:	6150      	str	r0, [r2, #20]
+  74:	605c      	str	r4, [r3, #4]
+  76:	6019      	str	r1, [r3, #0]
+  78:	e7e8      	b.n	4c <alt_wdog_stop+0x4c>
+  7a:	f06f 0008 	mvn.w	r0, #8
+  7e:	e7c8      	b.n	12 <alt_wdog_stop+0x12>
+  80:	fffec000 	.word	0xfffec000
+  84:	ffd05000 	.word	0xffd05000
+  88:	ffd02000 	.word	0xffd02000
+  8c:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_start:
 
 00000000 <alt_wdog_start>:
-   0:	b928      	cbnz	r0, e <alt_wdog_start+0xe>
-   2:	4a0d      	ldr	r2, [pc, #52]	; (38 <alt_wdog_start+0x38>)
-   4:	6813      	ldr	r3, [r2, #0]
-   6:	f043 0301 	orr.w	r3, r3, #1
-   a:	6013      	str	r3, [r2, #0]
-   c:	4770      	bx	lr
-   e:	f020 0302 	bic.w	r3, r0, #2
-  12:	2b01      	cmp	r3, #1
-  14:	d106      	bne.n	24 <alt_wdog_start+0x24>
-  16:	4a09      	ldr	r2, [pc, #36]	; (3c <alt_wdog_start+0x3c>)
-  18:	6813      	ldr	r3, [r2, #0]
-  1a:	2000      	movs	r0, #0
-  1c:	f043 0301 	orr.w	r3, r3, #1
-  20:	6013      	str	r3, [r2, #0]
-  22:	4770      	bx	lr
-  24:	2802      	cmp	r0, #2
-  26:	d001      	beq.n	2c <alt_wdog_start+0x2c>
-  28:	2804      	cmp	r0, #4
-  2a:	d101      	bne.n	30 <alt_wdog_start+0x30>
-  2c:	4a04      	ldr	r2, [pc, #16]	; (40 <alt_wdog_start+0x40>)
-  2e:	e7f3      	b.n	18 <alt_wdog_start+0x18>
-  30:	f06f 0008 	mvn.w	r0, #8
-  34:	4770      	bx	lr
-  36:	bf00      	nop
-  38:	fffec628 	.word	0xfffec628
-  3c:	ffd02000 	.word	0xffd02000
-  40:	ffd03000 	.word	0xffd03000
+   0:	b938      	cbnz	r0, 12 <alt_wdog_start+0x12>
+   2:	4a0e      	ldr	r2, [pc, #56]	; (3c <alt_wdog_start+0x3c>)
+   4:	f8d2 3628 	ldr.w	r3, [r2, #1576]	; 0x628
+   8:	f043 0301 	orr.w	r3, r3, #1
+   c:	f8c2 3628 	str.w	r3, [r2, #1576]	; 0x628
+  10:	4770      	bx	lr
+  12:	f020 0302 	bic.w	r3, r0, #2
+  16:	2b01      	cmp	r3, #1
+  18:	d106      	bne.n	28 <alt_wdog_start+0x28>
+  1a:	4a09      	ldr	r2, [pc, #36]	; (40 <alt_wdog_start+0x40>)
+  1c:	6813      	ldr	r3, [r2, #0]
+  1e:	2000      	movs	r0, #0
+  20:	f043 0301 	orr.w	r3, r3, #1
+  24:	6013      	str	r3, [r2, #0]
+  26:	4770      	bx	lr
+  28:	2802      	cmp	r0, #2
+  2a:	d001      	beq.n	30 <alt_wdog_start+0x30>
+  2c:	2804      	cmp	r0, #4
+  2e:	d101      	bne.n	34 <alt_wdog_start+0x34>
+  30:	4a04      	ldr	r2, [pc, #16]	; (44 <alt_wdog_start+0x44>)
+  32:	e7f3      	b.n	1c <alt_wdog_start+0x1c>
+  34:	f06f 0008 	mvn.w	r0, #8
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+  3c:	fffec000 	.word	0xfffec000
+  40:	ffd02000 	.word	0xffd02000
+  44:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_tmr_is_enabled:
 
 00000000 <alt_wdog_tmr_is_enabled>:
-   0:	b920      	cbnz	r0, c <alt_wdog_tmr_is_enabled+0xc>
-   2:	4b09      	ldr	r3, [pc, #36]	; (28 <alt_wdog_tmr_is_enabled+0x28>)
-   4:	6818      	ldr	r0, [r3, #0]
-   6:	f000 0001 	and.w	r0, r0, #1
-   a:	4770      	bx	lr
-   c:	f020 0302 	bic.w	r3, r0, #2
-  10:	2b01      	cmp	r3, #1
-  12:	d101      	bne.n	18 <alt_wdog_tmr_is_enabled+0x18>
-  14:	4b05      	ldr	r3, [pc, #20]	; (2c <alt_wdog_tmr_is_enabled+0x2c>)
-  16:	e7f5      	b.n	4 <alt_wdog_tmr_is_enabled+0x4>
-  18:	2802      	cmp	r0, #2
-  1a:	d001      	beq.n	20 <alt_wdog_tmr_is_enabled+0x20>
-  1c:	2804      	cmp	r0, #4
-  1e:	d101      	bne.n	24 <alt_wdog_tmr_is_enabled+0x24>
-  20:	4b03      	ldr	r3, [pc, #12]	; (30 <alt_wdog_tmr_is_enabled+0x30>)
-  22:	e7ef      	b.n	4 <alt_wdog_tmr_is_enabled+0x4>
-  24:	2000      	movs	r0, #0
-  26:	4770      	bx	lr
-  28:	fffec628 	.word	0xfffec628
-  2c:	ffd02000 	.word	0xffd02000
-  30:	ffd03000 	.word	0xffd03000
+   0:	b928      	cbnz	r0, e <alt_wdog_tmr_is_enabled+0xe>
+   2:	4b0a      	ldr	r3, [pc, #40]	; (2c <alt_wdog_tmr_is_enabled+0x2c>)
+   4:	f8d3 0628 	ldr.w	r0, [r3, #1576]	; 0x628
+   8:	f000 0001 	and.w	r0, r0, #1
+   c:	4770      	bx	lr
+   e:	f020 0302 	bic.w	r3, r0, #2
+  12:	2b01      	cmp	r3, #1
+  14:	d102      	bne.n	1c <alt_wdog_tmr_is_enabled+0x1c>
+  16:	4b06      	ldr	r3, [pc, #24]	; (30 <alt_wdog_tmr_is_enabled+0x30>)
+  18:	6818      	ldr	r0, [r3, #0]
+  1a:	e7f5      	b.n	8 <alt_wdog_tmr_is_enabled+0x8>
+  1c:	2802      	cmp	r0, #2
+  1e:	d001      	beq.n	24 <alt_wdog_tmr_is_enabled+0x24>
+  20:	2804      	cmp	r0, #4
+  22:	d101      	bne.n	28 <alt_wdog_tmr_is_enabled+0x28>
+  24:	4b03      	ldr	r3, [pc, #12]	; (34 <alt_wdog_tmr_is_enabled+0x34>)
+  26:	e7f7      	b.n	18 <alt_wdog_tmr_is_enabled+0x18>
+  28:	2000      	movs	r0, #0
+  2a:	4770      	bx	lr
+  2c:	fffec000 	.word	0xfffec000
+  30:	ffd02000 	.word	0xffd02000
+  34:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_reset:
 
 00000000 <alt_wdog_reset>:
-   0:	b980      	cbnz	r0, 24 <alt_wdog_reset+0x24>
-   2:	4b11      	ldr	r3, [pc, #68]	; (48 <alt_wdog_reset+0x48>)
-   4:	681a      	ldr	r2, [r3, #0]
-   6:	3308      	adds	r3, #8
-   8:	f843 2c08 	str.w	r2, [r3, #-8]
-   c:	2201      	movs	r2, #1
-   e:	681b      	ldr	r3, [r3, #0]
-  10:	f013 0308 	ands.w	r3, r3, #8
-  14:	d002      	beq.n	1c <alt_wdog_reset+0x1c>
-  16:	4b0d      	ldr	r3, [pc, #52]	; (4c <alt_wdog_reset+0x4c>)
-  18:	601a      	str	r2, [r3, #0]
-  1a:	4770      	bx	lr
-  1c:	490c      	ldr	r1, [pc, #48]	; (50 <alt_wdog_reset+0x50>)
-  1e:	600a      	str	r2, [r1, #0]
-  20:	2000      	movs	r0, #0
-  22:	4770      	bx	lr
-  24:	f020 0302 	bic.w	r3, r0, #2
-  28:	2b01      	cmp	r3, #1
-  2a:	d103      	bne.n	34 <alt_wdog_reset+0x34>
-  2c:	4b09      	ldr	r3, [pc, #36]	; (54 <alt_wdog_reset+0x54>)
-  2e:	2276      	movs	r2, #118	; 0x76
-  30:	601a      	str	r2, [r3, #0]
-  32:	e7f5      	b.n	20 <alt_wdog_reset+0x20>
-  34:	2802      	cmp	r0, #2
-  36:	d001      	beq.n	3c <alt_wdog_reset+0x3c>
-  38:	2804      	cmp	r0, #4
-  3a:	d102      	bne.n	42 <alt_wdog_reset+0x42>
-  3c:	2276      	movs	r2, #118	; 0x76
-  3e:	4b06      	ldr	r3, [pc, #24]	; (58 <alt_wdog_reset+0x58>)
+   0:	b988      	cbnz	r0, 26 <alt_wdog_reset+0x26>
+   2:	4911      	ldr	r1, [pc, #68]	; (48 <alt_wdog_reset+0x48>)
+   4:	f8d1 3620 	ldr.w	r3, [r1, #1568]	; 0x620
+   8:	f8c1 3620 	str.w	r3, [r1, #1568]	; 0x620
+   c:	2301      	movs	r3, #1
+   e:	f8d1 0628 	ldr.w	r0, [r1, #1576]	; 0x628
+  12:	f010 0008 	ands.w	r0, r0, #8
+  16:	d003      	beq.n	20 <alt_wdog_reset+0x20>
+  18:	f8c1 3630 	str.w	r3, [r1, #1584]	; 0x630
+  1c:	2000      	movs	r0, #0
+  1e:	4770      	bx	lr
+  20:	f8c1 362c 	str.w	r3, [r1, #1580]	; 0x62c
+  24:	4770      	bx	lr
+  26:	f020 0302 	bic.w	r3, r0, #2
+  2a:	2b01      	cmp	r3, #1
+  2c:	d103      	bne.n	36 <alt_wdog_reset+0x36>
+  2e:	4b07      	ldr	r3, [pc, #28]	; (4c <alt_wdog_reset+0x4c>)
+  30:	2276      	movs	r2, #118	; 0x76
+  32:	60da      	str	r2, [r3, #12]
+  34:	e7f2      	b.n	1c <alt_wdog_reset+0x1c>
+  36:	2802      	cmp	r0, #2
+  38:	d001      	beq.n	3e <alt_wdog_reset+0x3e>
+  3a:	2804      	cmp	r0, #4
+  3c:	d101      	bne.n	42 <alt_wdog_reset+0x42>
+  3e:	4b04      	ldr	r3, [pc, #16]	; (50 <alt_wdog_reset+0x50>)
   40:	e7f6      	b.n	30 <alt_wdog_reset+0x30>
   42:	f06f 0008 	mvn.w	r0, #8
   46:	4770      	bx	lr
-  48:	fffec620 	.word	0xfffec620
-  4c:	fffec630 	.word	0xfffec630
-  50:	fffec62c 	.word	0xfffec62c
-  54:	ffd0200c 	.word	0xffd0200c
-  58:	ffd0300c 	.word	0xffd0300c
+  48:	fffec000 	.word	0xfffec000
+  4c:	ffd02000 	.word	0xffd02000
+  50:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_counter_set:
 
 00000000 <alt_wdog_counter_set>:
-   0:	b910      	cbnz	r0, 8 <alt_wdog_counter_set+0x8>
-   2:	4b11      	ldr	r3, [pc, #68]	; (48 <alt_wdog_counter_set+0x48>)
-   4:	6019      	str	r1, [r3, #0]
-   6:	4770      	bx	lr
-   8:	290f      	cmp	r1, #15
-   a:	d81a      	bhi.n	42 <alt_wdog_counter_set+0x42>
-   c:	2801      	cmp	r0, #1
-   e:	d107      	bne.n	20 <alt_wdog_counter_set+0x20>
-  10:	4a0e      	ldr	r2, [pc, #56]	; (4c <alt_wdog_counter_set+0x4c>)
-  12:	6813      	ldr	r3, [r2, #0]
-  14:	f023 030f 	bic.w	r3, r3, #15
-  18:	4319      	orrs	r1, r3
-  1a:	6011      	str	r1, [r2, #0]
-  1c:	2000      	movs	r0, #0
-  1e:	4770      	bx	lr
-  20:	2802      	cmp	r0, #2
-  22:	d101      	bne.n	28 <alt_wdog_counter_set+0x28>
-  24:	4a0a      	ldr	r2, [pc, #40]	; (50 <alt_wdog_counter_set+0x50>)
-  26:	e7f4      	b.n	12 <alt_wdog_counter_set+0x12>
-  28:	2803      	cmp	r0, #3
-  2a:	d106      	bne.n	3a <alt_wdog_counter_set+0x3a>
-  2c:	4a07      	ldr	r2, [pc, #28]	; (4c <alt_wdog_counter_set+0x4c>)
-  2e:	6813      	ldr	r3, [r2, #0]
-  30:	f023 03f0 	bic.w	r3, r3, #240	; 0xf0
-  34:	ea43 1101 	orr.w	r1, r3, r1, lsl #4
-  38:	e7ef      	b.n	1a <alt_wdog_counter_set+0x1a>
-  3a:	2804      	cmp	r0, #4
-  3c:	d101      	bne.n	42 <alt_wdog_counter_set+0x42>
-  3e:	4a04      	ldr	r2, [pc, #16]	; (50 <alt_wdog_counter_set+0x50>)
-  40:	e7f5      	b.n	2e <alt_wdog_counter_set+0x2e>
-  42:	f06f 0008 	mvn.w	r0, #8
-  46:	4770      	bx	lr
-  48:	fffec620 	.word	0xfffec620
-  4c:	ffd02004 	.word	0xffd02004
-  50:	ffd03004 	.word	0xffd03004
+   0:	b918      	cbnz	r0, a <alt_wdog_counter_set+0xa>
+   2:	4b12      	ldr	r3, [pc, #72]	; (4c <alt_wdog_counter_set+0x4c>)
+   4:	f8c3 1620 	str.w	r1, [r3, #1568]	; 0x620
+   8:	4770      	bx	lr
+   a:	290f      	cmp	r1, #15
+   c:	d81a      	bhi.n	44 <alt_wdog_counter_set+0x44>
+   e:	2801      	cmp	r0, #1
+  10:	d107      	bne.n	22 <alt_wdog_counter_set+0x22>
+  12:	4a0f      	ldr	r2, [pc, #60]	; (50 <alt_wdog_counter_set+0x50>)
+  14:	6853      	ldr	r3, [r2, #4]
+  16:	f023 030f 	bic.w	r3, r3, #15
+  1a:	4319      	orrs	r1, r3
+  1c:	6051      	str	r1, [r2, #4]
+  1e:	2000      	movs	r0, #0
+  20:	4770      	bx	lr
+  22:	2802      	cmp	r0, #2
+  24:	d101      	bne.n	2a <alt_wdog_counter_set+0x2a>
+  26:	4a0b      	ldr	r2, [pc, #44]	; (54 <alt_wdog_counter_set+0x54>)
+  28:	e7f4      	b.n	14 <alt_wdog_counter_set+0x14>
+  2a:	2803      	cmp	r0, #3
+  2c:	d106      	bne.n	3c <alt_wdog_counter_set+0x3c>
+  2e:	4a08      	ldr	r2, [pc, #32]	; (50 <alt_wdog_counter_set+0x50>)
+  30:	6853      	ldr	r3, [r2, #4]
+  32:	f023 03f0 	bic.w	r3, r3, #240	; 0xf0
+  36:	ea43 1101 	orr.w	r1, r3, r1, lsl #4
+  3a:	e7ef      	b.n	1c <alt_wdog_counter_set+0x1c>
+  3c:	2804      	cmp	r0, #4
+  3e:	d101      	bne.n	44 <alt_wdog_counter_set+0x44>
+  40:	4a04      	ldr	r2, [pc, #16]	; (54 <alt_wdog_counter_set+0x54>)
+  42:	e7f5      	b.n	30 <alt_wdog_counter_set+0x30>
+  44:	f06f 0008 	mvn.w	r0, #8
+  48:	4770      	bx	lr
+  4a:	bf00      	nop
+  4c:	fffec000 	.word	0xfffec000
+  50:	ffd02000 	.word	0xffd02000
+  54:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_counter_get_current:
 
 00000000 <alt_wdog_counter_get_current>:
-   0:	b910      	cbnz	r0, 8 <alt_wdog_counter_get_current+0x8>
-   2:	4b08      	ldr	r3, [pc, #32]	; (24 <alt_wdog_counter_get_current+0x24>)
-   4:	6818      	ldr	r0, [r3, #0]
-   6:	4770      	bx	lr
-   8:	f020 0302 	bic.w	r3, r0, #2
-   c:	2b01      	cmp	r3, #1
-   e:	d101      	bne.n	14 <alt_wdog_counter_get_current+0x14>
-  10:	4b05      	ldr	r3, [pc, #20]	; (28 <alt_wdog_counter_get_current+0x28>)
-  12:	e7f7      	b.n	4 <alt_wdog_counter_get_current+0x4>
-  14:	2802      	cmp	r0, #2
-  16:	d001      	beq.n	1c <alt_wdog_counter_get_current+0x1c>
-  18:	2804      	cmp	r0, #4
-  1a:	d101      	bne.n	20 <alt_wdog_counter_get_current+0x20>
-  1c:	4b03      	ldr	r3, [pc, #12]	; (2c <alt_wdog_counter_get_current+0x2c>)
-  1e:	e7f1      	b.n	4 <alt_wdog_counter_get_current+0x4>
-  20:	2000      	movs	r0, #0
-  22:	4770      	bx	lr
-  24:	fffec624 	.word	0xfffec624
-  28:	ffd02008 	.word	0xffd02008
-  2c:	ffd03008 	.word	0xffd03008
+   0:	b918      	cbnz	r0, a <alt_wdog_counter_get_current+0xa>
+   2:	4b09      	ldr	r3, [pc, #36]	; (28 <alt_wdog_counter_get_current+0x28>)
+   4:	f8d3 0624 	ldr.w	r0, [r3, #1572]	; 0x624
+   8:	4770      	bx	lr
+   a:	f020 0302 	bic.w	r3, r0, #2
+   e:	2b01      	cmp	r3, #1
+  10:	d102      	bne.n	18 <alt_wdog_counter_get_current+0x18>
+  12:	4b06      	ldr	r3, [pc, #24]	; (2c <alt_wdog_counter_get_current+0x2c>)
+  14:	6898      	ldr	r0, [r3, #8]
+  16:	4770      	bx	lr
+  18:	2802      	cmp	r0, #2
+  1a:	d001      	beq.n	20 <alt_wdog_counter_get_current+0x20>
+  1c:	2804      	cmp	r0, #4
+  1e:	d101      	bne.n	24 <alt_wdog_counter_get_current+0x24>
+  20:	4b03      	ldr	r3, [pc, #12]	; (30 <alt_wdog_counter_get_current+0x30>)
+  22:	e7f7      	b.n	14 <alt_wdog_counter_get_current+0x14>
+  24:	2000      	movs	r0, #0
+  26:	4770      	bx	lr
+  28:	fffec000 	.word	0xfffec000
+  2c:	ffd02000 	.word	0xffd02000
+  30:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_counter_get_init:
 
 00000000 <alt_wdog_counter_get_init>:
-   0:	b910      	cbnz	r0, 8 <alt_wdog_counter_get_init+0x8>
+   0:	b918      	cbnz	r0, a <alt_wdog_counter_get_init+0xa>
    2:	4b0f      	ldr	r3, [pc, #60]	; (40 <alt_wdog_counter_get_init+0x40>)
-   4:	6818      	ldr	r0, [r3, #0]
-   6:	4770      	bx	lr
-   8:	2801      	cmp	r0, #1
-   a:	d107      	bne.n	1c <alt_wdog_counter_get_init+0x1c>
-   c:	4b0d      	ldr	r3, [pc, #52]	; (44 <alt_wdog_counter_get_init+0x44>)
-   e:	681b      	ldr	r3, [r3, #0]
-  10:	f003 030f 	and.w	r3, r3, #15
-  14:	f44f 3080 	mov.w	r0, #65536	; 0x10000
-  18:	4098      	lsls	r0, r3
-  1a:	4770      	bx	lr
-  1c:	2802      	cmp	r0, #2
-  1e:	d101      	bne.n	24 <alt_wdog_counter_get_init+0x24>
-  20:	4b09      	ldr	r3, [pc, #36]	; (48 <alt_wdog_counter_get_init+0x48>)
-  22:	e7f4      	b.n	e <alt_wdog_counter_get_init+0xe>
-  24:	2803      	cmp	r0, #3
-  26:	d104      	bne.n	32 <alt_wdog_counter_get_init+0x32>
-  28:	4b06      	ldr	r3, [pc, #24]	; (44 <alt_wdog_counter_get_init+0x44>)
-  2a:	681b      	ldr	r3, [r3, #0]
-  2c:	f3c3 1303 	ubfx	r3, r3, #4, #4
-  30:	e7f0      	b.n	14 <alt_wdog_counter_get_init+0x14>
-  32:	2804      	cmp	r0, #4
-  34:	d101      	bne.n	3a <alt_wdog_counter_get_init+0x3a>
-  36:	4b04      	ldr	r3, [pc, #16]	; (48 <alt_wdog_counter_get_init+0x48>)
-  38:	e7f7      	b.n	2a <alt_wdog_counter_get_init+0x2a>
-  3a:	2000      	movs	r0, #0
-  3c:	4770      	bx	lr
-  3e:	bf00      	nop
-  40:	fffec620 	.word	0xfffec620
-  44:	ffd02004 	.word	0xffd02004
-  48:	ffd03004 	.word	0xffd03004
+   4:	f8d3 0620 	ldr.w	r0, [r3, #1568]	; 0x620
+   8:	4770      	bx	lr
+   a:	2801      	cmp	r0, #1
+   c:	d107      	bne.n	1e <alt_wdog_counter_get_init+0x1e>
+   e:	4b0d      	ldr	r3, [pc, #52]	; (44 <alt_wdog_counter_get_init+0x44>)
+  10:	685b      	ldr	r3, [r3, #4]
+  12:	f003 030f 	and.w	r3, r3, #15
+  16:	f44f 3080 	mov.w	r0, #65536	; 0x10000
+  1a:	4098      	lsls	r0, r3
+  1c:	4770      	bx	lr
+  1e:	2802      	cmp	r0, #2
+  20:	d101      	bne.n	26 <alt_wdog_counter_get_init+0x26>
+  22:	4b09      	ldr	r3, [pc, #36]	; (48 <alt_wdog_counter_get_init+0x48>)
+  24:	e7f4      	b.n	10 <alt_wdog_counter_get_init+0x10>
+  26:	2803      	cmp	r0, #3
+  28:	d104      	bne.n	34 <alt_wdog_counter_get_init+0x34>
+  2a:	4b06      	ldr	r3, [pc, #24]	; (44 <alt_wdog_counter_get_init+0x44>)
+  2c:	685b      	ldr	r3, [r3, #4]
+  2e:	f3c3 1303 	ubfx	r3, r3, #4, #4
+  32:	e7f0      	b.n	16 <alt_wdog_counter_get_init+0x16>
+  34:	2804      	cmp	r0, #4
+  36:	d101      	bne.n	3c <alt_wdog_counter_get_init+0x3c>
+  38:	4b03      	ldr	r3, [pc, #12]	; (48 <alt_wdog_counter_get_init+0x48>)
+  3a:	e7f7      	b.n	2c <alt_wdog_counter_get_init+0x2c>
+  3c:	2000      	movs	r0, #0
+  3e:	4770      	bx	lr
+  40:	fffec000 	.word	0xfffec000
+  44:	ffd02000 	.word	0xffd02000
+  48:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_core_prescaler_set:
 
 00000000 <alt_wdog_core_prescaler_set>:
-   0:	28ff      	cmp	r0, #255	; 0xff
-   2:	d80c      	bhi.n	1e <alt_wdog_core_prescaler_set+0x1e>
-   4:	4909      	ldr	r1, [pc, #36]	; (2c <alt_wdog_core_prescaler_set+0x2c>)
-   6:	680b      	ldr	r3, [r1, #0]
-   8:	f013 0301 	ands.w	r3, r3, #1
-   c:	d10a      	bne.n	24 <alt_wdog_core_prescaler_set+0x24>
-   e:	680a      	ldr	r2, [r1, #0]
-  10:	f422 427f 	bic.w	r2, r2, #65280	; 0xff00
-  14:	ea42 2000 	orr.w	r0, r2, r0, lsl #8
-  18:	6008      	str	r0, [r1, #0]
-  1a:	4618      	mov	r0, r3
-  1c:	4770      	bx	lr
-  1e:	f06f 0008 	mvn.w	r0, #8
+   0:	4602      	mov	r2, r0
+   2:	28ff      	cmp	r0, #255	; 0xff
+   4:	d80e      	bhi.n	24 <alt_wdog_core_prescaler_set+0x24>
+   6:	490a      	ldr	r1, [pc, #40]	; (30 <alt_wdog_core_prescaler_set+0x30>)
+   8:	f8d1 0628 	ldr.w	r0, [r1, #1576]	; 0x628
+   c:	f010 0001 	ands.w	r0, r0, #1
+  10:	d10b      	bne.n	2a <alt_wdog_core_prescaler_set+0x2a>
+  12:	f8d1 3628 	ldr.w	r3, [r1, #1576]	; 0x628
+  16:	f423 437f 	bic.w	r3, r3, #65280	; 0xff00
+  1a:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+  1e:	f8c1 3628 	str.w	r3, [r1, #1576]	; 0x628
   22:	4770      	bx	lr
-  24:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+  24:	f06f 0008 	mvn.w	r0, #8
   28:	4770      	bx	lr
-  2a:	bf00      	nop
-  2c:	fffec628 	.word	0xfffec628
+  2a:	f04f 30ff 	mov.w	r0, #4294967295
+  2e:	4770      	bx	lr
+  30:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_wdog_core_prescaler_get:
 
 00000000 <alt_wdog_core_prescaler_get>:
    0:	4b02      	ldr	r3, [pc, #8]	; (c <alt_wdog_core_prescaler_get+0xc>)
-   2:	6818      	ldr	r0, [r3, #0]
-   4:	f3c0 2007 	ubfx	r0, r0, #8, #8
-   8:	4770      	bx	lr
-   a:	bf00      	nop
-   c:	fffec628 	.word	0xfffec628
+   2:	f8d3 0628 	ldr.w	r0, [r3, #1576]	; 0x628
+   6:	f3c0 2007 	ubfx	r0, r0, #8, #8
+   a:	4770      	bx	lr
+   c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_wdog_counter_get_curtime_millisecs:
 
 00000000 <alt_wdog_counter_get_curtime_millisecs>:
-   0:	b513      	push	{r0, r1, r4, lr}
-   2:	4604      	mov	r4, r0
+   0:	b573      	push	{r0, r1, r4, r5, r6, lr}
+   2:	4605      	mov	r5, r0
    4:	b128      	cbz	r0, 12 <alt_wdog_counter_get_curtime_millisecs+0x12>
    6:	1e43      	subs	r3, r0, #1
    8:	2b03      	cmp	r3, #3
-   a:	d928      	bls.n	5e <alt_wdog_counter_get_curtime_millisecs+0x5e>
+   a:	d92a      	bls.n	62 <alt_wdog_counter_get_curtime_millisecs+0x62>
    c:	2000      	movs	r0, #0
    e:	b002      	add	sp, #8
-  10:	bd10      	pop	{r4, pc}
+  10:	bd70      	pop	{r4, r5, r6, pc}
   12:	2015      	movs	r0, #21
   14:	a901      	add	r1, sp, #4
   16:	f7ff fffe 	bl	0 <alt_clk_freq_get>
-  1a:	2800      	cmp	r0, #0
-  1c:	d1f6      	bne.n	c <alt_wdog_counter_get_curtime_millisecs+0xc>
-  1e:	9b01      	ldr	r3, [sp, #4]
-  20:	2b00      	cmp	r3, #0
-  22:	d0f3      	beq.n	c <alt_wdog_counter_get_curtime_millisecs+0xc>
-  24:	4620      	mov	r0, r4
-  26:	f7ff fffe 	bl	0 <alt_wdog_counter_get_curtime_millisecs>
-  2a:	4601      	mov	r1, r0
-  2c:	2800      	cmp	r0, #0
-  2e:	d0ed      	beq.n	c <alt_wdog_counter_get_curtime_millisecs+0xc>
-  30:	4602      	mov	r2, r0
-  32:	2300      	movs	r3, #0
-  34:	b924      	cbnz	r4, 40 <alt_wdog_counter_get_curtime_millisecs+0x40>
-  36:	f7ff fffe 	bl	0 <alt_wdog_counter_get_curtime_millisecs>
-  3a:	3001      	adds	r0, #1
-  3c:	fba0 2301 	umull	r2, r3, r0, r1
-  40:	f44f 747a 	mov.w	r4, #1000	; 0x3e8
-  44:	fba2 0104 	umull	r0, r1, r2, r4
-  48:	9a01      	ldr	r2, [sp, #4]
-  4a:	fb04 1103 	mla	r1, r4, r3, r1
-  4e:	2300      	movs	r3, #0
+  1a:	4604      	mov	r4, r0
+  1c:	2800      	cmp	r0, #0
+  1e:	d1f5      	bne.n	c <alt_wdog_counter_get_curtime_millisecs+0xc>
+  20:	9b01      	ldr	r3, [sp, #4]
+  22:	2b00      	cmp	r3, #0
+  24:	d0f2      	beq.n	c <alt_wdog_counter_get_curtime_millisecs+0xc>
+  26:	4628      	mov	r0, r5
+  28:	f7ff fffe 	bl	0 <alt_wdog_counter_get_curtime_millisecs>
+  2c:	4602      	mov	r2, r0
+  2e:	2800      	cmp	r0, #0
+  30:	d0ec      	beq.n	c <alt_wdog_counter_get_curtime_millisecs+0xc>
+  32:	b925      	cbnz	r5, 3e <alt_wdog_counter_get_curtime_millisecs+0x3e>
+  34:	f7ff fffe 	bl	0 <alt_wdog_counter_get_curtime_millisecs>
+  38:	1c44      	adds	r4, r0, #1
+  3a:	fba4 2402 	umull	r2, r4, r4, r2
+  3e:	f44f 767a 	mov.w	r6, #1000	; 0x3e8
+  42:	2500      	movs	r5, #0
+  44:	462b      	mov	r3, r5
+  46:	fba2 0106 	umull	r0, r1, r2, r6
+  4a:	9a01      	ldr	r2, [sp, #4]
+  4c:	fb06 1104 	mla	r1, r6, r4, r1
   50:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  54:	2901      	cmp	r1, #1
-  56:	bf08      	it	eq
-  58:	2800      	cmpeq	r0, #0
-  5a:	d3d8      	bcc.n	e <alt_wdog_counter_get_curtime_millisecs+0xe>
-  5c:	e7d6      	b.n	c <alt_wdog_counter_get_curtime_millisecs+0xc>
-  5e:	200c      	movs	r0, #12
-  60:	e7d8      	b.n	14 <alt_wdog_counter_get_curtime_millisecs+0x14>
+  54:	f04f 33ff 	mov.w	r3, #4294967295
+  58:	4283      	cmp	r3, r0
+  5a:	eb75 0301 	sbcs.w	r3, r5, r1
+  5e:	d3d5      	bcc.n	c <alt_wdog_counter_get_curtime_millisecs+0xc>
+  60:	e7d5      	b.n	e <alt_wdog_counter_get_curtime_millisecs+0xe>
+  62:	200c      	movs	r0, #12
+  64:	e7d6      	b.n	14 <alt_wdog_counter_get_curtime_millisecs+0x14>
 
 Disassembly of section .text.alt_wdog_counter_get_inittime_nanosecs:
 
 00000000 <alt_wdog_counter_get_inittime_nanosecs>:
-   0:	b573      	push	{r0, r1, r4, r5, r6, lr}
-   2:	4606      	mov	r6, r0
+   0:	b537      	push	{r0, r1, r2, r4, r5, lr}
+   2:	4605      	mov	r5, r0
    4:	b130      	cbz	r0, 14 <alt_wdog_counter_get_inittime_nanosecs+0x14>
    6:	1e43      	subs	r3, r0, #1
    8:	2b03      	cmp	r3, #3
    a:	d928      	bls.n	5e <alt_wdog_counter_get_inittime_nanosecs+0x5e>
    c:	2000      	movs	r0, #0
-   e:	2100      	movs	r1, #0
-  10:	b002      	add	sp, #8
-  12:	bd70      	pop	{r4, r5, r6, pc}
+   e:	4601      	mov	r1, r0
+  10:	b003      	add	sp, #12
+  12:	bd30      	pop	{r4, r5, pc}
   14:	2015      	movs	r0, #21
   16:	a901      	add	r1, sp, #4
   18:	f7ff fffe 	bl	0 <alt_clk_freq_get>
-  1c:	2800      	cmp	r0, #0
-  1e:	d1f5      	bne.n	c <alt_wdog_counter_get_inittime_nanosecs+0xc>
-  20:	9b01      	ldr	r3, [sp, #4]
-  22:	2b00      	cmp	r3, #0
-  24:	d0f2      	beq.n	c <alt_wdog_counter_get_inittime_nanosecs+0xc>
-  26:	4630      	mov	r0, r6
-  28:	2500      	movs	r5, #0
+  1c:	4604      	mov	r4, r0
+  1e:	2800      	cmp	r0, #0
+  20:	d1f4      	bne.n	c <alt_wdog_counter_get_inittime_nanosecs+0xc>
+  22:	9b01      	ldr	r3, [sp, #4]
+  24:	2b00      	cmp	r3, #0
+  26:	d0f1      	beq.n	c <alt_wdog_counter_get_inittime_nanosecs+0xc>
+  28:	4628      	mov	r0, r5
   2a:	f7ff fffe 	bl	0 <alt_wdog_counter_get_inittime_nanosecs>
   2e:	2800      	cmp	r0, #0
   30:	d0ec      	beq.n	c <alt_wdog_counter_get_inittime_nanosecs+0xc>
-  32:	1c44      	adds	r4, r0, #1
-  34:	f145 0500 	adc.w	r5, r5, #0
-  38:	b93e      	cbnz	r6, 12 <alt_wdog_counter_get_inittime_nanosecs+0x12>
+  32:	1c42      	adds	r2, r0, #1
+  34:	f144 0400 	adc.w	r4, r4, #0
+  38:	b93d      	cbnz	r5, 4a <alt_wdog_counter_get_inittime_nanosecs+0x4a>
   3a:	f7ff fffe 	bl	0 <alt_wdog_counter_get_inittime_nanosecs>
-  3e:	3001      	adds	r0, #1
-  40:	fb00 f305 	mul.w	r3, r0, r5
-  44:	fba4 4500 	umull	r4, r5, r4, r0
-  48:	441d      	add	r5, r3
-  4a:	4b06      	ldr	r3, [pc, #24]	; (64 <alt_wdog_counter_get_inittime_nanosecs+0x64>)
-  4c:	9a01      	ldr	r2, [sp, #4]
-  4e:	fba4 0103 	umull	r0, r1, r4, r3
-  52:	fb03 1105 	mla	r1, r3, r5, r1
-  56:	2300      	movs	r3, #0
+  3e:	1c43      	adds	r3, r0, #1
+  40:	fb00 4004 	mla	r0, r0, r4, r4
+  44:	fba2 2403 	umull	r2, r4, r2, r3
+  48:	4404      	add	r4, r0
+  4a:	4d06      	ldr	r5, [pc, #24]	; (64 <alt_wdog_counter_get_inittime_nanosecs+0x64>)
+  4c:	2300      	movs	r3, #0
+  4e:	fba2 0105 	umull	r0, r1, r2, r5
+  52:	9a01      	ldr	r2, [sp, #4]
+  54:	fb05 1104 	mla	r1, r5, r4, r1
   58:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
   5c:	e7d8      	b.n	10 <alt_wdog_counter_get_inittime_nanosecs+0x10>
   5e:	200c      	movs	r0, #12
@@ -479,48 +467,49 @@ Disassembly of section .text.alt_wdog_counter_get_inittime_millisecs:
 
 00000000 <alt_wdog_counter_get_inittime_millisecs>:
    0:	b573      	push	{r0, r1, r4, r5, r6, lr}
-   2:	4606      	mov	r6, r0
+   2:	4605      	mov	r5, r0
    4:	b128      	cbz	r0, 12 <alt_wdog_counter_get_inittime_millisecs+0x12>
    6:	1e43      	subs	r3, r0, #1
    8:	2b03      	cmp	r3, #3
-   a:	d92c      	bls.n	66 <alt_wdog_counter_get_inittime_millisecs+0x66>
+   a:	d92f      	bls.n	6c <alt_wdog_counter_get_inittime_millisecs+0x6c>
    c:	2000      	movs	r0, #0
    e:	b002      	add	sp, #8
   10:	bd70      	pop	{r4, r5, r6, pc}
   12:	2015      	movs	r0, #21
   14:	a901      	add	r1, sp, #4
   16:	f7ff fffe 	bl	0 <alt_clk_freq_get>
-  1a:	2800      	cmp	r0, #0
-  1c:	d1f6      	bne.n	c <alt_wdog_counter_get_inittime_millisecs+0xc>
-  1e:	9b01      	ldr	r3, [sp, #4]
-  20:	2b00      	cmp	r3, #0
-  22:	d0f3      	beq.n	c <alt_wdog_counter_get_inittime_millisecs+0xc>
-  24:	4630      	mov	r0, r6
-  26:	f7ff fffe 	bl	0 <alt_wdog_counter_get_inittime_millisecs>
-  2a:	2800      	cmp	r0, #0
-  2c:	d0ee      	beq.n	c <alt_wdog_counter_get_inittime_millisecs+0xc>
-  2e:	2500      	movs	r5, #0
-  30:	1c44      	adds	r4, r0, #1
-  32:	f145 0500 	adc.w	r5, r5, #0
-  36:	b93e      	cbnz	r6, 12 <alt_wdog_counter_get_inittime_millisecs+0x12>
+  1a:	4604      	mov	r4, r0
+  1c:	2800      	cmp	r0, #0
+  1e:	d1f5      	bne.n	c <alt_wdog_counter_get_inittime_millisecs+0xc>
+  20:	9b01      	ldr	r3, [sp, #4]
+  22:	2b00      	cmp	r3, #0
+  24:	d0f2      	beq.n	c <alt_wdog_counter_get_inittime_millisecs+0xc>
+  26:	4628      	mov	r0, r5
+  28:	f7ff fffe 	bl	0 <alt_wdog_counter_get_inittime_millisecs>
+  2c:	2800      	cmp	r0, #0
+  2e:	d0ed      	beq.n	c <alt_wdog_counter_get_inittime_millisecs+0xc>
+  30:	1c42      	adds	r2, r0, #1
+  32:	f144 0400 	adc.w	r4, r4, #0
+  36:	b93d      	cbnz	r5, 48 <alt_wdog_counter_get_inittime_millisecs+0x48>
   38:	f7ff fffe 	bl	0 <alt_wdog_counter_get_inittime_millisecs>
-  3c:	3001      	adds	r0, #1
-  3e:	fb00 f305 	mul.w	r3, r0, r5
-  42:	fba4 4500 	umull	r4, r5, r4, r0
-  46:	441d      	add	r5, r3
-  48:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
-  4c:	9a01      	ldr	r2, [sp, #4]
-  4e:	fba4 0103 	umull	r0, r1, r4, r3
-  52:	fb03 1105 	mla	r1, r3, r5, r1
-  56:	2300      	movs	r3, #0
-  58:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  5c:	2901      	cmp	r1, #1
-  5e:	bf08      	it	eq
-  60:	2800      	cmpeq	r0, #0
-  62:	d3d4      	bcc.n	e <alt_wdog_counter_get_inittime_millisecs+0xe>
-  64:	e7d2      	b.n	c <alt_wdog_counter_get_inittime_millisecs+0xc>
-  66:	200c      	movs	r0, #12
-  68:	e7d4      	b.n	14 <alt_wdog_counter_get_inittime_millisecs+0x14>
+  3c:	1c43      	adds	r3, r0, #1
+  3e:	fb00 4004 	mla	r0, r0, r4, r4
+  42:	fba2 2403 	umull	r2, r4, r2, r3
+  46:	4404      	add	r4, r0
+  48:	f44f 767a 	mov.w	r6, #1000	; 0x3e8
+  4c:	2500      	movs	r5, #0
+  4e:	462b      	mov	r3, r5
+  50:	fba2 0106 	umull	r0, r1, r2, r6
+  54:	9a01      	ldr	r2, [sp, #4]
+  56:	fb06 1104 	mla	r1, r6, r4, r1
+  5a:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  5e:	f04f 33ff 	mov.w	r3, #4294967295
+  62:	4283      	cmp	r3, r0
+  64:	eb75 0301 	sbcs.w	r3, r5, r1
+  68:	d3d0      	bcc.n	c <alt_wdog_counter_get_inittime_millisecs+0xc>
+  6a:	e7d0      	b.n	e <alt_wdog_counter_get_inittime_millisecs+0xe>
+  6c:	200c      	movs	r0, #12
+  6e:	e7d1      	b.n	14 <alt_wdog_counter_get_inittime_millisecs+0x14>
 
 Disassembly of section .text.alt_wdog_counter_get_max:
 
@@ -532,325 +521,320 @@ Disassembly of section .text.alt_wdog_counter_get_max:
    8:	2000      	movhi	r0, #0
    a:	f04f 4000 	movls.w	r0, #2147483648	; 0x80000000
    e:	4770      	bx	lr
-  10:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+  10:	f04f 30ff 	mov.w	r0, #4294967295
   14:	4770      	bx	lr
 
 Disassembly of section .text.alt_wdog_counter_get_max_nanosecs:
 
 00000000 <alt_wdog_counter_get_max_nanosecs>:
-   0:	b573      	push	{r0, r1, r4, r5, r6, lr}
-   2:	4606      	mov	r6, r0
+   0:	b537      	push	{r0, r1, r2, r4, r5, lr}
+   2:	4605      	mov	r5, r0
    4:	b130      	cbz	r0, 14 <alt_wdog_counter_get_max_nanosecs+0x14>
    6:	1e43      	subs	r3, r0, #1
    8:	2b03      	cmp	r3, #3
-   a:	d925      	bls.n	58 <alt_wdog_counter_get_max_nanosecs+0x58>
+   a:	d923      	bls.n	54 <alt_wdog_counter_get_max_nanosecs+0x54>
    c:	2000      	movs	r0, #0
-   e:	2100      	movs	r1, #0
-  10:	b002      	add	sp, #8
-  12:	bd70      	pop	{r4, r5, r6, pc}
+   e:	4601      	mov	r1, r0
+  10:	b003      	add	sp, #12
+  12:	bd30      	pop	{r4, r5, pc}
   14:	2015      	movs	r0, #21
   16:	a901      	add	r1, sp, #4
   18:	f7ff fffe 	bl	0 <alt_clk_freq_get>
-  1c:	2800      	cmp	r0, #0
-  1e:	d1f5      	bne.n	c <alt_wdog_counter_get_max_nanosecs+0xc>
-  20:	9a01      	ldr	r2, [sp, #4]
-  22:	2a00      	cmp	r2, #0
-  24:	d0f2      	beq.n	c <alt_wdog_counter_get_max_nanosecs+0xc>
-  26:	4630      	mov	r0, r6
-  28:	2500      	movs	r5, #0
+  1c:	4604      	mov	r4, r0
+  1e:	2800      	cmp	r0, #0
+  20:	d1f4      	bne.n	c <alt_wdog_counter_get_max_nanosecs+0xc>
+  22:	9a01      	ldr	r2, [sp, #4]
+  24:	2a00      	cmp	r2, #0
+  26:	d0f1      	beq.n	c <alt_wdog_counter_get_max_nanosecs+0xc>
+  28:	4628      	mov	r0, r5
   2a:	f7ff fffe 	bl	0 <alt_wdog_counter_get_max_nanosecs>
   2e:	2800      	cmp	r0, #0
   30:	d0ec      	beq.n	c <alt_wdog_counter_get_max_nanosecs+0xc>
-  32:	1c44      	adds	r4, r0, #1
-  34:	f145 0500 	adc.w	r5, r5, #0
-  38:	b92e      	cbnz	r6, 46 <alt_wdog_counter_get_max_nanosecs+0x46>
-  3a:	022b      	lsls	r3, r5, #8
-  3c:	0221      	lsls	r1, r4, #8
-  3e:	ea43 6314 	orr.w	r3, r3, r4, lsr #24
-  42:	460c      	mov	r4, r1
-  44:	461d      	mov	r5, r3
-  46:	4b05      	ldr	r3, [pc, #20]	; (5c <alt_wdog_counter_get_max_nanosecs+0x5c>)
-  48:	fba4 0103 	umull	r0, r1, r4, r3
-  4c:	fb03 1105 	mla	r1, r3, r5, r1
-  50:	2300      	movs	r3, #0
-  52:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  56:	e7db      	b.n	10 <alt_wdog_counter_get_max_nanosecs+0x10>
-  58:	200c      	movs	r0, #12
-  5a:	e7dc      	b.n	16 <alt_wdog_counter_get_max_nanosecs+0x16>
-  5c:	3b9aca00 	.word	0x3b9aca00
+  32:	1c43      	adds	r3, r0, #1
+  34:	f144 0400 	adc.w	r4, r4, #0
+  38:	b91d      	cbnz	r5, 42 <alt_wdog_counter_get_max_nanosecs+0x42>
+  3a:	0224      	lsls	r4, r4, #8
+  3c:	ea44 6413 	orr.w	r4, r4, r3, lsr #24
+  40:	021b      	lsls	r3, r3, #8
+  42:	4d05      	ldr	r5, [pc, #20]	; (58 <alt_wdog_counter_get_max_nanosecs+0x58>)
+  44:	fba3 0105 	umull	r0, r1, r3, r5
+  48:	2300      	movs	r3, #0
+  4a:	fb05 1104 	mla	r1, r5, r4, r1
+  4e:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  52:	e7dd      	b.n	10 <alt_wdog_counter_get_max_nanosecs+0x10>
+  54:	200c      	movs	r0, #12
+  56:	e7de      	b.n	16 <alt_wdog_counter_get_max_nanosecs+0x16>
+  58:	3b9aca00 	.word	0x3b9aca00
 
 Disassembly of section .text.alt_wdog_counter_get_max_millisecs:
 
 00000000 <alt_wdog_counter_get_max_millisecs>:
-   0:	b573      	push	{r0, r1, r4, r5, r6, lr}
+   0:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
    2:	4606      	mov	r6, r0
    4:	b128      	cbz	r0, 12 <alt_wdog_counter_get_max_millisecs+0x12>
    6:	1e43      	subs	r3, r0, #1
    8:	2b03      	cmp	r3, #3
-   a:	d929      	bls.n	60 <alt_wdog_counter_get_max_millisecs+0x60>
+   a:	d92a      	bls.n	62 <alt_wdog_counter_get_max_millisecs+0x62>
    c:	2000      	movs	r0, #0
-   e:	b002      	add	sp, #8
-  10:	bd70      	pop	{r4, r5, r6, pc}
+   e:	b003      	add	sp, #12
+  10:	bdf0      	pop	{r4, r5, r6, r7, pc}
   12:	2015      	movs	r0, #21
   14:	a901      	add	r1, sp, #4
   16:	f7ff fffe 	bl	0 <alt_clk_freq_get>
-  1a:	2800      	cmp	r0, #0
-  1c:	d1f6      	bne.n	c <alt_wdog_counter_get_max_millisecs+0xc>
-  1e:	9a01      	ldr	r2, [sp, #4]
-  20:	2a00      	cmp	r2, #0
-  22:	d0f3      	beq.n	c <alt_wdog_counter_get_max_millisecs+0xc>
-  24:	4630      	mov	r0, r6
-  26:	f7ff fffe 	bl	0 <alt_wdog_counter_get_max_millisecs>
-  2a:	2800      	cmp	r0, #0
-  2c:	d0ee      	beq.n	c <alt_wdog_counter_get_max_millisecs+0xc>
-  2e:	2500      	movs	r5, #0
+  1a:	4605      	mov	r5, r0
+  1c:	2800      	cmp	r0, #0
+  1e:	d1f5      	bne.n	c <alt_wdog_counter_get_max_millisecs+0xc>
+  20:	9a01      	ldr	r2, [sp, #4]
+  22:	2a00      	cmp	r2, #0
+  24:	d0f2      	beq.n	c <alt_wdog_counter_get_max_millisecs+0xc>
+  26:	4630      	mov	r0, r6
+  28:	f7ff fffe 	bl	0 <alt_wdog_counter_get_max_millisecs>
+  2c:	2800      	cmp	r0, #0
+  2e:	d0ed      	beq.n	c <alt_wdog_counter_get_max_millisecs+0xc>
   30:	1c44      	adds	r4, r0, #1
   32:	f145 0500 	adc.w	r5, r5, #0
-  36:	b92e      	cbnz	r6, 44 <alt_wdog_counter_get_max_millisecs+0x44>
-  38:	022b      	lsls	r3, r5, #8
-  3a:	0221      	lsls	r1, r4, #8
-  3c:	ea43 6314 	orr.w	r3, r3, r4, lsr #24
-  40:	460c      	mov	r4, r1
-  42:	461d      	mov	r5, r3
-  44:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
-  48:	fba4 0103 	umull	r0, r1, r4, r3
-  4c:	fb03 1105 	mla	r1, r3, r5, r1
-  50:	2300      	movs	r3, #0
-  52:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  56:	2901      	cmp	r1, #1
-  58:	bf08      	it	eq
-  5a:	2800      	cmpeq	r0, #0
-  5c:	d3d7      	bcc.n	e <alt_wdog_counter_get_max_millisecs+0xe>
-  5e:	e7d5      	b.n	c <alt_wdog_counter_get_max_millisecs+0xc>
-  60:	200c      	movs	r0, #12
-  62:	e7d7      	b.n	14 <alt_wdog_counter_get_max_millisecs+0x14>
+  36:	b91e      	cbnz	r6, 40 <alt_wdog_counter_get_max_millisecs+0x40>
+  38:	022d      	lsls	r5, r5, #8
+  3a:	ea45 6514 	orr.w	r5, r5, r4, lsr #24
+  3e:	0224      	lsls	r4, r4, #8
+  40:	f44f 777a 	mov.w	r7, #1000	; 0x3e8
+  44:	2600      	movs	r6, #0
+  46:	4633      	mov	r3, r6
+  48:	fba4 0107 	umull	r0, r1, r4, r7
+  4c:	fb07 1105 	mla	r1, r7, r5, r1
+  50:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  54:	f04f 33ff 	mov.w	r3, #4294967295
+  58:	4283      	cmp	r3, r0
+  5a:	eb76 0301 	sbcs.w	r3, r6, r1
+  5e:	d3d5      	bcc.n	c <alt_wdog_counter_get_max_millisecs+0xc>
+  60:	e7d5      	b.n	e <alt_wdog_counter_get_max_millisecs+0xe>
+  62:	200c      	movs	r0, #12
+  64:	e7d6      	b.n	14 <alt_wdog_counter_get_max_millisecs+0x14>
 
 Disassembly of section .text.alt_wdog_int_disable:
 
 00000000 <alt_wdog_int_disable>:
-   0:	b948      	cbnz	r0, 16 <alt_wdog_int_disable+0x16>
-   2:	4b08      	ldr	r3, [pc, #32]	; (24 <alt_wdog_int_disable+0x24>)
-   4:	6818      	ldr	r0, [r3, #0]
-   6:	f010 0008 	ands.w	r0, r0, #8
-   a:	d107      	bne.n	1c <alt_wdog_int_disable+0x1c>
-   c:	681a      	ldr	r2, [r3, #0]
-   e:	f022 0204 	bic.w	r2, r2, #4
-  12:	601a      	str	r2, [r3, #0]
-  14:	4770      	bx	lr
-  16:	f06f 0008 	mvn.w	r0, #8
+   0:	b960      	cbnz	r0, 1c <alt_wdog_int_disable+0x1c>
+   2:	4b09      	ldr	r3, [pc, #36]	; (28 <alt_wdog_int_disable+0x28>)
+   4:	f8d3 0628 	ldr.w	r0, [r3, #1576]	; 0x628
+   8:	f010 0008 	ands.w	r0, r0, #8
+   c:	d109      	bne.n	22 <alt_wdog_int_disable+0x22>
+   e:	f8d3 2628 	ldr.w	r2, [r3, #1576]	; 0x628
+  12:	f022 0204 	bic.w	r2, r2, #4
+  16:	f8c3 2628 	str.w	r2, [r3, #1576]	; 0x628
   1a:	4770      	bx	lr
-  1c:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+  1c:	f06f 0008 	mvn.w	r0, #8
   20:	4770      	bx	lr
-  22:	bf00      	nop
-  24:	fffec628 	.word	0xfffec628
+  22:	f04f 30ff 	mov.w	r0, #4294967295
+  26:	4770      	bx	lr
+  28:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_wdog_int_enable:
 
 00000000 <alt_wdog_int_enable>:
-   0:	b948      	cbnz	r0, 16 <alt_wdog_int_enable+0x16>
-   2:	4b08      	ldr	r3, [pc, #32]	; (24 <alt_wdog_int_enable+0x24>)
-   4:	6818      	ldr	r0, [r3, #0]
-   6:	f010 0008 	ands.w	r0, r0, #8
-   a:	d107      	bne.n	1c <alt_wdog_int_enable+0x1c>
-   c:	681a      	ldr	r2, [r3, #0]
-   e:	f042 0204 	orr.w	r2, r2, #4
-  12:	601a      	str	r2, [r3, #0]
-  14:	4770      	bx	lr
-  16:	f06f 0008 	mvn.w	r0, #8
+   0:	b960      	cbnz	r0, 1c <alt_wdog_int_enable+0x1c>
+   2:	4b09      	ldr	r3, [pc, #36]	; (28 <alt_wdog_int_enable+0x28>)
+   4:	f8d3 0628 	ldr.w	r0, [r3, #1576]	; 0x628
+   8:	f010 0008 	ands.w	r0, r0, #8
+   c:	d109      	bne.n	22 <alt_wdog_int_enable+0x22>
+   e:	f8d3 2628 	ldr.w	r2, [r3, #1576]	; 0x628
+  12:	f042 0204 	orr.w	r2, r2, #4
+  16:	f8c3 2628 	str.w	r2, [r3, #1576]	; 0x628
   1a:	4770      	bx	lr
-  1c:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+  1c:	f06f 0008 	mvn.w	r0, #8
   20:	4770      	bx	lr
-  22:	bf00      	nop
-  24:	fffec628 	.word	0xfffec628
+  22:	f04f 30ff 	mov.w	r0, #4294967295
+  26:	4770      	bx	lr
+  28:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_wdog_int_is_pending:
 
 00000000 <alt_wdog_int_is_pending>:
    0:	b508      	push	{r3, lr}
-   2:	b948      	cbnz	r0, 18 <alt_wdog_int_is_pending+0x18>
+   2:	b950      	cbnz	r0, 1a <alt_wdog_int_is_pending+0x1a>
    4:	f7ff fffe 	bl	0 <alt_wdog_int_is_pending>
    8:	b908      	cbnz	r0, e <alt_wdog_int_is_pending+0xe>
    a:	2000      	movs	r0, #0
    c:	bd08      	pop	{r3, pc}
-   e:	4b08      	ldr	r3, [pc, #32]	; (30 <alt_wdog_int_is_pending+0x30>)
-  10:	6818      	ldr	r0, [r3, #0]
-  12:	f000 0001 	and.w	r0, r0, #1
-  16:	bd08      	pop	{r3, pc}
-  18:	f020 0302 	bic.w	r3, r0, #2
-  1c:	2b01      	cmp	r3, #1
-  1e:	d101      	bne.n	24 <alt_wdog_int_is_pending+0x24>
-  20:	4b04      	ldr	r3, [pc, #16]	; (34 <alt_wdog_int_is_pending+0x34>)
-  22:	e7f5      	b.n	10 <alt_wdog_int_is_pending+0x10>
-  24:	2802      	cmp	r0, #2
-  26:	d001      	beq.n	2c <alt_wdog_int_is_pending+0x2c>
-  28:	2804      	cmp	r0, #4
-  2a:	d1ee      	bne.n	a <alt_wdog_int_is_pending+0xa>
-  2c:	4b02      	ldr	r3, [pc, #8]	; (38 <alt_wdog_int_is_pending+0x38>)
-  2e:	e7ef      	b.n	10 <alt_wdog_int_is_pending+0x10>
-  30:	fffec62c 	.word	0xfffec62c
-  34:	ffd02010 	.word	0xffd02010
-  38:	ffd03010 	.word	0xffd03010
+   e:	4b09      	ldr	r3, [pc, #36]	; (34 <alt_wdog_int_is_pending+0x34>)
+  10:	f8d3 062c 	ldr.w	r0, [r3, #1580]	; 0x62c
+  14:	f000 0001 	and.w	r0, r0, #1
+  18:	e7f8      	b.n	c <alt_wdog_int_is_pending+0xc>
+  1a:	f020 0302 	bic.w	r3, r0, #2
+  1e:	2b01      	cmp	r3, #1
+  20:	d102      	bne.n	28 <alt_wdog_int_is_pending+0x28>
+  22:	4b05      	ldr	r3, [pc, #20]	; (38 <alt_wdog_int_is_pending+0x38>)
+  24:	6918      	ldr	r0, [r3, #16]
+  26:	e7f5      	b.n	14 <alt_wdog_int_is_pending+0x14>
+  28:	2802      	cmp	r0, #2
+  2a:	d001      	beq.n	30 <alt_wdog_int_is_pending+0x30>
+  2c:	2804      	cmp	r0, #4
+  2e:	d1ec      	bne.n	a <alt_wdog_int_is_pending+0xa>
+  30:	4b02      	ldr	r3, [pc, #8]	; (3c <alt_wdog_int_is_pending+0x3c>)
+  32:	e7f7      	b.n	24 <alt_wdog_int_is_pending+0x24>
+  34:	fffec000 	.word	0xfffec000
+  38:	ffd02000 	.word	0xffd02000
+  3c:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_int_is_enabled:
 
 00000000 <alt_wdog_int_is_enabled>:
-   0:	b938      	cbnz	r0, 12 <alt_wdog_int_is_enabled+0x12>
-   2:	4b0c      	ldr	r3, [pc, #48]	; (34 <alt_wdog_int_is_enabled+0x34>)
-   4:	681b      	ldr	r3, [r3, #0]
-   6:	f013 0f0c 	tst.w	r3, #12
-   a:	bf14      	ite	ne
-   c:	2001      	movne	r0, #1
-   e:	2000      	moveq	r0, #0
-  10:	4770      	bx	lr
-  12:	f020 0302 	bic.w	r3, r0, #2
-  16:	2b01      	cmp	r3, #1
-  18:	d104      	bne.n	24 <alt_wdog_int_is_enabled+0x24>
-  1a:	4b07      	ldr	r3, [pc, #28]	; (38 <alt_wdog_int_is_enabled+0x38>)
-  1c:	6818      	ldr	r0, [r3, #0]
-  1e:	f000 0001 	and.w	r0, r0, #1
-  22:	4770      	bx	lr
-  24:	2802      	cmp	r0, #2
-  26:	d001      	beq.n	2c <alt_wdog_int_is_enabled+0x2c>
-  28:	2804      	cmp	r0, #4
-  2a:	d101      	bne.n	30 <alt_wdog_int_is_enabled+0x30>
-  2c:	4b03      	ldr	r3, [pc, #12]	; (3c <alt_wdog_int_is_enabled+0x3c>)
-  2e:	e7f5      	b.n	1c <alt_wdog_int_is_enabled+0x1c>
-  30:	2000      	movs	r0, #0
-  32:	4770      	bx	lr
-  34:	fffec628 	.word	0xfffec628
-  38:	ffd02000 	.word	0xffd02000
-  3c:	ffd03000 	.word	0xffd03000
+   0:	b940      	cbnz	r0, 14 <alt_wdog_int_is_enabled+0x14>
+   2:	4b0d      	ldr	r3, [pc, #52]	; (38 <alt_wdog_int_is_enabled+0x38>)
+   4:	f8d3 3628 	ldr.w	r3, [r3, #1576]	; 0x628
+   8:	f013 0f0c 	tst.w	r3, #12
+   c:	bf14      	ite	ne
+   e:	2001      	movne	r0, #1
+  10:	2000      	moveq	r0, #0
+  12:	4770      	bx	lr
+  14:	f020 0302 	bic.w	r3, r0, #2
+  18:	2b01      	cmp	r3, #1
+  1a:	d104      	bne.n	26 <alt_wdog_int_is_enabled+0x26>
+  1c:	4b07      	ldr	r3, [pc, #28]	; (3c <alt_wdog_int_is_enabled+0x3c>)
+  1e:	6818      	ldr	r0, [r3, #0]
+  20:	f000 0001 	and.w	r0, r0, #1
+  24:	4770      	bx	lr
+  26:	2802      	cmp	r0, #2
+  28:	d001      	beq.n	2e <alt_wdog_int_is_enabled+0x2e>
+  2a:	2804      	cmp	r0, #4
+  2c:	d101      	bne.n	32 <alt_wdog_int_is_enabled+0x32>
+  2e:	4b04      	ldr	r3, [pc, #16]	; (40 <alt_wdog_int_is_enabled+0x40>)
+  30:	e7f5      	b.n	1e <alt_wdog_int_is_enabled+0x1e>
+  32:	2000      	movs	r0, #0
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	fffec000 	.word	0xfffec000
+  3c:	ffd02000 	.word	0xffd02000
+  40:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_int_clear:
 
 00000000 <alt_wdog_int_clear>:
-   0:	b918      	cbnz	r0, a <alt_wdog_int_clear+0xa>
-   2:	4b0a      	ldr	r3, [pc, #40]	; (2c <alt_wdog_int_clear+0x2c>)
+   0:	b920      	cbnz	r0, c <alt_wdog_int_clear+0xc>
+   2:	4b0b      	ldr	r3, [pc, #44]	; (30 <alt_wdog_int_clear+0x30>)
    4:	2201      	movs	r2, #1
-   6:	601a      	str	r2, [r3, #0]
-   8:	4770      	bx	lr
-   a:	f020 0302 	bic.w	r3, r0, #2
-   e:	2b01      	cmp	r3, #1
-  10:	d103      	bne.n	1a <alt_wdog_int_clear+0x1a>
-  12:	4b07      	ldr	r3, [pc, #28]	; (30 <alt_wdog_int_clear+0x30>)
-  14:	681b      	ldr	r3, [r3, #0]
-  16:	2000      	movs	r0, #0
-  18:	4770      	bx	lr
-  1a:	2802      	cmp	r0, #2
-  1c:	d001      	beq.n	22 <alt_wdog_int_clear+0x22>
-  1e:	2804      	cmp	r0, #4
-  20:	d101      	bne.n	26 <alt_wdog_int_clear+0x26>
-  22:	4b04      	ldr	r3, [pc, #16]	; (34 <alt_wdog_int_clear+0x34>)
-  24:	e7f6      	b.n	14 <alt_wdog_int_clear+0x14>
-  26:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  2a:	4770      	bx	lr
-  2c:	fffec62c 	.word	0xfffec62c
-  30:	ffd02014 	.word	0xffd02014
-  34:	ffd03014 	.word	0xffd03014
+   6:	f8c3 262c 	str.w	r2, [r3, #1580]	; 0x62c
+   a:	4770      	bx	lr
+   c:	f020 0302 	bic.w	r3, r0, #2
+  10:	2b01      	cmp	r3, #1
+  12:	d103      	bne.n	1c <alt_wdog_int_clear+0x1c>
+  14:	4b07      	ldr	r3, [pc, #28]	; (34 <alt_wdog_int_clear+0x34>)
+  16:	695b      	ldr	r3, [r3, #20]
+  18:	2000      	movs	r0, #0
+  1a:	4770      	bx	lr
+  1c:	2802      	cmp	r0, #2
+  1e:	d001      	beq.n	24 <alt_wdog_int_clear+0x24>
+  20:	2804      	cmp	r0, #4
+  22:	d101      	bne.n	28 <alt_wdog_int_clear+0x28>
+  24:	4b04      	ldr	r3, [pc, #16]	; (38 <alt_wdog_int_clear+0x38>)
+  26:	e7f6      	b.n	16 <alt_wdog_int_clear+0x16>
+  28:	f04f 30ff 	mov.w	r0, #4294967295
+  2c:	4770      	bx	lr
+  2e:	bf00      	nop
+  30:	fffec000 	.word	0xfffec000
+  34:	ffd02000 	.word	0xffd02000
+  38:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_int_if_pending_clear:
 
 00000000 <alt_wdog_int_if_pending_clear>:
-   0:	b938      	cbnz	r0, 12 <alt_wdog_int_if_pending_clear+0x12>
+   0:	b948      	cbnz	r0, 16 <alt_wdog_int_if_pending_clear+0x16>
    2:	4b0e      	ldr	r3, [pc, #56]	; (3c <alt_wdog_int_if_pending_clear+0x3c>)
-   4:	6818      	ldr	r0, [r3, #0]
-   6:	f010 0001 	ands.w	r0, r0, #1
-   a:	d015      	beq.n	38 <alt_wdog_int_if_pending_clear+0x38>
-   c:	2201      	movs	r2, #1
-   e:	601a      	str	r2, [r3, #0]
-  10:	4770      	bx	lr
-  12:	f020 0302 	bic.w	r3, r0, #2
-  16:	2b01      	cmp	r3, #1
-  18:	d107      	bne.n	2a <alt_wdog_int_if_pending_clear+0x2a>
-  1a:	4b09      	ldr	r3, [pc, #36]	; (40 <alt_wdog_int_if_pending_clear+0x40>)
-  1c:	6818      	ldr	r0, [r3, #0]
-  1e:	f010 0001 	ands.w	r0, r0, #1
-  22:	d009      	beq.n	38 <alt_wdog_int_if_pending_clear+0x38>
-  24:	3304      	adds	r3, #4
-  26:	681b      	ldr	r3, [r3, #0]
-  28:	4770      	bx	lr
-  2a:	2802      	cmp	r0, #2
-  2c:	d001      	beq.n	32 <alt_wdog_int_if_pending_clear+0x32>
-  2e:	2804      	cmp	r0, #4
-  30:	d101      	bne.n	36 <alt_wdog_int_if_pending_clear+0x36>
-  32:	4b04      	ldr	r3, [pc, #16]	; (44 <alt_wdog_int_if_pending_clear+0x44>)
-  34:	e7f2      	b.n	1c <alt_wdog_int_if_pending_clear+0x1c>
-  36:	2000      	movs	r0, #0
-  38:	4770      	bx	lr
-  3a:	bf00      	nop
-  3c:	fffec62c 	.word	0xfffec62c
-  40:	ffd02010 	.word	0xffd02010
-  44:	ffd03010 	.word	0xffd03010
+   4:	f8d3 062c 	ldr.w	r0, [r3, #1580]	; 0x62c
+   8:	f010 0001 	ands.w	r0, r0, #1
+   c:	d015      	beq.n	3a <alt_wdog_int_if_pending_clear+0x3a>
+   e:	2201      	movs	r2, #1
+  10:	f8c3 262c 	str.w	r2, [r3, #1580]	; 0x62c
+  14:	4770      	bx	lr
+  16:	f020 0302 	bic.w	r3, r0, #2
+  1a:	2b01      	cmp	r3, #1
+  1c:	d106      	bne.n	2c <alt_wdog_int_if_pending_clear+0x2c>
+  1e:	4b08      	ldr	r3, [pc, #32]	; (40 <alt_wdog_int_if_pending_clear+0x40>)
+  20:	6918      	ldr	r0, [r3, #16]
+  22:	f010 0001 	ands.w	r0, r0, #1
+  26:	d008      	beq.n	3a <alt_wdog_int_if_pending_clear+0x3a>
+  28:	695b      	ldr	r3, [r3, #20]
+  2a:	4770      	bx	lr
+  2c:	2802      	cmp	r0, #2
+  2e:	d001      	beq.n	34 <alt_wdog_int_if_pending_clear+0x34>
+  30:	2804      	cmp	r0, #4
+  32:	d101      	bne.n	38 <alt_wdog_int_if_pending_clear+0x38>
+  34:	4b03      	ldr	r3, [pc, #12]	; (44 <alt_wdog_int_if_pending_clear+0x44>)
+  36:	e7f3      	b.n	20 <alt_wdog_int_if_pending_clear+0x20>
+  38:	2000      	movs	r0, #0
+  3a:	4770      	bx	lr
+  3c:	fffec000 	.word	0xfffec000
+  40:	ffd02000 	.word	0xffd02000
+  44:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_response_mode_set:
 
 00000000 <alt_wdog_response_mode_set>:
-   0:	b960      	cbnz	r0, 1c <alt_wdog_response_mode_set+0x1c>
-   2:	4a13      	ldr	r2, [pc, #76]	; (50 <alt_wdog_response_mode_set+0x50>)
+   0:	b970      	cbnz	r0, 20 <alt_wdog_response_mode_set+0x20>
+   2:	4a14      	ldr	r2, [pc, #80]	; (54 <alt_wdog_response_mode_set+0x54>)
    4:	2902      	cmp	r1, #2
-   6:	6813      	ldr	r3, [r2, #0]
-   8:	d103      	bne.n	12 <alt_wdog_response_mode_set+0x12>
-   a:	f023 0302 	bic.w	r3, r3, #2
-   e:	6013      	str	r3, [r2, #0]
-  10:	4770      	bx	lr
-  12:	2903      	cmp	r1, #3
-  14:	d119      	bne.n	4a <alt_wdog_response_mode_set+0x4a>
-  16:	f043 0302 	orr.w	r3, r3, #2
-  1a:	e7f8      	b.n	e <alt_wdog_response_mode_set+0xe>
-  1c:	f020 0302 	bic.w	r3, r0, #2
-  20:	2b01      	cmp	r3, #1
-  22:	d107      	bne.n	34 <alt_wdog_response_mode_set+0x34>
-  24:	4a0b      	ldr	r2, [pc, #44]	; (54 <alt_wdog_response_mode_set+0x54>)
-  26:	6813      	ldr	r3, [r2, #0]
-  28:	b951      	cbnz	r1, 40 <alt_wdog_response_mode_set+0x40>
-  2a:	f023 0302 	bic.w	r3, r3, #2
-  2e:	6013      	str	r3, [r2, #0]
-  30:	2000      	movs	r0, #0
-  32:	4770      	bx	lr
-  34:	2802      	cmp	r0, #2
-  36:	d001      	beq.n	3c <alt_wdog_response_mode_set+0x3c>
-  38:	2804      	cmp	r0, #4
-  3a:	d106      	bne.n	4a <alt_wdog_response_mode_set+0x4a>
-  3c:	4a06      	ldr	r2, [pc, #24]	; (58 <alt_wdog_response_mode_set+0x58>)
-  3e:	e7f2      	b.n	26 <alt_wdog_response_mode_set+0x26>
-  40:	2901      	cmp	r1, #1
-  42:	d102      	bne.n	4a <alt_wdog_response_mode_set+0x4a>
-  44:	f043 0302 	orr.w	r3, r3, #2
-  48:	e7f1      	b.n	2e <alt_wdog_response_mode_set+0x2e>
-  4a:	f06f 0008 	mvn.w	r0, #8
-  4e:	4770      	bx	lr
-  50:	fffec628 	.word	0xfffec628
-  54:	ffd02000 	.word	0xffd02000
-  58:	ffd03000 	.word	0xffd03000
+   6:	f8d2 3628 	ldr.w	r3, [r2, #1576]	; 0x628
+   a:	d104      	bne.n	16 <alt_wdog_response_mode_set+0x16>
+   c:	f023 0302 	bic.w	r3, r3, #2
+  10:	f8c2 3628 	str.w	r3, [r2, #1576]	; 0x628
+  14:	4770      	bx	lr
+  16:	2903      	cmp	r1, #3
+  18:	d119      	bne.n	4e <alt_wdog_response_mode_set+0x4e>
+  1a:	f043 0302 	orr.w	r3, r3, #2
+  1e:	e7f7      	b.n	10 <alt_wdog_response_mode_set+0x10>
+  20:	f020 0302 	bic.w	r3, r0, #2
+  24:	2b01      	cmp	r3, #1
+  26:	d107      	bne.n	38 <alt_wdog_response_mode_set+0x38>
+  28:	4a0b      	ldr	r2, [pc, #44]	; (58 <alt_wdog_response_mode_set+0x58>)
+  2a:	6813      	ldr	r3, [r2, #0]
+  2c:	b951      	cbnz	r1, 44 <alt_wdog_response_mode_set+0x44>
+  2e:	f023 0302 	bic.w	r3, r3, #2
+  32:	6013      	str	r3, [r2, #0]
+  34:	2000      	movs	r0, #0
+  36:	4770      	bx	lr
+  38:	2802      	cmp	r0, #2
+  3a:	d001      	beq.n	40 <alt_wdog_response_mode_set+0x40>
+  3c:	2804      	cmp	r0, #4
+  3e:	d106      	bne.n	4e <alt_wdog_response_mode_set+0x4e>
+  40:	4a06      	ldr	r2, [pc, #24]	; (5c <alt_wdog_response_mode_set+0x5c>)
+  42:	e7f2      	b.n	2a <alt_wdog_response_mode_set+0x2a>
+  44:	2901      	cmp	r1, #1
+  46:	d102      	bne.n	4e <alt_wdog_response_mode_set+0x4e>
+  48:	f043 0302 	orr.w	r3, r3, #2
+  4c:	e7f1      	b.n	32 <alt_wdog_response_mode_set+0x32>
+  4e:	f06f 0008 	mvn.w	r0, #8
+  52:	4770      	bx	lr
+  54:	fffec000 	.word	0xfffec000
+  58:	ffd02000 	.word	0xffd02000
+  5c:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_response_mode_get:
 
 00000000 <alt_wdog_response_mode_get>:
-   0:	b938      	cbnz	r0, 12 <alt_wdog_response_mode_get+0x12>
+   0:	b940      	cbnz	r0, 14 <alt_wdog_response_mode_get+0x14>
    2:	4b0d      	ldr	r3, [pc, #52]	; (38 <alt_wdog_response_mode_get+0x38>)
-   4:	681b      	ldr	r3, [r3, #0]
-   6:	f013 0f02 	tst.w	r3, #2
-   a:	bf14      	ite	ne
-   c:	2003      	movne	r0, #3
-   e:	2002      	moveq	r0, #2
-  10:	4770      	bx	lr
-  12:	f020 0302 	bic.w	r3, r0, #2
-  16:	2b01      	cmp	r3, #1
-  18:	d104      	bne.n	24 <alt_wdog_response_mode_get+0x24>
-  1a:	4b08      	ldr	r3, [pc, #32]	; (3c <alt_wdog_response_mode_get+0x3c>)
-  1c:	6818      	ldr	r0, [r3, #0]
-  1e:	f3c0 0040 	ubfx	r0, r0, #1, #1
-  22:	4770      	bx	lr
-  24:	2802      	cmp	r0, #2
-  26:	d001      	beq.n	2c <alt_wdog_response_mode_get+0x2c>
-  28:	2804      	cmp	r0, #4
-  2a:	d101      	bne.n	30 <alt_wdog_response_mode_get+0x30>
-  2c:	4b04      	ldr	r3, [pc, #16]	; (40 <alt_wdog_response_mode_get+0x40>)
-  2e:	e7f5      	b.n	1c <alt_wdog_response_mode_get+0x1c>
-  30:	f06f 0008 	mvn.w	r0, #8
-  34:	4770      	bx	lr
-  36:	bf00      	nop
-  38:	fffec628 	.word	0xfffec628
+   4:	f8d3 3628 	ldr.w	r3, [r3, #1576]	; 0x628
+   8:	f013 0f02 	tst.w	r3, #2
+   c:	bf14      	ite	ne
+   e:	2003      	movne	r0, #3
+  10:	2002      	moveq	r0, #2
+  12:	4770      	bx	lr
+  14:	f020 0302 	bic.w	r3, r0, #2
+  18:	2b01      	cmp	r3, #1
+  1a:	d104      	bne.n	26 <alt_wdog_response_mode_get+0x26>
+  1c:	4b07      	ldr	r3, [pc, #28]	; (3c <alt_wdog_response_mode_get+0x3c>)
+  1e:	6818      	ldr	r0, [r3, #0]
+  20:	f3c0 0040 	ubfx	r0, r0, #1, #1
+  24:	4770      	bx	lr
+  26:	2802      	cmp	r0, #2
+  28:	d001      	beq.n	2e <alt_wdog_response_mode_get+0x2e>
+  2a:	2804      	cmp	r0, #4
+  2c:	d101      	bne.n	32 <alt_wdog_response_mode_get+0x32>
+  2e:	4b04      	ldr	r3, [pc, #16]	; (40 <alt_wdog_response_mode_get+0x40>)
+  30:	e7f5      	b.n	1e <alt_wdog_response_mode_get+0x1e>
+  32:	f06f 0008 	mvn.w	r0, #8
+  36:	4770      	bx	lr
+  38:	fffec000 	.word	0xfffec000
   3c:	ffd02000 	.word	0xffd02000
   40:	ffd03000 	.word	0xffd03000
 
@@ -859,39 +843,37 @@ Disassembly of section .text.alt_wdog_compcode_get:
 00000000 <alt_wdog_compcode_get>:
    0:	f020 0302 	bic.w	r3, r0, #2
    4:	2b01      	cmp	r3, #1
-   6:	d102      	bne.n	e <alt_wdog_compcode_get+0xe>
+   6:	d103      	bne.n	10 <alt_wdog_compcode_get+0x10>
    8:	4b05      	ldr	r3, [pc, #20]	; (20 <alt_wdog_compcode_get+0x20>)
-   a:	6818      	ldr	r0, [r3, #0]
-   c:	4770      	bx	lr
-   e:	2802      	cmp	r0, #2
-  10:	d001      	beq.n	16 <alt_wdog_compcode_get+0x16>
-  12:	2804      	cmp	r0, #4
-  14:	d101      	bne.n	1a <alt_wdog_compcode_get+0x1a>
-  16:	4b03      	ldr	r3, [pc, #12]	; (24 <alt_wdog_compcode_get+0x24>)
-  18:	e7f7      	b.n	a <alt_wdog_compcode_get+0xa>
-  1a:	2000      	movs	r0, #0
-  1c:	4770      	bx	lr
-  1e:	bf00      	nop
-  20:	ffd020fc 	.word	0xffd020fc
-  24:	ffd030fc 	.word	0xffd030fc
+   a:	f8d3 00fc 	ldr.w	r0, [r3, #252]	; 0xfc
+   e:	4770      	bx	lr
+  10:	2802      	cmp	r0, #2
+  12:	d001      	beq.n	18 <alt_wdog_compcode_get+0x18>
+  14:	2804      	cmp	r0, #4
+  16:	d101      	bne.n	1c <alt_wdog_compcode_get+0x1c>
+  18:	4b02      	ldr	r3, [pc, #8]	; (24 <alt_wdog_compcode_get+0x24>)
+  1a:	e7f6      	b.n	a <alt_wdog_compcode_get+0xa>
+  1c:	2000      	movs	r0, #0
+  1e:	4770      	bx	lr
+  20:	ffd02000 	.word	0xffd02000
+  24:	ffd03000 	.word	0xffd03000
 
 Disassembly of section .text.alt_wdog_ver_get:
 
 00000000 <alt_wdog_ver_get>:
    0:	f020 0302 	bic.w	r3, r0, #2
    4:	2b01      	cmp	r3, #1
-   6:	d102      	bne.n	e <alt_wdog_ver_get+0xe>
+   6:	d103      	bne.n	10 <alt_wdog_ver_get+0x10>
    8:	4b05      	ldr	r3, [pc, #20]	; (20 <alt_wdog_ver_get+0x20>)
-   a:	6818      	ldr	r0, [r3, #0]
-   c:	4770      	bx	lr
-   e:	2802      	cmp	r0, #2
-  10:	d001      	beq.n	16 <alt_wdog_ver_get+0x16>
-  12:	2804      	cmp	r0, #4
-  14:	d101      	bne.n	1a <alt_wdog_ver_get+0x1a>
-  16:	4b03      	ldr	r3, [pc, #12]	; (24 <alt_wdog_ver_get+0x24>)
-  18:	e7f7      	b.n	a <alt_wdog_ver_get+0xa>
-  1a:	2000      	movs	r0, #0
-  1c:	4770      	bx	lr
-  1e:	bf00      	nop
-  20:	ffd020f8 	.word	0xffd020f8
-  24:	ffd030f8 	.word	0xffd030f8
+   a:	f8d3 00f8 	ldr.w	r0, [r3, #248]	; 0xf8
+   e:	4770      	bx	lr
+  10:	2802      	cmp	r0, #2
+  12:	d001      	beq.n	18 <alt_wdog_ver_get+0x18>
+  14:	2804      	cmp	r0, #4
+  16:	d101      	bne.n	1c <alt_wdog_ver_get+0x1c>
+  18:	4b02      	ldr	r3, [pc, #8]	; (24 <alt_wdog_ver_get+0x24>)
+  1a:	e7f6      	b.n	a <alt_wdog_ver_get+0xa>
+  1c:	2000      	movs	r0, #0
+  1e:	4770      	bx	lr
+  20:	ffd02000 	.word	0xffd02000
+  24:	ffd03000 	.word	0xffd03000

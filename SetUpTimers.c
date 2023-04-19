@@ -100,21 +100,22 @@ ALT_STATUS_CODE system_init(void)
     puts("INFO: System Initialization.\n\r");
 
     // Initialize global timer
+    //if(status == ALT_E_SUCCESS)
+    //{
+    //    puts("INFO: Setting up Global Timer.\n\r");
+    //    if(!alt_globaltmr_int_is_enabled())
+    //    {
+    //        status = alt_globaltmr_init();
+    //    }
+    //}
+
+    // Initialize general purpose timers
+    // optionnal pour Private Timer ?
     if(status == ALT_E_SUCCESS)
     {
-        puts("INFO: Setting up Global Timer.\n\r");
-        if(!alt_globaltmr_int_is_enabled())
-        {
-            status = alt_globaltmr_init();
-        }
+        puts("INFO: Initializing General Purpose Timers.\n\r");
+        status = alt_gpt_all_tmr_init();
     }
-
-    // // Initialize general purpose timers
-    // if(status == ALT_E_SUCCESS)
-    // {
-    //     puts("INFO: Initializing General Purpose Timers.\n\r");
-    //     status = alt_gpt_all_tmr_init();
-    // }
 
     // // Initialize watchdog0 timer
     // if(status == ALT_E_SUCCESS)
@@ -576,7 +577,7 @@ ALT_STATUS_CODE private_timer_setup(void)
         //status = alt_gpt_counter_set(ALT_GPT_SP_TMR1, 1024);
         //status = alt_gpt_counter_set(ALT_GPT_SP_TMR1, 65535);
         // #define CONFIG_HPS_CLK_L4_SP_HZ 100000000
-        status = alt_gpt_counter_set(ALT_GPT_CPU_PRIVATE_TMR, 100000);        
+        status = alt_gpt_counter_set(ALT_GPT_CPU_PRIVATE_TMR, 1000000000);        
     }
 
     //uint32_t timer_val = alt_gpt_curtime_millisecs_get(ALT_GPT_SP_TMR1);

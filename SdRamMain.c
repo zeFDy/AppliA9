@@ -240,10 +240,10 @@ void SdRamMain(void)
 	while(1)
 	{
 		// soft loop for around 500ms
-		//for(int i=0;i<5000000;i++)
-		//{
-		//	volatile	int	j=i*2;
-		//}
+		for(int i=0;i<5000000;i++)
+		{
+			volatile	int	j=i*2;
+		}
 
 		//while(GP_Timer_Interrupt_Fired==false);
 		//puts(".");
@@ -290,6 +290,7 @@ void SdRamMain(void)
 		//}
 		//#endif
 		
+        #if false
 		ui64InitialValue = get_ticks();
 
 		while(1)
@@ -297,6 +298,7 @@ void SdRamMain(void)
 			uint64_t ui64ThisTickValue = get_ticks();
 			if(ui64InitialValue-ui64ThisTickValue>=5000000)	break;
 		}
+        #endif
 
 		iCounter++;
 		

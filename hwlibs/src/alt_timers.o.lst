@@ -5,40 +5,39 @@ hwlibs/src/alt_timers.o:     file format elf32-littlearm
 Disassembly of section .text.alt_gpt_all_tmr_uninit:
 
 00000000 <alt_gpt_all_tmr_uninit>:
-   0:	4a0a      	ldr	r2, [pc, #40]	; (2c <alt_gpt_all_tmr_uninit+0x2c>)
+   0:	4a0d      	ldr	r2, [pc, #52]	; (38 <alt_gpt_all_tmr_uninit+0x38>)
    2:	2000      	movs	r0, #0
-   4:	2101      	movs	r1, #1
-   6:	6813      	ldr	r3, [r2, #0]
-   8:	f443 6370 	orr.w	r3, r3, #3840	; 0xf00
-   c:	6013      	str	r3, [r2, #0]
-   e:	4a08      	ldr	r2, [pc, #32]	; (30 <alt_gpt_all_tmr_uninit+0x30>)
-  10:	6813      	ldr	r3, [r2, #0]
-  12:	f023 0305 	bic.w	r3, r3, #5
-  16:	6013      	str	r3, [r2, #0]
-  18:	4b06      	ldr	r3, [pc, #24]	; (34 <alt_gpt_all_tmr_uninit+0x34>)
-  1a:	6018      	str	r0, [r3, #0]
-  1c:	60d9      	str	r1, [r3, #12]
-  1e:	6813      	ldr	r3, [r2, #0]
-  20:	f423 437f 	bic.w	r3, r3, #65280	; 0xff00
-  24:	f023 0307 	bic.w	r3, r3, #7
-  28:	6013      	str	r3, [r2, #0]
-  2a:	4770      	bx	lr
-  2c:	ffd05014 	.word	0xffd05014
-  30:	fffec608 	.word	0xfffec608
-  34:	fffec600 	.word	0xfffec600
+   4:	6953      	ldr	r3, [r2, #20]
+   6:	f443 6370 	orr.w	r3, r3, #3840	; 0xf00
+   a:	6153      	str	r3, [r2, #20]
+   c:	4b0b      	ldr	r3, [pc, #44]	; (3c <alt_gpt_all_tmr_uninit+0x3c>)
+   e:	f8d3 2608 	ldr.w	r2, [r3, #1544]	; 0x608
+  12:	f022 0205 	bic.w	r2, r2, #5
+  16:	f8c3 2608 	str.w	r2, [r3, #1544]	; 0x608
+  1a:	f8c3 0600 	str.w	r0, [r3, #1536]	; 0x600
+  1e:	2201      	movs	r2, #1
+  20:	f8c3 260c 	str.w	r2, [r3, #1548]	; 0x60c
+  24:	f8d3 2608 	ldr.w	r2, [r3, #1544]	; 0x608
+  28:	f422 427f 	bic.w	r2, r2, #65280	; 0xff00
+  2c:	f022 0207 	bic.w	r2, r2, #7
+  30:	f8c3 2608 	str.w	r2, [r3, #1544]	; 0x608
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	ffd05000 	.word	0xffd05000
+  3c:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_gpt_all_tmr_init:
 
 00000000 <alt_gpt_all_tmr_init>:
    0:	b508      	push	{r3, lr}
    2:	f7ff fffe 	bl	0 <alt_gpt_all_tmr_init>
-   6:	2000      	movs	r0, #0
-   8:	4a02      	ldr	r2, [pc, #8]	; (14 <alt_gpt_all_tmr_init+0x14>)
-   a:	6813      	ldr	r3, [r2, #0]
+   6:	4a03      	ldr	r2, [pc, #12]	; (14 <alt_gpt_all_tmr_init+0x14>)
+   8:	2000      	movs	r0, #0
+   a:	6953      	ldr	r3, [r2, #20]
    c:	f423 6370 	bic.w	r3, r3, #3840	; 0xf00
-  10:	6013      	str	r3, [r2, #0]
+  10:	6153      	str	r3, [r2, #20]
   12:	bd08      	pop	{r3, pc}
-  14:	ffd05014 	.word	0xffd05014
+  14:	ffd05000 	.word	0xffd05000
 
 Disassembly of section .text.alt_gpt_tmr_stop:
 
@@ -51,8 +50,8 @@ Disassembly of section .text.alt_gpt_tmr_stop:
    e:	d107      	bne.n	20 <alt_gpt_tmr_stop+0x20>
   10:	f7ff fffe 	bl	0 <cpu_wdog_in_gpt_mode>
   14:	b1e8      	cbz	r0, 52 <alt_gpt_tmr_stop+0x52>
-  16:	2000      	movs	r0, #0
-  18:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  16:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  1a:	2000      	movs	r0, #0
   1c:	f7ff bffe 	b.w	0 <alt_wdog_stop>
   20:	2801      	cmp	r0, #1
   22:	d00e      	beq.n	42 <alt_gpt_tmr_stop+0x42>
@@ -78,10 +77,10 @@ Disassembly of section .text.alt_gpt_tmr_stop:
   4c:	e7f3      	b.n	36 <alt_gpt_tmr_stop+0x36>
   4e:	4b08      	ldr	r3, [pc, #32]	; (70 <alt_gpt_tmr_stop+0x70>)
   50:	e7f1      	b.n	36 <alt_gpt_tmr_stop+0x36>
-  52:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  56:	bd08      	pop	{r3, pc}
+  52:	f04f 30ff 	mov.w	r0, #4294967295
+  56:	e7f3      	b.n	40 <alt_gpt_tmr_stop+0x40>
   58:	f06f 0008 	mvn.w	r0, #8
-  5c:	bd08      	pop	{r3, pc}
+  5c:	e7f0      	b.n	40 <alt_gpt_tmr_stop+0x40>
   5e:	bf00      	nop
   60:	ffc09008 	.word	0xffc09008
   64:	fffec608 	.word	0xfffec608
@@ -100,8 +99,8 @@ Disassembly of section .text.alt_gpt_tmr_start:
    e:	d107      	bne.n	20 <alt_gpt_tmr_start+0x20>
   10:	f7ff fffe 	bl	0 <cpu_wdog_in_gpt_mode>
   14:	b1e8      	cbz	r0, 52 <alt_gpt_tmr_start+0x52>
-  16:	2000      	movs	r0, #0
-  18:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  16:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  1a:	2000      	movs	r0, #0
   1c:	f7ff bffe 	b.w	0 <alt_wdog_start>
   20:	2801      	cmp	r0, #1
   22:	d00e      	beq.n	42 <alt_gpt_tmr_start+0x42>
@@ -127,10 +126,10 @@ Disassembly of section .text.alt_gpt_tmr_start:
   4c:	e7f3      	b.n	36 <alt_gpt_tmr_start+0x36>
   4e:	4b08      	ldr	r3, [pc, #32]	; (70 <alt_gpt_tmr_start+0x70>)
   50:	e7f1      	b.n	36 <alt_gpt_tmr_start+0x36>
-  52:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  56:	bd08      	pop	{r3, pc}
+  52:	f04f 30ff 	mov.w	r0, #4294967295
+  56:	e7f3      	b.n	40 <alt_gpt_tmr_start+0x40>
   58:	f06f 0008 	mvn.w	r0, #8
-  5c:	bd08      	pop	{r3, pc}
+  5c:	e7f0      	b.n	40 <alt_gpt_tmr_start+0x40>
   5e:	bf00      	nop
   60:	ffc09008 	.word	0xffc09008
   64:	fffec608 	.word	0xfffec608
@@ -144,14 +143,14 @@ Disassembly of section .text.alt_gpt_tmr_is_running:
    0:	b508      	push	{r3, lr}
    2:	b928      	cbnz	r0, 10 <alt_gpt_tmr_is_running+0x10>
    4:	f7ff fffe 	bl	0 <alt_globaltmr_is_comp_mode>
-   8:	b308      	cbz	r0, 46 <alt_globaltmr_is_running+0x46>
+   8:	b108      	cbz	r0, e <alt_gpt_tmr_is_running+0xe>
    a:	f7ff fffe 	bl	0 <alt_globaltmr_is_running>
    e:	bd08      	pop	{r3, pc}
   10:	2802      	cmp	r0, #2
   12:	d103      	bne.n	1c <alt_gpt_tmr_is_running+0x1c>
   14:	2000      	movs	r0, #0
   16:	f7ff fffe 	bl	0 <alt_wdog_tmr_is_enabled>
-  1a:	bd08      	pop	{r3, pc}
+  1a:	e7f8      	b.n	e <alt_gpt_tmr_is_running+0xe>
   1c:	2801      	cmp	r0, #1
   1e:	d00c      	beq.n	3a <alt_gpt_tmr_is_running+0x3a>
   20:	2803      	cmp	r0, #3
@@ -165,7 +164,7 @@ Disassembly of section .text.alt_gpt_tmr_is_running:
   30:	4b07      	ldr	r3, [pc, #28]	; (50 <alt_gpt_tmr_is_running+0x50>)
   32:	6818      	ldr	r0, [r3, #0]
   34:	f000 0001 	and.w	r0, r0, #1
-  38:	bd08      	pop	{r3, pc}
+  38:	e7e9      	b.n	e <alt_gpt_tmr_is_running+0xe>
   3a:	4b06      	ldr	r3, [pc, #24]	; (54 <alt_gpt_tmr_is_running+0x54>)
   3c:	e7f9      	b.n	32 <alt_gpt_tmr_is_running+0x32>
   3e:	4b06      	ldr	r3, [pc, #24]	; (58 <alt_gpt_tmr_is_running+0x58>)
@@ -175,7 +174,7 @@ Disassembly of section .text.alt_gpt_tmr_is_running:
   46:	4b06      	ldr	r3, [pc, #24]	; (60 <alt_gpt_tmr_is_running+0x60>)
   48:	e7f3      	b.n	32 <alt_gpt_tmr_is_running+0x32>
   4a:	f06f 0008 	mvn.w	r0, #8
-  4e:	bd08      	pop	{r3, pc}
+  4e:	e7de      	b.n	e <alt_gpt_tmr_is_running+0xe>
   50:	ffc09008 	.word	0xffc09008
   54:	fffec608 	.word	0xfffec608
   58:	ffd00008 	.word	0xffd00008
@@ -225,7 +224,7 @@ Disassembly of section .text.alt_gpt_counter_set:
   56:	4b06      	ldr	r3, [pc, #24]	; (70 <alt_gpt_counter_set+0x70>)
   58:	e7f4      	b.n	44 <alt_gpt_counter_set+0x44>
   5a:	f06f 0008 	mvn.w	r0, #8
-  5e:	bd38      	pop	{r3, r4, r5, pc}
+  5e:	e7f3      	b.n	48 <alt_gpt_counter_set+0x48>
   60:	ffc09000 	.word	0xffc09000
   64:	fffec600 	.word	0xfffec600
   68:	ffd00000 	.word	0xffd00000
@@ -322,42 +321,42 @@ Disassembly of section .text.alt_gpt_maxcounter_get:
    e:	d006      	beq.n	1e <alt_gpt_maxcounter_get+0x1e>
   10:	3803      	subs	r0, #3
   12:	2803      	cmp	r0, #3
-  14:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+  14:	f04f 30ff 	mov.w	r0, #4294967295
   18:	bf88      	it	hi
   1a:	2000      	movhi	r0, #0
   1c:	4770      	bx	lr
-  1e:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+  1e:	f04f 30ff 	mov.w	r0, #4294967295
   22:	4770      	bx	lr
 
 Disassembly of section .text.alt_gpt_prescaler_set:
 
 00000000 <alt_gpt_prescaler_set>:
-   0:	b920      	cbnz	r0, c <alt_gpt_prescaler_set+0xc>
-   2:	29ff      	cmp	r1, #255	; 0xff
-   4:	d816      	bhi.n	34 <alt_gpt_prescaler_set+0x34>
-   6:	4608      	mov	r0, r1
-   8:	f7ff bffe 	b.w	0 <alt_globaltmr_prescaler_set>
-   c:	2802      	cmp	r0, #2
-   e:	d104      	bne.n	1a <alt_gpt_prescaler_set+0x1a>
-  10:	29ff      	cmp	r1, #255	; 0xff
-  12:	d80f      	bhi.n	34 <alt_gpt_prescaler_set+0x34>
-  14:	4608      	mov	r0, r1
+   0:	4603      	mov	r3, r0
+   2:	4608      	mov	r0, r1
+   4:	b91b      	cbnz	r3, e <alt_gpt_prescaler_set+0xe>
+   6:	29ff      	cmp	r1, #255	; 0xff
+   8:	d816      	bhi.n	38 <alt_gpt_prescaler_set+0x38>
+   a:	f7ff bffe 	b.w	0 <alt_globaltmr_prescaler_set>
+   e:	2b02      	cmp	r3, #2
+  10:	d103      	bne.n	1a <alt_gpt_prescaler_set+0x1a>
+  12:	29ff      	cmp	r1, #255	; 0xff
+  14:	d810      	bhi.n	38 <alt_gpt_prescaler_set+0x38>
   16:	f7ff bffe 	b.w	0 <alt_wdog_core_prescaler_set>
-  1a:	2801      	cmp	r0, #1
-  1c:	d10a      	bne.n	34 <alt_gpt_prescaler_set+0x34>
+  1a:	2b01      	cmp	r3, #1
+  1c:	d10c      	bne.n	38 <alt_gpt_prescaler_set+0x38>
   1e:	29ff      	cmp	r1, #255	; 0xff
-  20:	d808      	bhi.n	34 <alt_gpt_prescaler_set+0x34>
-  22:	4a06      	ldr	r2, [pc, #24]	; (3c <alt_gpt_prescaler_set+0x3c>)
-  24:	2000      	movs	r0, #0
-  26:	6813      	ldr	r3, [r2, #0]
-  28:	f423 437f 	bic.w	r3, r3, #65280	; 0xff00
-  2c:	ea43 2101 	orr.w	r1, r3, r1, lsl #8
-  30:	6011      	str	r1, [r2, #0]
-  32:	4770      	bx	lr
-  34:	f06f 0008 	mvn.w	r0, #8
-  38:	4770      	bx	lr
-  3a:	bf00      	nop
-  3c:	fffec608 	.word	0xfffec608
+  20:	d80a      	bhi.n	38 <alt_gpt_prescaler_set+0x38>
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <alt_gpt_prescaler_set+0x40>)
+  24:	f8d3 1608 	ldr.w	r1, [r3, #1544]	; 0x608
+  28:	f421 417f 	bic.w	r1, r1, #65280	; 0xff00
+  2c:	ea41 2100 	orr.w	r1, r1, r0, lsl #8
+  30:	2000      	movs	r0, #0
+  32:	f8c3 1608 	str.w	r1, [r3, #1544]	; 0x608
+  36:	4770      	bx	lr
+  38:	f06f 0008 	mvn.w	r0, #8
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_gpt_prescaler_get:
 
@@ -370,24 +369,23 @@ Disassembly of section .text.alt_gpt_prescaler_get:
    e:	2801      	cmp	r0, #1
   10:	bf03      	ittte	eq
   12:	4b03      	ldreq	r3, [pc, #12]	; (20 <alt_gpt_prescaler_get+0x20>)
-  14:	6818      	ldreq	r0, [r3, #0]
-  16:	f3c0 2007 	ubfxeq	r0, r0, #8, #8
-  1a:	2000      	movne	r0, #0
-  1c:	4770      	bx	lr
-  1e:	bf00      	nop
-  20:	fffec608 	.word	0xfffec608
+  14:	f8d3 0608 	ldreq.w	r0, [r3, #1544]	; 0x608
+  18:	f3c0 2007 	ubfxeq	r0, r0, #8, #8
+  1c:	2000      	movne	r0, #0
+  1e:	4770      	bx	lr
+  20:	fffec000 	.word	0xfffec000
 
 Disassembly of section .text.alt_gpt_curtime_get_kernl:
 
 00000000 <alt_gpt_curtime_get_kernl>:
-   0:	e92d 41f3 	stmdb	sp!, {r0, r1, r4, r5, r6, r7, r8, lr}
+   0:	e92d 45f7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, sl, lr}
    4:	4604      	mov	r4, r0
-   6:	4688      	mov	r8, r1
+   6:	468a      	mov	sl, r1
    8:	f7ff fffe 	bl	0 <alt_gpt_curtime_get_kernl>
-   c:	28ff      	cmp	r0, #255	; 0xff
-   e:	4605      	mov	r5, r0
-  10:	d84b      	bhi.n	aa <alt_gpt_curtime_get_kernl+0xaa>
-  12:	bb44      	cbnz	r4, 66 <alt_gpt_curtime_get_kernl+0x66>
+   c:	4605      	mov	r5, r0
+   e:	28ff      	cmp	r0, #255	; 0xff
+  10:	d84a      	bhi.n	a8 <alt_gpt_curtime_get_kernl+0xa8>
+  12:	bb3c      	cbnz	r4, 64 <alt_gpt_curtime_get_kernl+0x64>
   14:	f7ff fffe 	bl	0 <alt_globaltmr_comp_get64>
   18:	4606      	mov	r6, r0
   1a:	460f      	mov	r7, r1
@@ -397,67 +395,65 @@ Disassembly of section .text.alt_gpt_curtime_get_kernl:
   26:	eb67 0701 	sbc.w	r7, r7, r1
   2a:	a901      	add	r1, sp, #4
   2c:	f7ff fffe 	bl	0 <alt_clk_freq_get>
-  30:	4684      	mov	ip, r0
-  32:	b9a0      	cbnz	r0, 5e <alt_gpt_curtime_get_kernl+0x5e>
-  34:	1c6a      	adds	r2, r5, #1
-  36:	fba2 2308 	umull	r2, r3, r2, r8
-  3a:	fb02 f407 	mul.w	r4, r2, r7
-  3e:	fba2 0106 	umull	r0, r1, r2, r6
-  42:	9a01      	ldr	r2, [sp, #4]
-  44:	fb06 4403 	mla	r4, r6, r3, r4
-  48:	4663      	mov	r3, ip
-  4a:	4421      	add	r1, r4
-  4c:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  50:	2901      	cmp	r1, #1
-  52:	bf08      	it	eq
-  54:	2800      	cmpeq	r0, #0
-  56:	bf34      	ite	cc
-  58:	4604      	movcc	r4, r0
-  5a:	f04f 34ff 	movcs.w	r4, #4294967295	; 0xffffffff
-  5e:	4620      	mov	r0, r4
-  60:	b002      	add	sp, #8
-  62:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-  66:	2c02      	cmp	r4, #2
-  68:	d107      	bne.n	7a <alt_gpt_curtime_get_kernl+0x7a>
-  6a:	2000      	movs	r0, #0
-  6c:	f7ff fffe 	bl	0 <alt_wdog_counter_get_current>
-  70:	4604      	mov	r4, r0
-  72:	2015      	movs	r0, #21
-  74:	4626      	mov	r6, r4
-  76:	2700      	movs	r7, #0
-  78:	e7d7      	b.n	2a <alt_gpt_curtime_get_kernl+0x2a>
-  7a:	2c01      	cmp	r4, #1
-  7c:	d00a      	beq.n	94 <alt_gpt_curtime_get_kernl+0x94>
-  7e:	2c03      	cmp	r4, #3
-  80:	d00c      	beq.n	9c <alt_gpt_curtime_get_kernl+0x9c>
-  82:	2c04      	cmp	r4, #4
-  84:	d00d      	beq.n	a2 <alt_gpt_curtime_get_kernl+0xa2>
-  86:	2c05      	cmp	r4, #5
-  88:	d00d      	beq.n	a6 <alt_gpt_curtime_get_kernl+0xa6>
-  8a:	2c06      	cmp	r4, #6
-  8c:	d10d      	bne.n	aa <alt_gpt_curtime_get_kernl+0xaa>
-  8e:	4b08      	ldr	r3, [pc, #32]	; (b0 <alt_gpt_curtime_get_kernl+0xb0>)
-  90:	201b      	movs	r0, #27
-  92:	e001      	b.n	98 <alt_gpt_curtime_get_kernl+0x98>
-  94:	4b07      	ldr	r3, [pc, #28]	; (b4 <alt_gpt_curtime_get_kernl+0xb4>)
-  96:	2015      	movs	r0, #21
-  98:	681c      	ldr	r4, [r3, #0]
-  9a:	e7eb      	b.n	74 <alt_gpt_curtime_get_kernl+0x74>
-  9c:	4b06      	ldr	r3, [pc, #24]	; (b8 <alt_gpt_curtime_get_kernl+0xb8>)
-  9e:	200c      	movs	r0, #12
-  a0:	e7fa      	b.n	98 <alt_gpt_curtime_get_kernl+0x98>
-  a2:	4b06      	ldr	r3, [pc, #24]	; (bc <alt_gpt_curtime_get_kernl+0xbc>)
-  a4:	e7fb      	b.n	9e <alt_gpt_curtime_get_kernl+0x9e>
-  a6:	4b06      	ldr	r3, [pc, #24]	; (c0 <alt_gpt_curtime_get_kernl+0xc0>)
-  a8:	e7f2      	b.n	90 <alt_gpt_curtime_get_kernl+0x90>
-  aa:	2400      	movs	r4, #0
-  ac:	e7d7      	b.n	5e <alt_gpt_curtime_get_kernl+0x5e>
-  ae:	bf00      	nop
-  b0:	ffc09004 	.word	0xffc09004
-  b4:	fffec604 	.word	0xfffec604
-  b8:	ffd00004 	.word	0xffd00004
-  bc:	ffd01004 	.word	0xffd01004
-  c0:	ffc08004 	.word	0xffc08004
+  30:	4680      	mov	r8, r0
+  32:	b998      	cbnz	r0, 5c <alt_gpt_curtime_get_kernl+0x5c>
+  34:	3501      	adds	r5, #1
+  36:	4643      	mov	r3, r8
+  38:	f04f 34ff 	mov.w	r4, #4294967295
+  3c:	fba5 250a 	umull	r2, r5, r5, sl
+  40:	4357      	muls	r7, r2
+  42:	fb06 7105 	mla	r1, r6, r5, r7
+  46:	fba2 0606 	umull	r0, r6, r2, r6
+  4a:	9a01      	ldr	r2, [sp, #4]
+  4c:	4431      	add	r1, r6
+  4e:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  52:	4284      	cmp	r4, r0
+  54:	eb78 0301 	sbcs.w	r3, r8, r1
+  58:	d300      	bcc.n	5c <alt_gpt_curtime_get_kernl+0x5c>
+  5a:	4604      	mov	r4, r0
+  5c:	4620      	mov	r0, r4
+  5e:	b003      	add	sp, #12
+  60:	e8bd 85f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, sl, pc}
+  64:	2c02      	cmp	r4, #2
+  66:	d107      	bne.n	78 <alt_gpt_curtime_get_kernl+0x78>
+  68:	2000      	movs	r0, #0
+  6a:	f7ff fffe 	bl	0 <alt_wdog_counter_get_current>
+  6e:	4604      	mov	r4, r0
+  70:	2015      	movs	r0, #21
+  72:	4626      	mov	r6, r4
+  74:	2700      	movs	r7, #0
+  76:	e7d8      	b.n	2a <alt_gpt_curtime_get_kernl+0x2a>
+  78:	2c01      	cmp	r4, #1
+  7a:	d00a      	beq.n	92 <alt_gpt_curtime_get_kernl+0x92>
+  7c:	2c03      	cmp	r4, #3
+  7e:	d00c      	beq.n	9a <alt_gpt_curtime_get_kernl+0x9a>
+  80:	2c04      	cmp	r4, #4
+  82:	d00d      	beq.n	a0 <alt_gpt_curtime_get_kernl+0xa0>
+  84:	2c05      	cmp	r4, #5
+  86:	d00d      	beq.n	a4 <alt_gpt_curtime_get_kernl+0xa4>
+  88:	2c06      	cmp	r4, #6
+  8a:	d10d      	bne.n	a8 <alt_gpt_curtime_get_kernl+0xa8>
+  8c:	4b07      	ldr	r3, [pc, #28]	; (ac <alt_gpt_curtime_get_kernl+0xac>)
+  8e:	201b      	movs	r0, #27
+  90:	e001      	b.n	96 <alt_gpt_curtime_get_kernl+0x96>
+  92:	4b07      	ldr	r3, [pc, #28]	; (b0 <alt_gpt_curtime_get_kernl+0xb0>)
+  94:	2015      	movs	r0, #21
+  96:	681c      	ldr	r4, [r3, #0]
+  98:	e7eb      	b.n	72 <alt_gpt_curtime_get_kernl+0x72>
+  9a:	4b06      	ldr	r3, [pc, #24]	; (b4 <alt_gpt_curtime_get_kernl+0xb4>)
+  9c:	200c      	movs	r0, #12
+  9e:	e7fa      	b.n	96 <alt_gpt_curtime_get_kernl+0x96>
+  a0:	4b05      	ldr	r3, [pc, #20]	; (b8 <alt_gpt_curtime_get_kernl+0xb8>)
+  a2:	e7fb      	b.n	9c <alt_gpt_curtime_get_kernl+0x9c>
+  a4:	4b05      	ldr	r3, [pc, #20]	; (bc <alt_gpt_curtime_get_kernl+0xbc>)
+  a6:	e7f2      	b.n	8e <alt_gpt_curtime_get_kernl+0x8e>
+  a8:	2400      	movs	r4, #0
+  aa:	e7d7      	b.n	5c <alt_gpt_curtime_get_kernl+0x5c>
+  ac:	ffc09004 	.word	0xffc09004
+  b0:	fffec604 	.word	0xfffec604
+  b4:	ffd00004 	.word	0xffd00004
+  b8:	ffd01004 	.word	0xffd01004
+  bc:	ffc08004 	.word	0xffc08004
 
 Disassembly of section .text.alt_gpt_curtime_get:
 
@@ -495,81 +491,78 @@ Disassembly of section .text.alt_gpt_delay_ns:
    4:	460c      	mov	r4, r1
    6:	4616      	mov	r6, r2
    8:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
-   c:	2d06      	cmp	r5, #6
+   c:	2d04      	cmp	r5, #4
    e:	4607      	mov	r7, r0
-  10:	d828      	bhi.n	64 <alt_gpt_delay_ns+0x64>
-  12:	2301      	movs	r3, #1
-  14:	40ab      	lsls	r3, r5
-  16:	075a      	lsls	r2, r3, #29
-  18:	d127      	bne.n	6a <alt_gpt_delay_ns+0x6a>
-  1a:	f013 0f60 	tst.w	r3, #96	; 0x60
-  1e:	d126      	bne.n	6e <alt_gpt_delay_ns+0x6e>
-  20:	f013 0f18 	tst.w	r3, #24
-  24:	d01e      	beq.n	64 <alt_gpt_delay_ns+0x64>
-  26:	200c      	movs	r0, #12
-  28:	a901      	add	r1, sp, #4
-  2a:	f7ff fffe 	bl	0 <alt_clk_freq_get>
-  2e:	9801      	ldr	r0, [sp, #4]
-  30:	1c7a      	adds	r2, r7, #1
-  32:	2300      	movs	r3, #0
-  34:	fba6 0100 	umull	r0, r1, r6, r0
-  38:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  3c:	a316      	add	r3, pc, #88	; (adr r3, 98 <alt_gpt_delay_ns+0x98>)
-  3e:	e9d3 2300 	ldrd	r2, r3, [r3]
-  42:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  46:	1c46      	adds	r6, r0, #1
-  48:	42b4      	cmp	r4, r6
-  4a:	d312      	bcc.n	72 <alt_gpt_delay_ns+0x72>
-  4c:	4628      	mov	r0, r5
-  4e:	1ba4      	subs	r4, r4, r6
-  50:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
-  54:	4606      	mov	r6, r0
-  56:	4628      	mov	r0, r5
-  58:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
-  5c:	4284      	cmp	r4, r0
-  5e:	d801      	bhi.n	64 <alt_gpt_delay_ns+0x64>
-  60:	4286      	cmp	r6, r0
-  62:	d2f7      	bcs.n	54 <alt_gpt_delay_ns+0x54>
-  64:	2000      	movs	r0, #0
-  66:	b003      	add	sp, #12
-  68:	bdf0      	pop	{r4, r5, r6, r7, pc}
-  6a:	2015      	movs	r0, #21
-  6c:	e7dc      	b.n	28 <alt_gpt_delay_ns+0x28>
-  6e:	201b      	movs	r0, #27
-  70:	e7da      	b.n	28 <alt_gpt_delay_ns+0x28>
+  10:	d824      	bhi.n	5c <alt_gpt_delay_ns+0x5c>
+  12:	2d02      	cmp	r5, #2
+  14:	bf8c      	ite	hi
+  16:	200c      	movhi	r0, #12
+  18:	2015      	movls	r0, #21
+  1a:	a901      	add	r1, sp, #4
+  1c:	f7ff fffe 	bl	0 <alt_clk_freq_get>
+  20:	9901      	ldr	r1, [sp, #4]
+  22:	1c7a      	adds	r2, r7, #1
+  24:	2300      	movs	r3, #0
+  26:	fba6 0101 	umull	r0, r1, r6, r1
+  2a:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  2e:	a318      	add	r3, pc, #96	; (adr r3, 90 <alt_gpt_delay_ns+0x90>)
+  30:	e9d3 2300 	ldrd	r2, r3, [r3]
+  34:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  38:	1c46      	adds	r6, r0, #1
+  3a:	42b4      	cmp	r4, r6
+  3c:	d313      	bcc.n	66 <alt_gpt_delay_ns+0x66>
+  3e:	4628      	mov	r0, r5
+  40:	1ba4      	subs	r4, r4, r6
+  42:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
+  46:	4606      	mov	r6, r0
+  48:	4628      	mov	r0, r5
+  4a:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
+  4e:	4284      	cmp	r4, r0
+  50:	d801      	bhi.n	56 <alt_gpt_delay_ns+0x56>
+  52:	4286      	cmp	r6, r0
+  54:	d2f7      	bcs.n	46 <alt_gpt_delay_ns+0x46>
+  56:	2000      	movs	r0, #0
+  58:	b003      	add	sp, #12
+  5a:	bdf0      	pop	{r4, r5, r6, r7, pc}
+  5c:	1f6b      	subs	r3, r5, #5
+  5e:	2b01      	cmp	r3, #1
+  60:	d8f9      	bhi.n	56 <alt_gpt_delay_ns+0x56>
+  62:	201b      	movs	r0, #27
+  64:	e7d9      	b.n	1a <alt_gpt_delay_ns+0x1a>
+  66:	4628      	mov	r0, r5
+  68:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
+  6c:	42a0      	cmp	r0, r4
+  6e:	d3fa      	bcc.n	66 <alt_gpt_delay_ns+0x66>
+  70:	1b36      	subs	r6, r6, r4
   72:	4628      	mov	r0, r5
   74:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
-  78:	4284      	cmp	r4, r0
-  7a:	d8fa      	bhi.n	72 <alt_gpt_delay_ns+0x72>
-  7c:	1b36      	subs	r6, r6, r4
+  78:	4604      	mov	r4, r0
+  7a:	4286      	cmp	r6, r0
+  7c:	d9dd      	bls.n	3a <alt_gpt_delay_ns+0x3a>
   7e:	4628      	mov	r0, r5
   80:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
-  84:	4286      	cmp	r6, r0
-  86:	4604      	mov	r4, r0
-  88:	d9de      	bls.n	48 <alt_gpt_delay_ns+0x48>
-  8a:	4628      	mov	r0, r5
-  8c:	f7ff fffe 	bl	0 <alt_gpt_delay_ns>
-  90:	4284      	cmp	r4, r0
-  92:	d0fa      	beq.n	8a <alt_gpt_delay_ns+0x8a>
-  94:	e7d8      	b.n	48 <alt_gpt_delay_ns+0x48>
-  96:	bf00      	nop
-  98:	3b9aca00 	.word	0x3b9aca00
-  9c:	00000000 	.word	0x00000000
+  84:	42a0      	cmp	r0, r4
+  86:	d0fa      	beq.n	7e <alt_gpt_delay_ns+0x7e>
+  88:	e7d7      	b.n	3a <alt_gpt_delay_ns+0x3a>
+  8a:	bf00      	nop
+  8c:	f3af 8000 	nop.w
+  90:	3b9aca00 	.word	0x3b9aca00
+  94:	00000000 	.word	0x00000000
 
 Disassembly of section .text.alt_gpt_time_get_kernl:
 
 00000000 <alt_gpt_time_get_kernl>:
-   0:	2802      	cmp	r0, #2
-   2:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
+   0:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
+   2:	2802      	cmp	r0, #2
    4:	4605      	mov	r5, r0
    6:	460e      	mov	r6, r1
    8:	d908      	bls.n	1c <alt_gpt_time_get_kernl+0x1c>
    a:	1ec3      	subs	r3, r0, #3
    c:	2b01      	cmp	r3, #1
-   e:	d92d      	bls.n	6c <alt_gpt_time_get_kernl+0x6c>
+   e:	d92e      	bls.n	6e <alt_gpt_time_get_kernl+0x6e>
   10:	1f43      	subs	r3, r0, #5
   12:	2b01      	cmp	r3, #1
-  14:	d92c      	bls.n	70 <alt_gpt_time_get_kernl+0x70>
+  14:	d92d      	bls.n	72 <alt_gpt_time_get_kernl+0x72>
   16:	2000      	movs	r0, #0
   18:	b003      	add	sp, #12
   1a:	bdf0      	pop	{r4, r5, r6, r7, pc}
@@ -584,42 +577,43 @@ Disassembly of section .text.alt_gpt_time_get_kernl:
   30:	4604      	mov	r4, r0
   32:	4628      	mov	r0, r5
   34:	f7ff fffe 	bl	0 <alt_gpt_time_get_kernl>
-  38:	1c62      	adds	r2, r4, #1
-  3a:	f100 0001 	add.w	r0, r0, #1
-  3e:	fba2 4500 	umull	r4, r5, r2, r0
-  42:	f04f 0300 	mov.w	r3, #0
-  46:	f143 0300 	adc.w	r3, r3, #0
-  4a:	9a01      	ldr	r2, [sp, #4]
-  4c:	fb00 5503 	mla	r5, r0, r3, r5
-  50:	fba6 0104 	umull	r0, r1, r6, r4
-  54:	463b      	mov	r3, r7
-  56:	fb06 1105 	mla	r1, r6, r5, r1
-  5a:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  5e:	2901      	cmp	r1, #1
-  60:	bf08      	it	eq
-  62:	2800      	cmpeq	r0, #0
-  64:	bf28      	it	cs
-  66:	f04f 30ff 	movcs.w	r0, #4294967295	; 0xffffffff
-  6a:	e7d5      	b.n	18 <alt_gpt_time_get_kernl+0x18>
-  6c:	200c      	movs	r0, #12
-  6e:	e7d6      	b.n	1e <alt_gpt_time_get_kernl+0x1e>
-  70:	201b      	movs	r0, #27
-  72:	e7d4      	b.n	1e <alt_gpt_time_get_kernl+0x1e>
+  38:	3401      	adds	r4, #1
+  3a:	f100 0301 	add.w	r3, r0, #1
+  3e:	f147 0100 	adc.w	r1, r7, #0
+  42:	9a01      	ldr	r2, [sp, #4]
+  44:	fba4 4303 	umull	r4, r3, r4, r3
+  48:	fb00 1101 	mla	r1, r0, r1, r1
+  4c:	4419      	add	r1, r3
+  4e:	463b      	mov	r3, r7
+  50:	fba6 0404 	umull	r0, r4, r6, r4
+  54:	fb06 4101 	mla	r1, r6, r1, r4
+  58:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  5c:	4603      	mov	r3, r0
+  5e:	f04f 30ff 	mov.w	r0, #4294967295
+  62:	4298      	cmp	r0, r3
+  64:	eb77 0201 	sbcs.w	r2, r7, r1
+  68:	bf28      	it	cs
+  6a:	4618      	movcs	r0, r3
+  6c:	e7d4      	b.n	18 <alt_gpt_time_get_kernl+0x18>
+  6e:	200c      	movs	r0, #12
+  70:	e7d5      	b.n	1e <alt_gpt_time_get_kernl+0x1e>
+  72:	201b      	movs	r0, #27
+  74:	e7d3      	b.n	1e <alt_gpt_time_get_kernl+0x1e>
 
 Disassembly of section .text.alt_gpt_maxtime_get_kernl:
 
 00000000 <alt_gpt_maxtime_get_kernl>:
-   0:	2802      	cmp	r0, #2
-   2:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
+   0:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
+   2:	2802      	cmp	r0, #2
    4:	4605      	mov	r5, r0
    6:	460e      	mov	r6, r1
    8:	d908      	bls.n	1c <alt_gpt_maxtime_get_kernl+0x1c>
    a:	1ec3      	subs	r3, r0, #3
    c:	2b01      	cmp	r3, #1
-   e:	d92d      	bls.n	6c <alt_gpt_maxtime_get_kernl+0x6c>
+   e:	d92e      	bls.n	6e <alt_gpt_maxtime_get_kernl+0x6e>
   10:	1f43      	subs	r3, r0, #5
   12:	2b01      	cmp	r3, #1
-  14:	d92c      	bls.n	70 <alt_gpt_maxtime_get_kernl+0x70>
+  14:	d92d      	bls.n	72 <alt_gpt_maxtime_get_kernl+0x72>
   16:	2000      	movs	r0, #0
   18:	b003      	add	sp, #12
   1a:	bdf0      	pop	{r4, r5, r6, r7, pc}
@@ -634,27 +628,28 @@ Disassembly of section .text.alt_gpt_maxtime_get_kernl:
   30:	4604      	mov	r4, r0
   32:	4628      	mov	r0, r5
   34:	f7ff fffe 	bl	0 <alt_gpt_maxtime_get_kernl>
-  38:	1c62      	adds	r2, r4, #1
-  3a:	f100 0001 	add.w	r0, r0, #1
-  3e:	fba2 4500 	umull	r4, r5, r2, r0
-  42:	f04f 0300 	mov.w	r3, #0
-  46:	f143 0300 	adc.w	r3, r3, #0
-  4a:	9a01      	ldr	r2, [sp, #4]
-  4c:	fb00 5503 	mla	r5, r0, r3, r5
-  50:	fba6 0104 	umull	r0, r1, r6, r4
-  54:	463b      	mov	r3, r7
-  56:	fb06 1105 	mla	r1, r6, r5, r1
-  5a:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  5e:	2901      	cmp	r1, #1
-  60:	bf08      	it	eq
-  62:	2800      	cmpeq	r0, #0
-  64:	bf28      	it	cs
-  66:	f04f 30ff 	movcs.w	r0, #4294967295	; 0xffffffff
-  6a:	e7d5      	b.n	18 <alt_gpt_maxtime_get_kernl+0x18>
-  6c:	200c      	movs	r0, #12
-  6e:	e7d6      	b.n	1e <alt_gpt_maxtime_get_kernl+0x1e>
-  70:	201b      	movs	r0, #27
-  72:	e7d4      	b.n	1e <alt_gpt_maxtime_get_kernl+0x1e>
+  38:	3401      	adds	r4, #1
+  3a:	f100 0301 	add.w	r3, r0, #1
+  3e:	f147 0100 	adc.w	r1, r7, #0
+  42:	9a01      	ldr	r2, [sp, #4]
+  44:	fba4 4303 	umull	r4, r3, r4, r3
+  48:	fb00 1101 	mla	r1, r0, r1, r1
+  4c:	4419      	add	r1, r3
+  4e:	463b      	mov	r3, r7
+  50:	fba6 0404 	umull	r0, r4, r6, r4
+  54:	fb06 4101 	mla	r1, r6, r1, r4
+  58:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  5c:	4603      	mov	r3, r0
+  5e:	f04f 30ff 	mov.w	r0, #4294967295
+  62:	4298      	cmp	r0, r3
+  64:	eb77 0201 	sbcs.w	r2, r7, r1
+  68:	bf28      	it	cs
+  6a:	4618      	movcs	r0, r3
+  6c:	e7d4      	b.n	18 <alt_gpt_maxtime_get_kernl+0x18>
+  6e:	200c      	movs	r0, #12
+  70:	e7d5      	b.n	1e <alt_gpt_maxtime_get_kernl+0x1e>
+  72:	201b      	movs	r0, #27
+  74:	e7d3      	b.n	1e <alt_gpt_maxtime_get_kernl+0x1e>
 
 Disassembly of section .text.alt_gpt_freq_get:
 
@@ -664,18 +659,18 @@ Disassembly of section .text.alt_gpt_freq_get:
    4:	2d02      	cmp	r5, #2
    6:	f04f 0000 	mov.w	r0, #0
    a:	9001      	str	r0, [sp, #4]
-   c:	d926      	bls.n	5c <alt_gpt_freq_get+0x5c>
+   c:	d924      	bls.n	58 <alt_gpt_freq_get+0x58>
    e:	1eeb      	subs	r3, r5, #3
   10:	2b01      	cmp	r3, #1
-  12:	d925      	bls.n	60 <alt_gpt_freq_get+0x60>
+  12:	d923      	bls.n	5c <alt_gpt_freq_get+0x5c>
   14:	1f6b      	subs	r3, r5, #5
   16:	2b01      	cmp	r3, #1
-  18:	d81e      	bhi.n	58 <alt_gpt_freq_get+0x58>
+  18:	d81c      	bhi.n	54 <alt_gpt_freq_get+0x54>
   1a:	201b      	movs	r0, #27
   1c:	a901      	add	r1, sp, #4
   1e:	f7ff fffe 	bl	0 <alt_clk_freq_get>
   22:	4606      	mov	r6, r0
-  24:	b9f0      	cbnz	r0, 64 <alt_gpt_freq_get+0x64>
+  24:	b9e0      	cbnz	r0, 60 <alt_gpt_freq_get+0x60>
   26:	4628      	mov	r0, r5
   28:	9f01      	ldr	r7, [sp, #4]
   2a:	f7ff fffe 	bl	0 <alt_gpt_freq_get>
@@ -683,25 +678,25 @@ Disassembly of section .text.alt_gpt_freq_get:
   30:	4628      	mov	r0, r5
   32:	f7ff fffe 	bl	0 <alt_gpt_freq_get>
   36:	3401      	adds	r4, #1
-  38:	f100 0001 	add.w	r0, r0, #1
-  3c:	fba4 2300 	umull	r2, r3, r4, r0
-  40:	f04f 0500 	mov.w	r5, #0
-  44:	f145 0500 	adc.w	r5, r5, #0
-  48:	4631      	mov	r1, r6
-  4a:	fb00 3305 	mla	r3, r0, r5, r3
-  4e:	4638      	mov	r0, r7
-  50:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
-  54:	9001      	str	r0, [sp, #4]
-  56:	9801      	ldr	r0, [sp, #4]
-  58:	b003      	add	sp, #12
-  5a:	bdf0      	pop	{r4, r5, r6, r7, pc}
-  5c:	2015      	movs	r0, #21
+  38:	f146 0300 	adc.w	r3, r6, #0
+  3c:	1c42      	adds	r2, r0, #1
+  3e:	4631      	mov	r1, r6
+  40:	fb00 3303 	mla	r3, r0, r3, r3
+  44:	4638      	mov	r0, r7
+  46:	fba4 2402 	umull	r2, r4, r4, r2
+  4a:	4423      	add	r3, r4
+  4c:	f7ff fffe 	bl	0 <__aeabi_uldivmod>
+  50:	9001      	str	r0, [sp, #4]
+  52:	9801      	ldr	r0, [sp, #4]
+  54:	b003      	add	sp, #12
+  56:	bdf0      	pop	{r4, r5, r6, r7, pc}
+  58:	2015      	movs	r0, #21
+  5a:	e7df      	b.n	1c <alt_gpt_freq_get+0x1c>
+  5c:	200c      	movs	r0, #12
   5e:	e7dd      	b.n	1c <alt_gpt_freq_get+0x1c>
-  60:	200c      	movs	r0, #12
-  62:	e7db      	b.n	1c <alt_gpt_freq_get+0x1c>
-  64:	2300      	movs	r3, #0
-  66:	9301      	str	r3, [sp, #4]
-  68:	e7f5      	b.n	56 <alt_gpt_freq_get+0x56>
+  60:	2300      	movs	r3, #0
+  62:	9301      	str	r3, [sp, #4]
+  64:	e7f5      	b.n	52 <alt_gpt_freq_get+0x52>
 
 Disassembly of section .text.alt_gpt_time_get:
 
@@ -745,47 +740,47 @@ Disassembly of section .text.alt_gpt_int_enable:
    c:	2802      	cmp	r0, #2
    e:	d107      	bne.n	20 <alt_gpt_int_enable+0x20>
   10:	f7ff fffe 	bl	0 <cpu_wdog_in_gpt_mode>
-  14:	b308      	cbz	r0, 5a <alt_gpt_int_enable+0x5a>
-  16:	2000      	movs	r0, #0
-  18:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  14:	b318      	cbz	r0, 5e <alt_gpt_int_enable+0x5e>
+  16:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  1a:	2000      	movs	r0, #0
   1c:	f7ff bffe 	b.w	0 <alt_wdog_int_enable>
   20:	2801      	cmp	r0, #1
-  22:	d106      	bne.n	32 <alt_gpt_int_enable+0x32>
-  24:	4a10      	ldr	r2, [pc, #64]	; (68 <alt_gpt_int_enable+0x68>)
-  26:	6813      	ldr	r3, [r2, #0]
-  28:	f043 0304 	orr.w	r3, r3, #4
-  2c:	6013      	str	r3, [r2, #0]
-  2e:	2000      	movs	r0, #0
-  30:	bd08      	pop	{r3, pc}
-  32:	2803      	cmp	r0, #3
-  34:	d00b      	beq.n	4e <alt_gpt_int_enable+0x4e>
-  36:	2804      	cmp	r0, #4
+  22:	d108      	bne.n	36 <alt_gpt_int_enable+0x36>
+  24:	4a11      	ldr	r2, [pc, #68]	; (6c <alt_gpt_int_enable+0x6c>)
+  26:	f8d2 3608 	ldr.w	r3, [r2, #1544]	; 0x608
+  2a:	f043 0304 	orr.w	r3, r3, #4
+  2e:	f8c2 3608 	str.w	r3, [r2, #1544]	; 0x608
+  32:	2000      	movs	r0, #0
+  34:	bd08      	pop	{r3, pc}
+  36:	2803      	cmp	r0, #3
   38:	d00b      	beq.n	52 <alt_gpt_int_enable+0x52>
-  3a:	2805      	cmp	r0, #5
+  3a:	2804      	cmp	r0, #4
   3c:	d00b      	beq.n	56 <alt_gpt_int_enable+0x56>
-  3e:	2806      	cmp	r0, #6
-  40:	d10e      	bne.n	60 <alt_gpt_int_enable+0x60>
-  42:	4b0a      	ldr	r3, [pc, #40]	; (6c <alt_gpt_int_enable+0x6c>)
-  44:	681a      	ldr	r2, [r3, #0]
-  46:	f022 0204 	bic.w	r2, r2, #4
-  4a:	601a      	str	r2, [r3, #0]
-  4c:	e7ef      	b.n	2e <alt_gpt_int_enable+0x2e>
-  4e:	4b08      	ldr	r3, [pc, #32]	; (70 <alt_gpt_int_enable+0x70>)
-  50:	e7f8      	b.n	44 <alt_gpt_int_enable+0x44>
+  3e:	2805      	cmp	r0, #5
+  40:	d00b      	beq.n	5a <alt_gpt_int_enable+0x5a>
+  42:	2806      	cmp	r0, #6
+  44:	d10e      	bne.n	64 <alt_gpt_int_enable+0x64>
+  46:	4b0a      	ldr	r3, [pc, #40]	; (70 <alt_gpt_int_enable+0x70>)
+  48:	681a      	ldr	r2, [r3, #0]
+  4a:	f022 0204 	bic.w	r2, r2, #4
+  4e:	601a      	str	r2, [r3, #0]
+  50:	e7ef      	b.n	32 <alt_gpt_int_enable+0x32>
   52:	4b08      	ldr	r3, [pc, #32]	; (74 <alt_gpt_int_enable+0x74>)
-  54:	e7f6      	b.n	44 <alt_gpt_int_enable+0x44>
+  54:	e7f8      	b.n	48 <alt_gpt_int_enable+0x48>
   56:	4b08      	ldr	r3, [pc, #32]	; (78 <alt_gpt_int_enable+0x78>)
-  58:	e7f4      	b.n	44 <alt_gpt_int_enable+0x44>
-  5a:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  5e:	bd08      	pop	{r3, pc}
-  60:	f06f 0008 	mvn.w	r0, #8
-  64:	bd08      	pop	{r3, pc}
-  66:	bf00      	nop
-  68:	fffec608 	.word	0xfffec608
-  6c:	ffc09008 	.word	0xffc09008
-  70:	ffd00008 	.word	0xffd00008
-  74:	ffd01008 	.word	0xffd01008
-  78:	ffc08008 	.word	0xffc08008
+  58:	e7f6      	b.n	48 <alt_gpt_int_enable+0x48>
+  5a:	4b08      	ldr	r3, [pc, #32]	; (7c <alt_gpt_int_enable+0x7c>)
+  5c:	e7f4      	b.n	48 <alt_gpt_int_enable+0x48>
+  5e:	f04f 30ff 	mov.w	r0, #4294967295
+  62:	e7e7      	b.n	34 <alt_gpt_int_enable+0x34>
+  64:	f06f 0008 	mvn.w	r0, #8
+  68:	e7e4      	b.n	34 <alt_gpt_int_enable+0x34>
+  6a:	bf00      	nop
+  6c:	fffec000 	.word	0xfffec000
+  70:	ffc09008 	.word	0xffc09008
+  74:	ffd00008 	.word	0xffd00008
+  78:	ffd01008 	.word	0xffd01008
+  7c:	ffc08008 	.word	0xffc08008
 
 Disassembly of section .text.alt_gpt_int_is_enabled:
 
@@ -797,41 +792,42 @@ Disassembly of section .text.alt_gpt_int_is_enabled:
    c:	2802      	cmp	r0, #2
    e:	d107      	bne.n	20 <alt_gpt_int_is_enabled+0x20>
   10:	f7ff fffe 	bl	0 <cpu_wdog_in_gpt_mode>
-  14:	b1f8      	cbz	r0, 56 <alt_gpt_int_is_enabled+0x56>
-  16:	2000      	movs	r0, #0
-  18:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  14:	b158      	cbz	r0, 2e <alt_gpt_int_is_enabled+0x2e>
+  16:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  1a:	2000      	movs	r0, #0
   1c:	f7ff bffe 	b.w	0 <alt_wdog_int_is_enabled>
   20:	2801      	cmp	r0, #1
-  22:	d104      	bne.n	2e <alt_gpt_int_is_enabled+0x2e>
-  24:	4b0c      	ldr	r3, [pc, #48]	; (58 <alt_gpt_int_is_enabled+0x58>)
-  26:	6818      	ldr	r0, [r3, #0]
-  28:	f3c0 0080 	ubfx	r0, r0, #2, #1
-  2c:	bd08      	pop	{r3, pc}
-  2e:	2803      	cmp	r0, #3
-  30:	d00a      	beq.n	48 <alt_gpt_int_is_enabled+0x48>
-  32:	2804      	cmp	r0, #4
-  34:	d00a      	beq.n	4c <alt_gpt_int_is_enabled+0x4c>
-  36:	2805      	cmp	r0, #5
-  38:	d00a      	beq.n	50 <alt_gpt_int_is_enabled+0x50>
-  3a:	2806      	cmp	r0, #6
-  3c:	d10a      	bne.n	54 <alt_gpt_int_is_enabled+0x54>
-  3e:	4b07      	ldr	r3, [pc, #28]	; (5c <alt_gpt_int_is_enabled+0x5c>)
-  40:	6818      	ldr	r0, [r3, #0]
-  42:	f080 0004 	eor.w	r0, r0, #4
-  46:	e7ef      	b.n	28 <alt_gpt_int_is_enabled+0x28>
-  48:	4b05      	ldr	r3, [pc, #20]	; (60 <alt_gpt_int_is_enabled+0x60>)
-  4a:	e7f9      	b.n	40 <alt_gpt_int_is_enabled+0x40>
-  4c:	4b05      	ldr	r3, [pc, #20]	; (64 <alt_gpt_int_is_enabled+0x64>)
-  4e:	e7f7      	b.n	40 <alt_gpt_int_is_enabled+0x40>
-  50:	4b05      	ldr	r3, [pc, #20]	; (68 <alt_gpt_int_is_enabled+0x68>)
-  52:	e7f5      	b.n	40 <alt_gpt_int_is_enabled+0x40>
-  54:	2000      	movs	r0, #0
-  56:	bd08      	pop	{r3, pc}
-  58:	fffec608 	.word	0xfffec608
-  5c:	ffc09008 	.word	0xffc09008
-  60:	ffd00008 	.word	0xffd00008
-  64:	ffd01008 	.word	0xffd01008
-  68:	ffc08008 	.word	0xffc08008
+  22:	d105      	bne.n	30 <alt_gpt_int_is_enabled+0x30>
+  24:	4b0d      	ldr	r3, [pc, #52]	; (5c <alt_gpt_int_is_enabled+0x5c>)
+  26:	f8d3 0608 	ldr.w	r0, [r3, #1544]	; 0x608
+  2a:	f3c0 0080 	ubfx	r0, r0, #2, #1
+  2e:	bd08      	pop	{r3, pc}
+  30:	2803      	cmp	r0, #3
+  32:	d00a      	beq.n	4a <alt_gpt_int_is_enabled+0x4a>
+  34:	2804      	cmp	r0, #4
+  36:	d00a      	beq.n	4e <alt_gpt_int_is_enabled+0x4e>
+  38:	2805      	cmp	r0, #5
+  3a:	d00a      	beq.n	52 <alt_gpt_int_is_enabled+0x52>
+  3c:	2806      	cmp	r0, #6
+  3e:	d10a      	bne.n	56 <alt_gpt_int_is_enabled+0x56>
+  40:	4b07      	ldr	r3, [pc, #28]	; (60 <alt_gpt_int_is_enabled+0x60>)
+  42:	6818      	ldr	r0, [r3, #0]
+  44:	f080 0004 	eor.w	r0, r0, #4
+  48:	e7ef      	b.n	2a <alt_gpt_int_is_enabled+0x2a>
+  4a:	4b06      	ldr	r3, [pc, #24]	; (64 <alt_gpt_int_is_enabled+0x64>)
+  4c:	e7f9      	b.n	42 <alt_gpt_int_is_enabled+0x42>
+  4e:	4b06      	ldr	r3, [pc, #24]	; (68 <alt_gpt_int_is_enabled+0x68>)
+  50:	e7f7      	b.n	42 <alt_gpt_int_is_enabled+0x42>
+  52:	4b06      	ldr	r3, [pc, #24]	; (6c <alt_gpt_int_is_enabled+0x6c>)
+  54:	e7f5      	b.n	42 <alt_gpt_int_is_enabled+0x42>
+  56:	2000      	movs	r0, #0
+  58:	e7e9      	b.n	2e <alt_gpt_int_is_enabled+0x2e>
+  5a:	bf00      	nop
+  5c:	fffec000 	.word	0xfffec000
+  60:	ffc09008 	.word	0xffc09008
+  64:	ffd00008 	.word	0xffd00008
+  68:	ffd01008 	.word	0xffd01008
+  6c:	ffc08008 	.word	0xffc08008
 
 Disassembly of section .text.alt_gpt_int_clear_pending:
 
@@ -843,43 +839,43 @@ Disassembly of section .text.alt_gpt_int_clear_pending:
    c:	2802      	cmp	r0, #2
    e:	d107      	bne.n	20 <alt_gpt_int_clear_pending+0x20>
   10:	f7ff fffe 	bl	0 <cpu_wdog_in_gpt_mode>
-  14:	b1d8      	cbz	r0, 4e <alt_gpt_int_clear_pending+0x4e>
-  16:	2000      	movs	r0, #0
-  18:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  14:	b1e8      	cbz	r0, 52 <alt_gpt_int_clear_pending+0x52>
+  16:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
+  1a:	2000      	movs	r0, #0
   1c:	f7ff bffe 	b.w	0 <alt_wdog_int_clear>
   20:	2801      	cmp	r0, #1
-  22:	d103      	bne.n	2c <alt_gpt_int_clear_pending+0x2c>
-  24:	4b0d      	ldr	r3, [pc, #52]	; (5c <alt_gpt_int_clear_pending+0x5c>)
-  26:	6018      	str	r0, [r3, #0]
-  28:	2000      	movs	r0, #0
-  2a:	bd08      	pop	{r3, pc}
-  2c:	2803      	cmp	r0, #3
-  2e:	d102      	bne.n	36 <alt_gpt_int_clear_pending+0x36>
-  30:	4b0b      	ldr	r3, [pc, #44]	; (60 <alt_gpt_int_clear_pending+0x60>)
-  32:	681b      	ldr	r3, [r3, #0]
-  34:	e7f8      	b.n	28 <alt_gpt_int_clear_pending+0x28>
-  36:	2804      	cmp	r0, #4
-  38:	d101      	bne.n	3e <alt_gpt_int_clear_pending+0x3e>
-  3a:	4b0a      	ldr	r3, [pc, #40]	; (64 <alt_gpt_int_clear_pending+0x64>)
-  3c:	e7f9      	b.n	32 <alt_gpt_int_clear_pending+0x32>
-  3e:	2805      	cmp	r0, #5
-  40:	d101      	bne.n	46 <alt_gpt_int_clear_pending+0x46>
-  42:	4b09      	ldr	r3, [pc, #36]	; (68 <alt_gpt_int_clear_pending+0x68>)
-  44:	e7f5      	b.n	32 <alt_gpt_int_clear_pending+0x32>
-  46:	2806      	cmp	r0, #6
-  48:	d104      	bne.n	54 <alt_gpt_int_clear_pending+0x54>
-  4a:	4b08      	ldr	r3, [pc, #32]	; (6c <alt_gpt_int_clear_pending+0x6c>)
-  4c:	e7f1      	b.n	32 <alt_gpt_int_clear_pending+0x32>
-  4e:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  52:	bd08      	pop	{r3, pc}
-  54:	f06f 0008 	mvn.w	r0, #8
-  58:	bd08      	pop	{r3, pc}
-  5a:	bf00      	nop
-  5c:	fffec60c 	.word	0xfffec60c
-  60:	ffd000a4 	.word	0xffd000a4
-  64:	ffd010a4 	.word	0xffd010a4
-  68:	ffc080a4 	.word	0xffc080a4
-  6c:	ffc090a4 	.word	0xffc090a4
+  22:	d104      	bne.n	2e <alt_gpt_int_clear_pending+0x2e>
+  24:	4b0e      	ldr	r3, [pc, #56]	; (60 <alt_gpt_int_clear_pending+0x60>)
+  26:	f8c3 060c 	str.w	r0, [r3, #1548]	; 0x60c
+  2a:	2000      	movs	r0, #0
+  2c:	bd08      	pop	{r3, pc}
+  2e:	2803      	cmp	r0, #3
+  30:	d103      	bne.n	3a <alt_gpt_int_clear_pending+0x3a>
+  32:	4b0c      	ldr	r3, [pc, #48]	; (64 <alt_gpt_int_clear_pending+0x64>)
+  34:	f8d3 30a4 	ldr.w	r3, [r3, #164]	; 0xa4
+  38:	e7f7      	b.n	2a <alt_gpt_int_clear_pending+0x2a>
+  3a:	2804      	cmp	r0, #4
+  3c:	d101      	bne.n	42 <alt_gpt_int_clear_pending+0x42>
+  3e:	4b0a      	ldr	r3, [pc, #40]	; (68 <alt_gpt_int_clear_pending+0x68>)
+  40:	e7f8      	b.n	34 <alt_gpt_int_clear_pending+0x34>
+  42:	2805      	cmp	r0, #5
+  44:	d101      	bne.n	4a <alt_gpt_int_clear_pending+0x4a>
+  46:	4b09      	ldr	r3, [pc, #36]	; (6c <alt_gpt_int_clear_pending+0x6c>)
+  48:	e7f4      	b.n	34 <alt_gpt_int_clear_pending+0x34>
+  4a:	2806      	cmp	r0, #6
+  4c:	d104      	bne.n	58 <alt_gpt_int_clear_pending+0x58>
+  4e:	4b08      	ldr	r3, [pc, #32]	; (70 <alt_gpt_int_clear_pending+0x70>)
+  50:	e7f0      	b.n	34 <alt_gpt_int_clear_pending+0x34>
+  52:	f04f 30ff 	mov.w	r0, #4294967295
+  56:	e7e9      	b.n	2c <alt_gpt_int_clear_pending+0x2c>
+  58:	f06f 0008 	mvn.w	r0, #8
+  5c:	e7e6      	b.n	2c <alt_gpt_int_clear_pending+0x2c>
+  5e:	bf00      	nop
+  60:	fffec000 	.word	0xfffec000
+  64:	ffd00000 	.word	0xffd00000
+  68:	ffd01000 	.word	0xffd01000
+  6c:	ffc08000 	.word	0xffc08000
+  70:	ffc09000 	.word	0xffc09000
 
 Disassembly of section .text.alt_gpt_tmr_reset:
 
@@ -887,19 +883,18 @@ Disassembly of section .text.alt_gpt_tmr_reset:
    0:	b510      	push	{r4, lr}
    2:	4604      	mov	r4, r0
    4:	f7ff fffe 	bl	0 <alt_gpt_tmr_reset>
-   8:	b920      	cbnz	r0, 14 <alt_gpt_tmr_reset+0x14>
+   8:	b940      	cbnz	r0, 1c <alt_gpt_tmr_reset+0x1c>
    a:	4620      	mov	r0, r4
    c:	f7ff fffe 	bl	0 <alt_gpt_tmr_reset>
-  10:	b130      	cbz	r0, 20 <alt_gpt_tmr_reset+0x20>
-  12:	bd10      	pop	{r4, pc}
-  14:	4620      	mov	r0, r4
-  16:	f7ff fffe 	bl	0 <alt_gpt_tmr_reset>
-  1a:	2800      	cmp	r0, #0
-  1c:	d0f5      	beq.n	a <alt_gpt_tmr_reset+0xa>
-  1e:	bd10      	pop	{r4, pc}
-  20:	4620      	mov	r0, r4
-  22:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
-  26:	f7ff bffe 	b.w	0 <alt_gpt_tmr_reset>
+  10:	b948      	cbnz	r0, 26 <alt_gpt_tmr_reset+0x26>
+  12:	4620      	mov	r0, r4
+  14:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
+  18:	f7ff bffe 	b.w	0 <alt_gpt_tmr_reset>
+  1c:	4620      	mov	r0, r4
+  1e:	f7ff fffe 	bl	0 <alt_gpt_tmr_reset>
+  22:	2800      	cmp	r0, #0
+  24:	d0f1      	beq.n	a <alt_gpt_tmr_reset+0xa>
+  26:	bd10      	pop	{r4, pc}
 
 Disassembly of section .text.alt_gpt_int_disable:
 
@@ -919,40 +914,40 @@ Disassembly of section .text.alt_gpt_int_disable:
   1c:	f7ff fffe 	bl	0 <alt_wdog_int_disable>
   20:	e7f3      	b.n	a <alt_gpt_int_disable+0xa>
   22:	2801      	cmp	r0, #1
-  24:	d106      	bne.n	34 <alt_gpt_int_disable+0x34>
-  26:	4a0f      	ldr	r2, [pc, #60]	; (64 <alt_gpt_int_disable+0x64>)
-  28:	6813      	ldr	r3, [r2, #0]
-  2a:	f023 0304 	bic.w	r3, r3, #4
-  2e:	6013      	str	r3, [r2, #0]
-  30:	2500      	movs	r5, #0
-  32:	e7eb      	b.n	c <alt_gpt_int_disable+0xc>
-  34:	2803      	cmp	r0, #3
-  36:	d00b      	beq.n	50 <alt_gpt_int_disable+0x50>
-  38:	2804      	cmp	r0, #4
+  24:	d108      	bne.n	38 <alt_gpt_int_disable+0x38>
+  26:	4a10      	ldr	r2, [pc, #64]	; (68 <alt_gpt_int_disable+0x68>)
+  28:	f8d2 3608 	ldr.w	r3, [r2, #1544]	; 0x608
+  2c:	f023 0304 	bic.w	r3, r3, #4
+  30:	f8c2 3608 	str.w	r3, [r2, #1544]	; 0x608
+  34:	2500      	movs	r5, #0
+  36:	e7e9      	b.n	c <alt_gpt_int_disable+0xc>
+  38:	2803      	cmp	r0, #3
   3a:	d00b      	beq.n	54 <alt_gpt_int_disable+0x54>
-  3c:	2805      	cmp	r0, #5
+  3c:	2804      	cmp	r0, #4
   3e:	d00b      	beq.n	58 <alt_gpt_int_disable+0x58>
-  40:	2806      	cmp	r0, #6
-  42:	d10b      	bne.n	5c <alt_gpt_int_disable+0x5c>
-  44:	4b08      	ldr	r3, [pc, #32]	; (68 <alt_gpt_int_disable+0x68>)
-  46:	681a      	ldr	r2, [r3, #0]
-  48:	f042 0204 	orr.w	r2, r2, #4
-  4c:	601a      	str	r2, [r3, #0]
-  4e:	e7ef      	b.n	30 <alt_gpt_int_disable+0x30>
-  50:	4b06      	ldr	r3, [pc, #24]	; (6c <alt_gpt_int_disable+0x6c>)
-  52:	e7f8      	b.n	46 <alt_gpt_int_disable+0x46>
+  40:	2805      	cmp	r0, #5
+  42:	d00b      	beq.n	5c <alt_gpt_int_disable+0x5c>
+  44:	2806      	cmp	r0, #6
+  46:	d10b      	bne.n	60 <alt_gpt_int_disable+0x60>
+  48:	4b08      	ldr	r3, [pc, #32]	; (6c <alt_gpt_int_disable+0x6c>)
+  4a:	681a      	ldr	r2, [r3, #0]
+  4c:	f042 0204 	orr.w	r2, r2, #4
+  50:	601a      	str	r2, [r3, #0]
+  52:	e7ef      	b.n	34 <alt_gpt_int_disable+0x34>
   54:	4b06      	ldr	r3, [pc, #24]	; (70 <alt_gpt_int_disable+0x70>)
-  56:	e7f6      	b.n	46 <alt_gpt_int_disable+0x46>
+  56:	e7f8      	b.n	4a <alt_gpt_int_disable+0x4a>
   58:	4b06      	ldr	r3, [pc, #24]	; (74 <alt_gpt_int_disable+0x74>)
-  5a:	e7f4      	b.n	46 <alt_gpt_int_disable+0x46>
-  5c:	f06f 0508 	mvn.w	r5, #8
-  60:	e7d7      	b.n	12 <alt_gpt_int_disable+0x12>
-  62:	bf00      	nop
-  64:	fffec608 	.word	0xfffec608
-  68:	ffc09008 	.word	0xffc09008
-  6c:	ffd00008 	.word	0xffd00008
-  70:	ffd01008 	.word	0xffd01008
-  74:	ffc08008 	.word	0xffc08008
+  5a:	e7f6      	b.n	4a <alt_gpt_int_disable+0x4a>
+  5c:	4b06      	ldr	r3, [pc, #24]	; (78 <alt_gpt_int_disable+0x78>)
+  5e:	e7f4      	b.n	4a <alt_gpt_int_disable+0x4a>
+  60:	f06f 0508 	mvn.w	r5, #8
+  64:	e7d5      	b.n	12 <alt_gpt_int_disable+0x12>
+  66:	bf00      	nop
+  68:	fffec000 	.word	0xfffec000
+  6c:	ffc09008 	.word	0xffc09008
+  70:	ffd00008 	.word	0xffd00008
+  74:	ffd01008 	.word	0xffd01008
+  78:	ffc08008 	.word	0xffc08008
 
 Disassembly of section .text.alt_gpt_int_is_pending:
 
@@ -967,7 +962,7 @@ Disassembly of section .text.alt_gpt_int_is_pending:
   12:	b1d0      	cbz	r0, 4a <alt_gpt_int_is_pending+0x4a>
   14:	2000      	movs	r0, #0
   16:	f7ff fffe 	bl	0 <alt_wdog_int_is_pending>
-  1a:	bd08      	pop	{r3, pc}
+  1a:	e7f5      	b.n	8 <alt_gpt_int_is_pending+0x8>
   1c:	2801      	cmp	r0, #1
   1e:	d00c      	beq.n	3a <alt_gpt_int_is_pending+0x3a>
   20:	2803      	cmp	r0, #3
@@ -981,7 +976,7 @@ Disassembly of section .text.alt_gpt_int_is_pending:
   30:	4b09      	ldr	r3, [pc, #36]	; (58 <alt_gpt_int_is_pending+0x58>)
   32:	6818      	ldr	r0, [r3, #0]
   34:	f000 0001 	and.w	r0, r0, #1
-  38:	bd08      	pop	{r3, pc}
+  38:	e7e6      	b.n	8 <alt_gpt_int_is_pending+0x8>
   3a:	4b08      	ldr	r3, [pc, #32]	; (5c <alt_gpt_int_is_pending+0x5c>)
   3c:	e7f9      	b.n	32 <alt_gpt_int_is_pending+0x32>
   3e:	4b08      	ldr	r3, [pc, #32]	; (60 <alt_gpt_int_is_pending+0x60>)
@@ -990,10 +985,10 @@ Disassembly of section .text.alt_gpt_int_is_pending:
   44:	e7f5      	b.n	32 <alt_gpt_int_is_pending+0x32>
   46:	4b08      	ldr	r3, [pc, #32]	; (68 <alt_gpt_int_is_pending+0x68>)
   48:	e7f3      	b.n	32 <alt_gpt_int_is_pending+0x32>
-  4a:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  4e:	bd08      	pop	{r3, pc}
+  4a:	f04f 30ff 	mov.w	r0, #4294967295
+  4e:	e7db      	b.n	8 <alt_gpt_int_is_pending+0x8>
   50:	f06f 0008 	mvn.w	r0, #8
-  54:	bd08      	pop	{r3, pc}
+  54:	e7d8      	b.n	8 <alt_gpt_int_is_pending+0x8>
   56:	bf00      	nop
   58:	ffc09010 	.word	0xffc09010
   5c:	fffec60c 	.word	0xfffec60c
@@ -1004,118 +999,116 @@ Disassembly of section .text.alt_gpt_int_is_pending:
 Disassembly of section .text.alt_gpt_int_if_pending_clear:
 
 00000000 <alt_gpt_int_if_pending_clear>:
-   0:	b508      	push	{r3, lr}
-   2:	b910      	cbnz	r0, a <alt_gpt_int_if_pending_clear+0xa>
-   4:	f7ff fffe 	bl	0 <alt_globaltmr_int_if_pending_clear>
-   8:	bd08      	pop	{r3, pc}
-   a:	2802      	cmp	r0, #2
-   c:	d106      	bne.n	1c <alt_gpt_int_if_pending_clear+0x1c>
-   e:	f7ff fffe 	bl	0 <cpu_wdog_in_gpt_mode>
-  12:	b318      	cbz	r0, 5c <alt_gpt_int_if_pending_clear+0x5c>
-  14:	2000      	movs	r0, #0
-  16:	f7ff fffe 	bl	0 <alt_wdog_int_if_pending_clear>
-  1a:	bd08      	pop	{r3, pc}
-  1c:	2801      	cmp	r0, #1
-  1e:	d106      	bne.n	2e <alt_gpt_int_if_pending_clear+0x2e>
-  20:	4a12      	ldr	r2, [pc, #72]	; (6c <alt_gpt_int_if_pending_clear+0x6c>)
-  22:	6813      	ldr	r3, [r2, #0]
-  24:	f013 0301 	ands.w	r3, r3, #1
-  28:	d01b      	beq.n	62 <alt_gpt_int_if_pending_clear+0x62>
-  2a:	6010      	str	r0, [r2, #0]
-  2c:	bd08      	pop	{r3, pc}
-  2e:	2803      	cmp	r0, #3
-  30:	d108      	bne.n	44 <alt_gpt_int_if_pending_clear+0x44>
-  32:	4b0f      	ldr	r3, [pc, #60]	; (70 <alt_gpt_int_if_pending_clear+0x70>)
-  34:	6818      	ldr	r0, [r3, #0]
-  36:	f010 0001 	ands.w	r0, r0, #1
-  3a:	d016      	beq.n	6a <alt_gpt_int_if_pending_clear+0x6a>
-  3c:	3b04      	subs	r3, #4
-  3e:	2001      	movs	r0, #1
-  40:	681b      	ldr	r3, [r3, #0]
-  42:	bd08      	pop	{r3, pc}
-  44:	2804      	cmp	r0, #4
-  46:	d101      	bne.n	4c <alt_gpt_int_if_pending_clear+0x4c>
-  48:	4b0a      	ldr	r3, [pc, #40]	; (74 <alt_gpt_int_if_pending_clear+0x74>)
-  4a:	e7f3      	b.n	34 <alt_gpt_int_if_pending_clear+0x34>
-  4c:	2805      	cmp	r0, #5
-  4e:	d101      	bne.n	54 <alt_gpt_int_if_pending_clear+0x54>
-  50:	4b09      	ldr	r3, [pc, #36]	; (78 <alt_gpt_int_if_pending_clear+0x78>)
-  52:	e7ef      	b.n	34 <alt_gpt_int_if_pending_clear+0x34>
-  54:	2806      	cmp	r0, #6
-  56:	d106      	bne.n	66 <alt_gpt_int_if_pending_clear+0x66>
-  58:	4b08      	ldr	r3, [pc, #32]	; (7c <alt_gpt_int_if_pending_clear+0x7c>)
-  5a:	e7eb      	b.n	34 <alt_gpt_int_if_pending_clear+0x34>
-  5c:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-  60:	bd08      	pop	{r3, pc}
-  62:	4618      	mov	r0, r3
-  64:	bd08      	pop	{r3, pc}
+   0:	4602      	mov	r2, r0
+   2:	b508      	push	{r3, lr}
+   4:	b910      	cbnz	r0, c <alt_gpt_int_if_pending_clear+0xc>
+   6:	f7ff fffe 	bl	0 <alt_globaltmr_int_if_pending_clear>
+   a:	bd08      	pop	{r3, pc}
+   c:	2802      	cmp	r0, #2
+   e:	d106      	bne.n	1e <alt_gpt_int_if_pending_clear+0x1e>
+  10:	f7ff fffe 	bl	0 <cpu_wdog_in_gpt_mode>
+  14:	b320      	cbz	r0, 60 <alt_gpt_int_if_pending_clear+0x60>
+  16:	2000      	movs	r0, #0
+  18:	f7ff fffe 	bl	0 <alt_wdog_int_if_pending_clear>
+  1c:	e7f5      	b.n	a <alt_gpt_int_if_pending_clear+0xa>
+  1e:	2801      	cmp	r0, #1
+  20:	d109      	bne.n	36 <alt_gpt_int_if_pending_clear+0x36>
+  22:	4912      	ldr	r1, [pc, #72]	; (6c <alt_gpt_int_if_pending_clear+0x6c>)
+  24:	f8d1 060c 	ldr.w	r0, [r1, #1548]	; 0x60c
+  28:	f010 0001 	ands.w	r0, r0, #1
+  2c:	d0ed      	beq.n	a <alt_gpt_int_if_pending_clear+0xa>
+  2e:	f8c1 260c 	str.w	r2, [r1, #1548]	; 0x60c
+  32:	2001      	movs	r0, #1
+  34:	e7e9      	b.n	a <alt_gpt_int_if_pending_clear+0xa>
+  36:	2803      	cmp	r0, #3
+  38:	d106      	bne.n	48 <alt_gpt_int_if_pending_clear+0x48>
+  3a:	4b0d      	ldr	r3, [pc, #52]	; (70 <alt_gpt_int_if_pending_clear+0x70>)
+  3c:	6918      	ldr	r0, [r3, #16]
+  3e:	f010 0001 	ands.w	r0, r0, #1
+  42:	d0e2      	beq.n	a <alt_gpt_int_if_pending_clear+0xa>
+  44:	68db      	ldr	r3, [r3, #12]
+  46:	e7f4      	b.n	32 <alt_gpt_int_if_pending_clear+0x32>
+  48:	2804      	cmp	r0, #4
+  4a:	d101      	bne.n	50 <alt_gpt_int_if_pending_clear+0x50>
+  4c:	4b09      	ldr	r3, [pc, #36]	; (74 <alt_gpt_int_if_pending_clear+0x74>)
+  4e:	e7f5      	b.n	3c <alt_gpt_int_if_pending_clear+0x3c>
+  50:	2805      	cmp	r0, #5
+  52:	d101      	bne.n	58 <alt_gpt_int_if_pending_clear+0x58>
+  54:	4b08      	ldr	r3, [pc, #32]	; (78 <alt_gpt_int_if_pending_clear+0x78>)
+  56:	e7f1      	b.n	3c <alt_gpt_int_if_pending_clear+0x3c>
+  58:	2806      	cmp	r0, #6
+  5a:	d104      	bne.n	66 <alt_gpt_int_if_pending_clear+0x66>
+  5c:	4b07      	ldr	r3, [pc, #28]	; (7c <alt_gpt_int_if_pending_clear+0x7c>)
+  5e:	e7ed      	b.n	3c <alt_gpt_int_if_pending_clear+0x3c>
+  60:	f04f 30ff 	mov.w	r0, #4294967295
+  64:	e7d1      	b.n	a <alt_gpt_int_if_pending_clear+0xa>
   66:	f06f 0008 	mvn.w	r0, #8
-  6a:	bd08      	pop	{r3, pc}
-  6c:	fffec60c 	.word	0xfffec60c
-  70:	ffd00010 	.word	0xffd00010
-  74:	ffd01010 	.word	0xffd01010
-  78:	ffc08010 	.word	0xffc08010
-  7c:	ffc09010 	.word	0xffc09010
+  6a:	e7ce      	b.n	a <alt_gpt_int_if_pending_clear+0xa>
+  6c:	fffec000 	.word	0xfffec000
+  70:	ffd00000 	.word	0xffd00000
+  74:	ffd01000 	.word	0xffd01000
+  78:	ffc08000 	.word	0xffc08000
+  7c:	ffc09000 	.word	0xffc09000
 
 Disassembly of section .text.alt_gpt_mode_set:
 
 00000000 <alt_gpt_mode_set>:
    0:	2901      	cmp	r1, #1
-   2:	d835      	bhi.n	70 <alt_gpt_mode_set+0x70>
+   2:	d838      	bhi.n	76 <alt_gpt_mode_set+0x76>
    4:	b928      	cbnz	r0, 12 <alt_gpt_mode_set+0x12>
    6:	2901      	cmp	r1, #1
    8:	d101      	bne.n	e <alt_gpt_mode_set+0xe>
    a:	f7ff bffe 	b.w	0 <alt_globaltmr_autoinc_mode_start>
    e:	f7ff bffe 	b.w	0 <alt_globaltmr_autoinc_mode_stop>
   12:	2802      	cmp	r0, #2
-  14:	d107      	bne.n	26 <alt_gpt_mode_set+0x26>
+  14:	d108      	bne.n	28 <alt_gpt_mode_set+0x28>
   16:	2900      	cmp	r1, #0
-  18:	f04f 0000 	mov.w	r0, #0
-  1c:	bf0c      	ite	eq
-  1e:	2102      	moveq	r1, #2
-  20:	2103      	movne	r1, #3
-  22:	f7ff bffe 	b.w	0 <alt_wdog_response_mode_set>
-  26:	2801      	cmp	r0, #1
-  28:	d10a      	bne.n	40 <alt_gpt_mode_set+0x40>
-  2a:	4a13      	ldr	r2, [pc, #76]	; (78 <alt_gpt_mode_set+0x78>)
-  2c:	2901      	cmp	r1, #1
-  2e:	6813      	ldr	r3, [r2, #0]
-  30:	bf0c      	ite	eq
-  32:	f043 0302 	orreq.w	r3, r3, #2
-  36:	f023 0302 	bicne.w	r3, r3, #2
-  3a:	6013      	str	r3, [r2, #0]
-  3c:	2000      	movs	r0, #0
-  3e:	4770      	bx	lr
-  40:	2803      	cmp	r0, #3
-  42:	d00c      	beq.n	5e <alt_gpt_mode_set+0x5e>
-  44:	2804      	cmp	r0, #4
-  46:	d00c      	beq.n	62 <alt_gpt_mode_set+0x62>
-  48:	2805      	cmp	r0, #5
-  4a:	d00c      	beq.n	66 <alt_gpt_mode_set+0x66>
-  4c:	2806      	cmp	r0, #6
-  4e:	d10f      	bne.n	70 <alt_gpt_mode_set+0x70>
-  50:	4b0a      	ldr	r3, [pc, #40]	; (7c <alt_gpt_mode_set+0x7c>)
-  52:	681a      	ldr	r2, [r3, #0]
-  54:	b949      	cbnz	r1, 6a <alt_gpt_mode_set+0x6a>
-  56:	f022 0202 	bic.w	r2, r2, #2
-  5a:	601a      	str	r2, [r3, #0]
-  5c:	e7ee      	b.n	3c <alt_gpt_mode_set+0x3c>
-  5e:	4b08      	ldr	r3, [pc, #32]	; (80 <alt_gpt_mode_set+0x80>)
-  60:	e7f7      	b.n	52 <alt_gpt_mode_set+0x52>
-  62:	4b08      	ldr	r3, [pc, #32]	; (84 <alt_gpt_mode_set+0x84>)
-  64:	e7f5      	b.n	52 <alt_gpt_mode_set+0x52>
-  66:	4b08      	ldr	r3, [pc, #32]	; (88 <alt_gpt_mode_set+0x88>)
-  68:	e7f3      	b.n	52 <alt_gpt_mode_set+0x52>
-  6a:	f042 0202 	orr.w	r2, r2, #2
-  6e:	e7f4      	b.n	5a <alt_gpt_mode_set+0x5a>
-  70:	f06f 0008 	mvn.w	r0, #8
-  74:	4770      	bx	lr
-  76:	bf00      	nop
-  78:	fffec608 	.word	0xfffec608
-  7c:	ffc09008 	.word	0xffc09008
-  80:	ffd00008 	.word	0xffd00008
-  84:	ffd01008 	.word	0xffd01008
-  88:	ffc08008 	.word	0xffc08008
+  18:	bf08      	it	eq
+  1a:	4601      	moveq	r1, r0
+  1c:	f04f 0000 	mov.w	r0, #0
+  20:	bf18      	it	ne
+  22:	2103      	movne	r1, #3
+  24:	f7ff bffe 	b.w	0 <alt_wdog_response_mode_set>
+  28:	2801      	cmp	r0, #1
+  2a:	d10c      	bne.n	46 <alt_gpt_mode_set+0x46>
+  2c:	4a13      	ldr	r2, [pc, #76]	; (7c <alt_gpt_mode_set+0x7c>)
+  2e:	2901      	cmp	r1, #1
+  30:	f8d2 3608 	ldr.w	r3, [r2, #1544]	; 0x608
+  34:	bf0c      	ite	eq
+  36:	f043 0302 	orreq.w	r3, r3, #2
+  3a:	f023 0302 	bicne.w	r3, r3, #2
+  3e:	f8c2 3608 	str.w	r3, [r2, #1544]	; 0x608
+  42:	2000      	movs	r0, #0
+  44:	4770      	bx	lr
+  46:	2803      	cmp	r0, #3
+  48:	d00c      	beq.n	64 <alt_gpt_mode_set+0x64>
+  4a:	2804      	cmp	r0, #4
+  4c:	d00c      	beq.n	68 <alt_gpt_mode_set+0x68>
+  4e:	2805      	cmp	r0, #5
+  50:	d00c      	beq.n	6c <alt_gpt_mode_set+0x6c>
+  52:	2806      	cmp	r0, #6
+  54:	d10f      	bne.n	76 <alt_gpt_mode_set+0x76>
+  56:	4b0a      	ldr	r3, [pc, #40]	; (80 <alt_gpt_mode_set+0x80>)
+  58:	681a      	ldr	r2, [r3, #0]
+  5a:	b949      	cbnz	r1, 70 <alt_gpt_mode_set+0x70>
+  5c:	f022 0202 	bic.w	r2, r2, #2
+  60:	601a      	str	r2, [r3, #0]
+  62:	e7ee      	b.n	42 <alt_gpt_mode_set+0x42>
+  64:	4b07      	ldr	r3, [pc, #28]	; (84 <alt_gpt_mode_set+0x84>)
+  66:	e7f7      	b.n	58 <alt_gpt_mode_set+0x58>
+  68:	4b07      	ldr	r3, [pc, #28]	; (88 <alt_gpt_mode_set+0x88>)
+  6a:	e7f5      	b.n	58 <alt_gpt_mode_set+0x58>
+  6c:	4b07      	ldr	r3, [pc, #28]	; (8c <alt_gpt_mode_set+0x8c>)
+  6e:	e7f3      	b.n	58 <alt_gpt_mode_set+0x58>
+  70:	f042 0202 	orr.w	r2, r2, #2
+  74:	e7f4      	b.n	60 <alt_gpt_mode_set+0x60>
+  76:	f06f 0008 	mvn.w	r0, #8
+  7a:	4770      	bx	lr
+  7c:	fffec000 	.word	0xfffec000
+  80:	ffc09008 	.word	0xffc09008
+  84:	ffd00008 	.word	0xffd00008
+  88:	ffd01008 	.word	0xffd01008
+  8c:	ffc08008 	.word	0xffc08008
 
 Disassembly of section .text.alt_gpt_mode_get:
 
@@ -1129,40 +1122,41 @@ Disassembly of section .text.alt_gpt_mode_get:
    e:	2000      	movs	r0, #0
   10:	f7ff fffe 	bl	0 <alt_wdog_response_mode_get>
   14:	2802      	cmp	r0, #2
-  16:	d01c      	beq.n	52 <alt_gpt_mode_get+0x52>
+  16:	d01e      	beq.n	56 <alt_gpt_mode_get+0x56>
   18:	2803      	cmp	r0, #3
   1a:	bf0c      	ite	eq
   1c:	2001      	moveq	r0, #1
-  1e:	f04f 30ff 	movne.w	r0, #4294967295	; 0xffffffff
-  22:	bd08      	pop	{r3, pc}
+  1e:	f04f 30ff 	movne.w	r0, #4294967295
+  22:	e7f1      	b.n	8 <alt_gpt_mode_get+0x8>
   24:	2801      	cmp	r0, #1
-  26:	d104      	bne.n	32 <alt_gpt_mode_get+0x32>
-  28:	4b0c      	ldr	r3, [pc, #48]	; (5c <alt_gpt_mode_get+0x5c>)
-  2a:	6818      	ldr	r0, [r3, #0]
-  2c:	f3c0 0040 	ubfx	r0, r0, #1, #1
-  30:	bd08      	pop	{r3, pc}
-  32:	2803      	cmp	r0, #3
-  34:	d007      	beq.n	46 <alt_gpt_mode_get+0x46>
-  36:	2804      	cmp	r0, #4
-  38:	d007      	beq.n	4a <alt_gpt_mode_get+0x4a>
-  3a:	2805      	cmp	r0, #5
-  3c:	d007      	beq.n	4e <alt_gpt_mode_get+0x4e>
-  3e:	2806      	cmp	r0, #6
-  40:	d109      	bne.n	56 <alt_gpt_mode_get+0x56>
-  42:	4b07      	ldr	r3, [pc, #28]	; (60 <alt_gpt_mode_get+0x60>)
-  44:	e7f1      	b.n	2a <alt_gpt_mode_get+0x2a>
-  46:	4b07      	ldr	r3, [pc, #28]	; (64 <alt_gpt_mode_get+0x64>)
-  48:	e7ef      	b.n	2a <alt_gpt_mode_get+0x2a>
+  26:	d105      	bne.n	34 <alt_gpt_mode_get+0x34>
+  28:	4b0d      	ldr	r3, [pc, #52]	; (60 <alt_gpt_mode_get+0x60>)
+  2a:	f8d3 0608 	ldr.w	r0, [r3, #1544]	; 0x608
+  2e:	f3c0 0040 	ubfx	r0, r0, #1, #1
+  32:	e7e9      	b.n	8 <alt_gpt_mode_get+0x8>
+  34:	2803      	cmp	r0, #3
+  36:	d008      	beq.n	4a <alt_gpt_mode_get+0x4a>
+  38:	2804      	cmp	r0, #4
+  3a:	d008      	beq.n	4e <alt_gpt_mode_get+0x4e>
+  3c:	2805      	cmp	r0, #5
+  3e:	d008      	beq.n	52 <alt_gpt_mode_get+0x52>
+  40:	2806      	cmp	r0, #6
+  42:	d10a      	bne.n	5a <alt_gpt_mode_get+0x5a>
+  44:	4b07      	ldr	r3, [pc, #28]	; (64 <alt_gpt_mode_get+0x64>)
+  46:	6818      	ldr	r0, [r3, #0]
+  48:	e7f1      	b.n	2e <alt_gpt_mode_get+0x2e>
   4a:	4b07      	ldr	r3, [pc, #28]	; (68 <alt_gpt_mode_get+0x68>)
-  4c:	e7ed      	b.n	2a <alt_gpt_mode_get+0x2a>
+  4c:	e7fb      	b.n	46 <alt_gpt_mode_get+0x46>
   4e:	4b07      	ldr	r3, [pc, #28]	; (6c <alt_gpt_mode_get+0x6c>)
-  50:	e7eb      	b.n	2a <alt_gpt_mode_get+0x2a>
-  52:	2000      	movs	r0, #0
-  54:	bd08      	pop	{r3, pc}
-  56:	f06f 0008 	mvn.w	r0, #8
-  5a:	bd08      	pop	{r3, pc}
-  5c:	fffec608 	.word	0xfffec608
-  60:	ffc09008 	.word	0xffc09008
-  64:	ffd00008 	.word	0xffd00008
-  68:	ffd01008 	.word	0xffd01008
-  6c:	ffc08008 	.word	0xffc08008
+  50:	e7f9      	b.n	46 <alt_gpt_mode_get+0x46>
+  52:	4b07      	ldr	r3, [pc, #28]	; (70 <alt_gpt_mode_get+0x70>)
+  54:	e7f7      	b.n	46 <alt_gpt_mode_get+0x46>
+  56:	2000      	movs	r0, #0
+  58:	e7d6      	b.n	8 <alt_gpt_mode_get+0x8>
+  5a:	f06f 0008 	mvn.w	r0, #8
+  5e:	e7d3      	b.n	8 <alt_gpt_mode_get+0x8>
+  60:	fffec000 	.word	0xfffec000
+  64:	ffc09008 	.word	0xffc09008
+  68:	ffd00008 	.word	0xffd00008
+  6c:	ffd01008 	.word	0xffd01008
+  70:	ffc08008 	.word	0xffc08008

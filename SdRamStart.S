@@ -128,7 +128,7 @@ _mainSdRamPart:
 
 	// Core0 SP
 	//ldr	r0, =0x0001E000			// Ok DRAM
-	ldr	r0, =0x3FFFF000				// Ok DRAM high
+	ldr	r0, =0x3FFFF000				// Ok DRAM high - fix me !
 	@ ldr	r0, =0xFFFFFF40
 	@ ldr	r0, =0xFFFFFF00			// On Chip RAM
 	bic	r0, r0, #7	/* 8-byte alignment for ABI compliance */
@@ -182,7 +182,7 @@ Cpu1CodeStart:
 	// Core1 SP
 	//ldr	r0, =0xFFFFF000			// Ok On Chip RAM
 	//ldr	r0, =0x0001F000			// Ok DRAM en bas
-	ldr	r0, =0x40000000				// Ok haut de DRAM
+	ldr	r0, =0x40000000				// Ok haut de DRAM - fix me !
 	bic	r0, r0, #7	/* 8-byte alignment for ABI compliance */
 	mov	sp, r0
 	mov	r9, r0

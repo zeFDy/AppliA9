@@ -46,7 +46,7 @@
 #include "../include/socal/socal.h"
 #include "../include/hwlib.h"
 #include "../include/alt_interrupt.h"
-
+#include "../../debugConsole.h"
 
 //#ifdef DEBUG_ALT_INTERRUPT
 //  #define dprintf printf
@@ -908,6 +908,7 @@ ALT_STATUS_CODE alt_int_cpu_init()
      / of the block. */
     //stack_irq = (uint32_t) &alt_int_stack_irq_block[cpu_num][sizeof(alt_int_stack_irq_block[0]) - 16];
     stack_irq = (uint32_t) 0x10000;         // FDy
+    //stack_irq = (uint32_t) 0x3FFF0000;    // FDy - fix me !
 
     alt_int_fixup_irq_stack(stack_irq);
 
