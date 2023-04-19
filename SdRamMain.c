@@ -6,7 +6,7 @@
 #include "hwlibs/include/alt_watchdog.h"
 #include "hwlibs/include/socal/hps.h"
 #include "ourDateTime.h"
-
+#include "debugConsole.h"
 
 // RESET MANAGER
 #define SOCFPGA_RSTMGR_ADDRESS	0xffd05000
@@ -17,7 +17,6 @@
 #define 	ALT_GIC_BASE_CPU	MPU_BASE + 0x0100
 #define 	ALT_DIST_BASE_CPU	MPU_BASE + 0x1000
 
-char		tempBuffer[20];
 
 uint32_t	timerValueHigh;
 uint32_t	timerValueLow;
@@ -30,6 +29,10 @@ uint32_t 				thisLedValue    =0;
 volatile uint32_t		j;
 int 					iCounter;
 
+// from SetUpTimers.c
+int timers_init(void);
+
+#if false
 static void alt_int_fixup_irq_stack(uint32_t stack_irq)
 {
     __asm(
@@ -42,6 +45,7 @@ static void alt_int_fixup_irq_stack(uint32_t stack_irq)
         : : "r" (stack_irq) : "r3"
         );
 }
+#endif
 
 static __inline uint32_t get_current_sp(void)
 {
@@ -76,116 +80,6 @@ uint64_t  get_ticks(void)
 	uint64_t	ui64returnValue = (uint64_t)(((uint64_t)timerValueHigh << 32) | timerValueLow);
 	return 		ui64returnValue;
 }
-
-void putc(char c)
-{
-	volatile unsigned int*	Uart0_lsr 		= (unsigned int *)0xFFC02014;
-	//#define UART_LSR_THRE 0x20
-
-	//while ((serial_in(&com_port->lsr) & UART_LSR_THRE) == 0)
-	while((*Uart0_lsr & 0x20)==0)	;	// check xmit empty
-	
-	volatile unsigned int*	Uart0Data = (unsigned int *)0xFFC02000;
-	*Uart0Data = (unsigned int) (c);
-
-}
-
-void PutNible(uint8_t ucNibble)
-{
-	ucNibble = ucNibble + 0x30;
-	if(ucNibble>0x39)	ucNibble+=0x07;	// 0x41 ('A') - 0x3A (>'9')
-
-	putc((char)ucNibble);
-}
-
-void PutByte(uint8_t ucByte)
-{
-	unsigned char ucCarac = 0;
-
-	ucCarac = (ucByte >> 4 ) & 0x0F;
-	PutNible((char)ucCarac);
-
-	ucCarac = ucByte & 0x0F;
-	PutNible((char)ucCarac);
-}
-
-void putHexa32(uint32_t uiNumber)
-{
-	putc((char)'0');
-	putc((char)'x');
-	PutByte((uiNumber >> 24) & 0xFF);
-	PutByte((uiNumber >> 16) & 0xFF);
-	PutByte((uiNumber >>  8) & 0xFF);
-	PutByte( uiNumber        & 0xFF);
-}
-
-void putHexa64(uint64_t ullNumber)
-{
-	putc((char)'0');
-	putc((char)'x');
-
-	PutByte((ullNumber >> 56) & 0xFF);
-	PutByte((ullNumber >> 48) & 0xFF);
-	PutByte((ullNumber >> 40) & 0xFF);
-	PutByte((ullNumber >> 32) & 0xFF);
-	
-	PutByte((ullNumber >> 24) & 0xFF);
-	PutByte((ullNumber >> 16) & 0xFF);
-	PutByte((ullNumber >>  8) & 0xFF);
-	PutByte( ullNumber        & 0xFF);
-}
-
-void puts(char *caMessage)
-{
-	while(*caMessage!=0)
-	{
-		putc(*caMessage++);
-	}
-}
-
-void HexDump(uint8_t* pucStartAddr, unsigned int uiSize)
-{
-	char c = 0;
-	
-	for(unsigned int 	uiCounter =0;
-						uiCounter<uiSize;
-						uiCounter+=16)
-	{
-		putHexa32((uint32_t)pucStartAddr + uiCounter);
-		puts(" - ");
-		//memset(tempBuffer, 0, 20);
-		for(int itempBufferCounter =0;
-				itempBufferCounter <20;
-				itempBufferCounter++)
-		{
-			tempBuffer[itempBufferCounter]=0;	
-		}
-
-		for(unsigned int 	uiLineCounter=0;
-							uiLineCounter<16;
-							uiLineCounter++)
-		{
-			if(uiCounter+uiLineCounter<= uiSize)
-			{
-				c = (char)pucStartAddr[uiCounter+uiLineCounter];
-				PutByte(c);
-				putc(' ');
-				if(c<32||c>'z')	tempBuffer[uiLineCounter]='.';
-				else 			tempBuffer[uiLineCounter]=c;
-			}	
-			else
-			{
-				puts("   ");
-				tempBuffer[uiLineCounter] = ' ';
-			}
-		}
-
-		puts("- ");
-		puts(tempBuffer);
-		puts("\n\r");
-	}
-}
-
 void 		Cpu1Code(void)
 {
 	uint32_t	uiMainCounter =0;
@@ -301,11 +195,11 @@ void SdRamMain(void)
 	puts((char*)"\r\n");
 	
 	
-	alt_int_fixup_irq_stack(0x10000);									// Set IRQ Stack Pointer to 0x10000 -> Fix it !
-	alt_write_word(ALT_GIC_BASE_CPU + 0x4, 0xFF /*priority_mask*/); 	// Set priority mask to 0xFF so IRq are forwarded to CPU /* iccpmr */
+	//alt_int_fixup_irq_stack(0x10000);								// Set IRQ Stack Pointer to 0x10000 -> Fix it !
+	//writel(0xFF /*priority_mask*/, ALT_GIC_BASE_CPU + 0x4); 		// Set priority mask to 0xFF so IRq are forwarded to CPU /* iccpmr */
 	
-	//timers_demo_main();			
-	//puts("End of timer demo...\n\r");
+	timers_init();			
+	//puts("End of timer init...\n\r");
 	
 	// lever de reset du Core1
 	volatile uint32_t*		cpu1startaddr 		= (uint32_t *)0xFFD080C4;
@@ -409,7 +303,7 @@ void SdRamMain(void)
 }
 
 
-//#if false
+#if false
 void alt_int_handler_irq(void)
 //#endif /* #if ALT_INT_PROVISION_VECTOR_SUPPORT */
 {
@@ -449,7 +343,7 @@ void alt_int_handler_irq(void)
     // alt_write_word(alt_int_base_cpu + 0x10, icciar); /* icceoir */
 	
 }
-//#endif
+#endif
 
 void hang(void)
 {
