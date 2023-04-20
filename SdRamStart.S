@@ -284,6 +284,7 @@ irq_SdRamPart:	push {r0-r7, lr}
 		//str r0, [r1, #0]
 		
 		// les IRQ passent par ici 
+		b 	exitIrq
 		
 	    //
 		// test core0/core1

@@ -898,14 +898,17 @@ ALT_STATUS_CODE alt_int_cpu_init()
     uint32_t stack_irq; 
     ALT_STATUS_CODE status;
 
-    if (cpu_num >= ALT_INT_PROVISION_CPU_COUNT)
-    {
-        return ALT_E_ERROR;
-    }
+    //if (cpu_num >= ALT_INT_PROVISION_CPU_COUNT)
+    //{
+    //    return ALT_E_ERROR;
+    //}
 
     /* Setup the IRQ stack */
 
 #if ALT_INT_PROVISION_STACK_SUPPORT
+
+	if(cpu_num==0)	puts("setup core0\r\n");
+	if(cpu_num==1)	puts("setup core1\r\n");
 
     /* The ARM stack lowers in address as it is being used. 16 is the alignment
      / of the block. */
@@ -1193,6 +1196,9 @@ ALT_STATUS_CODE alt_int_isr_register(ALT_INT_INTERRUPT_t int_id,
     {
 		uint32_t uiCoreId 	= get_current_cpu_num();	
     
+		//if(uiCoreId==0)	puts("isr register on core0\r\n");
+		//if(uiCoreId==1)	puts("isr register on core1\r\n");
+	
         alt_int_dispatch[uiCoreId][int_id].callback = callback;
         alt_int_dispatch[uiCoreId][int_id].context  = context;
 
@@ -1264,7 +1270,9 @@ void alt_int_handler_irq(void)
 	uint32_t uiCoreId 	= get_current_cpu_num();	
     uint32_t ackintid 	= ALT_INT_ICCIAR_ACKINTID_GET(icciar);
 
-    //putc('-');
+	//if(uiCoreId==0)	putc('0');
+	//if(uiCoreId==1)	putc('1');
+	//putc('-');
 
     if (ackintid < ALT_INT_PROVISION_INT_COUNT)
     {

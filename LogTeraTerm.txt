@@ -1,0 +1,119 @@
+                                       \o.o/
+---------------------------------.ooO---(_)---Ooo.----------
+    BareMetal Boot inspired by U-BOOT
+    Custom Version myBoot-Ed03 by FDy (17/04/2023 18:33:20)
+--------------------------------------------Oooo.-----------
+                                     .oooO  (   )
+                                     (   )   ) /
+                                      \ (   (_/
+                                       \_)
+FPGA not ready.
+SDRAM init.
+SDRAM: Calibrating PHY.
+SDRAM: 0x00000400 MiB - 0x40000000 Bytes
+Sanity check ensure correct SDRAM size specified.
+INFO: Setting up SDMMC.
+INFO: SDHC Card detected.
+INFO: Card width      = 0x00000004
+INFO: Card block size = 0x00000200
+INFO: Card size       = 0x00000003B5980000
+INFO: Reading menu.rbf
+INFO: Reading from address 0x00300000, size = 0x0024A000 bytes
+menu.rbf finished to load in 5034888 ticks -> 100 ms
+INFO: Loading FPGA
+INFO: End of Loading FPGA
+Pret a recevoir fichier Applicative format RAW (fichier SdRamExec.raw) sur RS232
+Magic  is RAW1 (0x31574152)
+Offset is 0x00000000
+Length is 0x00006490
+uiCpuNumber=00
+Jump to applicative
+Hello my friend
+Welcome to the other side !
+Version by FDy (20/04/2023 20:09:16)
+              ,   .-'"'=;_  ,                
+              |\.'-~`-.`-`;/|                 
+              \.` '.'~-.` './                
+              (\`,__=-'__,'/)                
+           _.-'-.( 0\_/0 ).-'-._             
+         /'.-'   ' .---. '   '-.`\           
+       /'  .' (=    (_)    =) '.  `\         
+      /'  .',  `-.__.-.__.-'  ,'.  `\        
+     (     .'.   V       V  ; '.     )       
+     (    |::  `-,__.-.__,-'  ::|    )       
+     |   /|`:.               .:'|\   |       
+     |  / | `:.              :' |`\  |       
+     | |  (  :.-------------.:  )  | |       
+     | |   ( `:.    FDy     :' )   | |       
+     | |    \ :.-----------.: /    | |       
+     | |     \`:.         .:'/     | |       
+     ) (      `\`:.     .:'/'      ) (       
+     (  `)_     ) `:._.:' (     _(`  )       
+     \  ' _)  .'           `.  (_ `  /       
+      \  '_) /   .'"```"'.   \ (_`  /        
+       `'"`  \  (         )  /  `"'`         
+   ___        `.`.       .'.'        ___     
+ .`   ``"""'''--`_)     (_'--'''"""``   `.   
+(_(_(___...--'"'`         `'"'--...___)_)_)  
+SdRamMain affinity = 0x00
+RUNNING ON CORE0
+SP=0x3FFFEFF0
+INFO : System Initialization.
+INFO : Setting up Global Timer.
+CORE0: Interrupt Setup.
+setup core0
+INFO: CORE0: Private Timer Setup.
+CORE0: Setting Private Timer mode.
+CORE0: Setting Private Timer count value.
+CORE0: Enabling Private Timer Interrupt.
+CORE0: Starting Private Timer.
+Cpu1Code affinity = 0x01
+RUNNING ON CORE1
+SP=0x3FFFFFF0
+CORE1: Interrupt Setup.
+CORE1: alt_int_global_init = 0x00000000.
+setup core1
+CORE1: alt_int_cpu_init = 0x00000000.
+CORE1: alt_int_dist_trigger_set = 0x00000000.
+CORE1: alt_int_dist_enable = 0x00000000.
+CORE1: alt_int_cpu_enable = 0x00000000.
+CORE1: alt_int_global_enable = 0x00000000.
+CORE1: Interrupt Setup done whit status = 0x00000000.
+CORE1: Private Timer Setup Core1.
+CORE1: Setting Private Timer mode.
+CORE1: Setting Private Timer count value.
+CORE1: Enabling Private Timer Interrupt.
+CORE1: Starting Private Timer.
+LHLH
+CORE1: GblTimer =0x000000008BC594F1 - PrivateTimer =0x000L2DFE0 - CORE1 kicks !
+CORE0: GblTimer =0x000000008E231313 - PrivateTimer =0x0002E7E6 - CORE0 kicks !
+HLHL
+CORE1: GblTimer =0x00000000A9A86EH68 - PrivateTimer =0x00028490 - CORE1 kicks !
+CORE0: GblTimer =0x00000000AC059E30 - PrivateTimer =0x00001140 - CORE0 kicks !
+CORE0: private_timer_isr_callback_core0()
+L
+CORE1: private_timer_isr_callback_core1()
+HLH
+CORE1: GblTimer =0x00000L000C78D96DC - PrivateTimer =0x00001DC2 - CORE1 kicks !
+CORE0: GblTimer =0x00000000C9E82B02 - PrivateTimer =0x00004633 - CORE0 kicks !
+HLHL
+CHORE1: GblTimer =0x00000000E570B504 - PrivateTimer =0x00000532 - CORE1 kicks !
+CORE0: GblTimer =0x00000000E7CAB600 - PrivateTimer =0x00007CF4 - CORE0 kicks !
+L
+CORE0: private_timer_isr_callback_core0()
+H
+CORE1: private_timer_isr_callback_core1()
+LH
+LCORE1: GblTimer =0x0000000103539028 - PrivateTimer =0x0002F8ED - CORE1 kicks !
+CORE0: GblTimer =0x0000000105AD4193 - PrivateTimer =0x0000B339 - CORE0 kicks !
+HLHLH
+CORE1: GblTimer =0x00000001213626EA - PrivateTimer =0x000016C6 - CORE1 kicks !
+CORE0: GblTimer =0x00000001238FCD0C - PrivateTimer =0x0000E960 - CORE0 kicks !
+LH
+CORE0: private_timer_isr_callback_core0()
+L
+CORE1: private_timer_isr_callback_core1()
+HL
+CORE1: GblTimer =0x000000013F18BCD2 - PrivateTimer =0x000042A2 - CORE1 kicks !
+CORE0: GblTimer =0x0000000141725947 - PrivateTimer =0x00011ED2 - CORE0 kicks !
+H

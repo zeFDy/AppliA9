@@ -201,44 +201,65 @@ ALT_STATUS_CODE soc_int_setup_core1(void)
     puts("CORE1: Interrupt Setup.\n\r");
 
     // Initialize global interrupts
-    //if (status == ALT_E_SUCCESS)
-    //{
-    //    status = alt_int_global_init();
-    //}
+    if (status == ALT_E_SUCCESS)
+    {
+        status = alt_int_global_init();
+		puts("CORE1: alt_int_global_init = ");
+		putHexa32(status);
+		puts(".\n\r");
+	}
 
     // Initialize CPU interrupts
-    //if (status == ALT_E_SUCCESS)
-    //{
-    //    status = alt_int_cpu_init();
-    //}
+    if (status == ALT_E_SUCCESS)
+    {
+        status = alt_int_cpu_init();
+		puts("CORE1: alt_int_cpu_init = ");
+		putHexa32(status);
+		puts(".\n\r");
+	}
 
     // Set interrupt trigger type
     if (status == ALT_E_SUCCESS)
     {
         //status = alt_int_dist_trigger_set(ALT_INT_INTERRUPT_PPI_TIMER_GLOBAL, ALT_INT_TRIGGER_AUTODETECT);
-        status = alt_int_dist_trigger_set(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE, ALT_INT_TRIGGER_AUTODETECT);
+        status = alt_int_dist_trigger_set(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE, ALT_INT_TRIGGER_EDGE);
+		puts("CORE1: alt_int_dist_trigger_set = ");
+		putHexa32(status);
+		puts(".\n\r");
     }
 
     // Enable interrupt at the distributor level
     if (status == ALT_E_SUCCESS)
     {
-        //status = alt_int_dist_enable(ALT_INT_INTERRUPT_PPI_TIMER_GLOBAL);
+		//status = alt_int_dist_enable(ALT_INT_INTERRUPT_PPI_TIMER_GLOBAL);
         status = alt_int_dist_enable(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE);
+		puts("CORE1: alt_int_dist_enable = ");
+		putHexa32(status);
+		puts(".\n\r");
     }
 
     // Enable CPU interrupts
     if (status == ALT_E_SUCCESS)
     {
         status = alt_int_cpu_enable();
+		puts("CORE1: alt_int_cpu_enable = ");
+		putHexa32(status);
+		puts(".\n\r");
     }
 
     // Enable global interrupts
-    //if (status == ALT_E_SUCCESS)
-    //{
-    //    status = alt_int_global_enable();
-    //}
+    if (status == ALT_E_SUCCESS)
+    {
+        status = alt_int_global_enable();
+		puts("CORE1: alt_int_global_enable = ");
+		putHexa32(status);
+		puts(".\n\r");
+	}
 
-    return status;
+    puts("CORE1: Interrupt Setup done whit status = ");
+	putHexa32(status);
+	puts(".\n\r");
+	return status;
 }
 
 
@@ -553,6 +574,7 @@ int timers_init_Core0(void)
         status = system_init();
     }
 
+	//#if false
     // Setup Interrupt (for private timer)
     if(status == ALT_E_SUCCESS)
     {
@@ -564,12 +586,14 @@ int timers_init_Core0(void)
     {
         status = private_timer_setup_core0();
     }
-
+	//#endif
+	
 	// Use Global timer to measure code snippet & ticks (delay...)
-	if(status == ALT_E_SUCCESS)
-	{
-		  status = global_timer_setup();
-	}
+	// already done in system_init()
+	//if(status == ALT_E_SUCCESS)
+	//{
+	//	  status = global_timer_setup();
+	//}
 
 	return 0;
 }

@@ -145,7 +145,8 @@ extern "C"
  * ALT_INT_PROVISION_CPU_COUNT in the Makefile.
  */
 #ifndef ALT_INT_PROVISION_CPU_COUNT
-#define ALT_INT_PROVISION_CPU_COUNT         (1)
+//#define ALT_INT_PROVISION_CPU_COUNT       (1)
+#define ALT_INT_PROVISION_CPU_COUNT         (2)
 #endif
 
 /*!

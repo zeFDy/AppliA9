@@ -659,28 +659,38 @@ Disassembly of section .text.alt_int_sgi_trigger:
 Disassembly of section .text.alt_int_cpu_init:
 
 00000000 <alt_int_cpu_init>:
-   0:	ee10 0fb0 	mrc	15, 0, r0, cr0, cr0, {5}
-   4:	f010 00ff 	ands.w	r0, r0, #255	; 0xff
-   8:	d116      	bne.n	38 <alt_int_cpu_init+0x38>
-   a:	f44f 3280 	mov.w	r2, #65536	; 0x10000
-   e:	f3ef 8300 	mrs	r3, CPSR
-  12:	f04f 01d2 	mov.w	r1, #210	; 0xd2
-  16:	f381 8100 	msr	CPSR_c, r1
-  1a:	4695      	mov	sp, r2
-  1c:	f383 8100 	msr	CPSR_c, r3
-  20:	ee11 3f10 	mrc	15, 0, r3, cr1, cr0, {0}
-  24:	f423 5300 	bic.w	r3, r3, #8192	; 0x2000
-  28:	ee01 3f10 	mcr	15, 0, r3, cr1, cr0, {0}
-  2c:	4b04      	ldr	r3, [pc, #16]	; (40 <alt_int_cpu_init+0x40>)
-  2e:	22ff      	movs	r2, #255	; 0xff
-  30:	681b      	ldr	r3, [r3, #0]
-  32:	605a      	str	r2, [r3, #4]
-  34:	6098      	str	r0, [r3, #8]
-  36:	4770      	bx	lr
-  38:	f04f 30ff 	mov.w	r0, #4294967295
-  3c:	4770      	bx	lr
-  3e:	bf00      	nop
-  40:	00000000 	.word	0x00000000
+   0:	b508      	push	{r3, lr}
+   2:	ee10 3fb0 	mrc	15, 0, r3, cr0, cr0, {5}
+   6:	f013 03ff 	ands.w	r3, r3, #255	; 0xff
+   a:	d105      	bne.n	18 <alt_int_cpu_init+0x18>
+   c:	4811      	ldr	r0, [pc, #68]	; (54 <alt_int_cpu_init+0x54>)
+   e:	f7ff fffe 	bl	0 <puts>
+  12:	f44f 3280 	mov.w	r2, #65536	; 0x10000
+  16:	e006      	b.n	26 <alt_int_cpu_init+0x26>
+  18:	2b01      	cmp	r3, #1
+  1a:	d1fa      	bne.n	12 <alt_int_cpu_init+0x12>
+  1c:	480e      	ldr	r0, [pc, #56]	; (58 <alt_int_cpu_init+0x58>)
+  1e:	f7ff fffe 	bl	0 <puts>
+  22:	f44f 3288 	mov.w	r2, #69632	; 0x11000
+  26:	f3ef 8300 	mrs	r3, CPSR
+  2a:	f04f 01d2 	mov.w	r1, #210	; 0xd2
+  2e:	f381 8100 	msr	CPSR_c, r1
+  32:	4695      	mov	sp, r2
+  34:	f383 8100 	msr	CPSR_c, r3
+  38:	ee11 3f10 	mrc	15, 0, r3, cr1, cr0, {0}
+  3c:	f423 5300 	bic.w	r3, r3, #8192	; 0x2000
+  40:	ee01 3f10 	mcr	15, 0, r3, cr1, cr0, {0}
+  44:	4b05      	ldr	r3, [pc, #20]	; (5c <alt_int_cpu_init+0x5c>)
+  46:	22ff      	movs	r2, #255	; 0xff
+  48:	2000      	movs	r0, #0
+  4a:	681b      	ldr	r3, [r3, #0]
+  4c:	605a      	str	r2, [r3, #4]
+  4e:	6098      	str	r0, [r3, #8]
+  50:	bd08      	pop	{r3, pc}
+  52:	bf00      	nop
+  54:	00000000 	.word	0x00000000
+  58:	0000000e 	.word	0x0000000e
+  5c:	00000000 	.word	0x00000000
 
 Disassembly of section .text.alt_int_cpu_uninit:
 

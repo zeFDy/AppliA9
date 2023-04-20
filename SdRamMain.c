@@ -34,6 +34,18 @@ int timers_init_Core0(void);
 int timers_init_Core1(void);
 
 
+
+void 	DelayGblTimer(uint32_t uiValue)
+{		
+		uint64_t	ui64InitialValue = alt_globaltmr_get64();
+
+		while(1)
+		{
+			uint64_t ui64ThisTickValue = alt_globaltmr_get64();
+			if(ui64ThisTickValue-ui64InitialValue>=uiValue)	break;
+		}
+}
+
 #if false
 static void alt_int_fixup_irq_stack(uint32_t stack_irq)
 {
@@ -101,13 +113,17 @@ void 		Cpu1Code(void)
 	
 	while(1)
 	{
+		#if false
 		// soft loop for around 500ms (5000000)
 		//for(iCounter=0;iCounter<5000000;iCounter++)
 		for(iCounter=0;iCounter<2000000;iCounter++)
 		{
 			j=iCounter*2;
 		}
+		#endif
 
+		DelayGblTimer(50000000);
+		
 		uiMainCounter++;
 		
 		#if false
@@ -129,6 +145,13 @@ void 		Cpu1Code(void)
 		//if(uiMainCounter%100==0)	puts("CORE1 kicks !\r\n");
 		if(uiMainCounter>=10)	
 		{
+			puts((char*)"\r\nCORE1: GblTimer =");
+			putHexa64(alt_globaltmr_get64());
+
+			unsigned int uiCurrentPrivateTimerValue 	=readl(0xFFFEC604);
+			puts((char*)" - PrivateTimer =");
+			putHexa32(uiCurrentPrivateTimerValue);
+			puts((char*)" - ");
 			//puts((char*)"\r\nCore1-GLOBALTIMER=");
 			//putHexa64(alt_globaltmr_get64());
 			//puts((char*)"\r\n");
@@ -248,11 +271,22 @@ void SdRamMain(void)
 	
 	while(1)
 	{
+		#if false
 		// soft loop for around 500ms
 		for(int i=0;i<5000000;i++)
 		{
 			volatile	int	j=i*2;
 		}
+		#endif
+
+		DelayGblTimer(50000000);
+		//uint64_t	ui64InitialValue = alt_globaltmr_get64();
+
+		//while(1)
+		//{
+		//	uint64_t ui64ThisTickValue = alt_globaltmr_get64();
+		//	if(ui64InitialValue-ui64ThisTickValue>=50000000)	break;
+		//}
 
 		//while(GP_Timer_Interrupt_Fired==false);
 		//puts(".");
@@ -274,25 +308,26 @@ void SdRamMain(void)
 		// 	//putc('H');
 		// }
 		
-		//puts((char*)"\r\Core0-GLOBALTIMER=");
-		//putHexa64(alt_globaltmr_get64());
 		
 		// next line to be modified (as % implies division and therfore lib.a)
 		//if(iCounter%10=0)	
 		if(iCounter>=10)	
 		{
+			puts((char*)"\r\nCORE0: GblTimer =");
+			putHexa64(alt_globaltmr_get64());
+			
 		//	ui64InitialValue 							=get_ticks();
-		//	unsigned int uiCurrentPrivateTimerValue 	=readl(0xFFFEC604);
+			unsigned int uiCurrentPrivateTimerValue 	=readl(0xFFFEC604);
 		//	unsigned int uiCurrentPrivateTimerStatus 	=readl(0xFFFEC60C);
 	
 		//	puts((char*)"OSC1TIMER0 =");
 		//	putHexa64(ui64InitialValue);
-		//	puts((char*)" - PRIVATETIMER =");
+			puts((char*)" - PrivateTimer =");
 		//	puts((char*)"PRIVATETIMER=");
-			//putHexa32(*privateTimerCounter);
-			//puts((char*)" (");
+			putHexa32(uiCurrentPrivateTimerValue);
+		//	puts((char*)" (");
 		//	putHexa32(uiCurrentPrivateTimerValue);
-			//puts((char*)" - ");
+			puts((char*)" - ");
 			//putHexa32(uiCurrentPrivateTimerStatus);
 			//puts((char*)") - Alive and kicking...\n\r");
 			//puts((char*)" - Alive and kicking.\n\r");
