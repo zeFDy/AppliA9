@@ -285,9 +285,30 @@ irq_SdRamPart:	push {r0-r7, lr}
 		
 		// les IRQ passent par ici 
 		
-		/*
-		bx 	lr
-		*/
+	    //
+		// test core0/core1
+		MRC p15, 0, r1, c0, c0, 5	// recuperation du coreX - Read CPU ID Register
+		and r1, #0xFF				// mask uniquement info coreX
+		cmp r1, #1					// running on core1 ?
+		
+		bne JumpCore0Code			// non jump to JumpCore0Code
+		
+		ldr r0, ='1'				/* envoi 1 sur RS232 pour Core1 */
+		ldr r1, =0xFFC02000			/* UartData */ 
+		str r0, [r1, #0]
+		b 	exitIrq
+		
+	JumpCore0Code:
+		
+		ldr r0, ='0'				/* envoi 0 sur RS232 pour Core0 */
+		ldr r1, =0xFFC02000			/* UartData */ 
+		str r0, [r1, #0]
+		
+
+		
+	exitIrq:
+	
+		//bx 	lr
 		bl 		alt_int_handler_irq
 		
 		pop		{R0-R7, LR}

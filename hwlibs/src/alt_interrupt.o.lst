@@ -43,61 +43,65 @@ Disassembly of section .text.alt_int_global_init:
 
 00000000 <alt_int_global_init>:
    0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-   2:	4b26      	ldr	r3, [pc, #152]	; (9c <alt_int_global_init+0x9c>)
+   2:	4b29      	ldr	r3, [pc, #164]	; (a8 <alt_int_global_init+0xa8>)
    4:	ee9f 1f10 	mrc	15, 4, r1, cr15, cr0, {0}
-   8:	f501 5280 	add.w	r2, r1, #4096	; 0x1000
-   c:	4824      	ldr	r0, [pc, #144]	; (a0 <alt_int_global_init+0xa0>)
-   e:	4d25      	ldr	r5, [pc, #148]	; (a4 <alt_int_global_init+0xa4>)
-  10:	601a      	str	r2, [r3, #0]
-  12:	f501 7280 	add.w	r2, r1, #256	; 0x100
-  16:	4b24      	ldr	r3, [pc, #144]	; (a8 <alt_int_global_init+0xa8>)
-  18:	462c      	mov	r4, r5
-  1a:	601a      	str	r2, [r3, #0]
-  1c:	f241 0304 	movw	r3, #4100	; 0x1004
-  20:	58cb      	ldr	r3, [r1, r3]
-  22:	f3c3 1242 	ubfx	r2, r3, #5, #3
-  26:	f003 031f 	and.w	r3, r3, #31
-  2a:	3201      	adds	r2, #1
-  2c:	6002      	str	r2, [r0, #0]
-  2e:	4a1f      	ldr	r2, [pc, #124]	; (ac <alt_int_global_init+0xac>)
-  30:	3301      	adds	r3, #1
-  32:	015b      	lsls	r3, r3, #5
-  34:	6013      	str	r3, [r2, #0]
-  36:	2300      	movs	r3, #0
-  38:	4a1d      	ldr	r2, [pc, #116]	; (b0 <alt_int_global_init+0xb0>)
-  3a:	4618      	mov	r0, r3
-  3c:	3301      	adds	r3, #1
-  3e:	6010      	str	r0, [r2, #0]
-  40:	6050      	str	r0, [r2, #4]
-  42:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
-  46:	f102 0208 	add.w	r2, r2, #8
-  4a:	f804 0b01 	strb.w	r0, [r4], #1
-  4e:	d1f5      	bne.n	3c <alt_int_global_init+0x3c>
-  50:	f501 518c 	add.w	r1, r1, #4480	; 0x1180
-  54:	f7ff fffe 	bl	0 <alt_int_global_init>
-  58:	f04f 36ff 	mov.w	r6, #4294967295
-  5c:	2300      	movs	r3, #0
-  5e:	2701      	movs	r7, #1
-  60:	f841 6c80 	str.w	r6, [r1, #-128]
-  64:	1958      	adds	r0, r3, r5
-  66:	2200      	movs	r2, #0
-  68:	f851 cc80 	ldr.w	ip, [r1, #-128]
-  6c:	fa07 f402 	lsl.w	r4, r7, r2
-  70:	3201      	adds	r2, #1
-  72:	ea14 0f0c 	tst.w	r4, ip
-  76:	f100 0001 	add.w	r0, r0, #1
-  7a:	bf1e      	ittt	ne
-  7c:	f810 4c01 	ldrbne.w	r4, [r0, #-1]
-  80:	f044 0401 	orrne.w	r4, r4, #1
-  84:	f800 4c01 	strbne.w	r4, [r0, #-1]
-  88:	2a20      	cmp	r2, #32
-  8a:	d1ef      	bne.n	6c <alt_int_global_init+0x6c>
-  8c:	3320      	adds	r3, #32
-  8e:	f841 6b04 	str.w	r6, [r1], #4
-  92:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
-  96:	d1e3      	bne.n	60 <alt_int_global_init+0x60>
-  98:	2000      	movs	r0, #0
-  9a:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+   8:	f501 5080 	add.w	r0, r1, #4096	; 0x1000
+   c:	4c27      	ldr	r4, [pc, #156]	; (ac <alt_int_global_init+0xac>)
+   e:	4d28      	ldr	r5, [pc, #160]	; (b0 <alt_int_global_init+0xb0>)
+  10:	6018      	str	r0, [r3, #0]
+  12:	f501 7080 	add.w	r0, r1, #256	; 0x100
+  16:	4b27      	ldr	r3, [pc, #156]	; (b4 <alt_int_global_init+0xb4>)
+  18:	ee10 2fb0 	mrc	15, 0, r2, cr0, cr0, {5}
+  1c:	b2d2      	uxtb	r2, r2
+  1e:	6018      	str	r0, [r3, #0]
+  20:	f241 0304 	movw	r3, #4100	; 0x1004
+  24:	58cb      	ldr	r3, [r1, r3]
+  26:	f3c3 1042 	ubfx	r0, r3, #5, #3
+  2a:	f003 031f 	and.w	r3, r3, #31
+  2e:	3001      	adds	r0, #1
+  30:	6020      	str	r0, [r4, #0]
+  32:	4821      	ldr	r0, [pc, #132]	; (b8 <alt_int_global_init+0xb8>)
+  34:	3301      	adds	r3, #1
+  36:	462c      	mov	r4, r5
+  38:	015b      	lsls	r3, r3, #5
+  3a:	6003      	str	r3, [r0, #0]
+  3c:	4b1f      	ldr	r3, [pc, #124]	; (bc <alt_int_global_init+0xbc>)
+  3e:	eb03 23c2 	add.w	r3, r3, r2, lsl #11
+  42:	2200      	movs	r2, #0
+  44:	4610      	mov	r0, r2
+  46:	3201      	adds	r2, #1
+  48:	6018      	str	r0, [r3, #0]
+  4a:	6058      	str	r0, [r3, #4]
+  4c:	f5b2 7f80 	cmp.w	r2, #256	; 0x100
+  50:	f103 0308 	add.w	r3, r3, #8
+  54:	f804 0b01 	strb.w	r0, [r4], #1
+  58:	d1f5      	bne.n	46 <alt_int_global_init+0x46>
+  5a:	f501 518c 	add.w	r1, r1, #4480	; 0x1180
+  5e:	f7ff fffe 	bl	0 <alt_int_global_init>
+  62:	f04f 36ff 	mov.w	r6, #4294967295
+  66:	2300      	movs	r3, #0
+  68:	2701      	movs	r7, #1
+  6a:	f841 6c80 	str.w	r6, [r1, #-128]
+  6e:	1958      	adds	r0, r3, r5
+  70:	2200      	movs	r2, #0
+  72:	f851 cc80 	ldr.w	ip, [r1, #-128]
+  76:	fa07 f402 	lsl.w	r4, r7, r2
+  7a:	3201      	adds	r2, #1
+  7c:	ea14 0f0c 	tst.w	r4, ip
+  80:	f100 0001 	add.w	r0, r0, #1
+  84:	bf1e      	ittt	ne
+  86:	f810 4c01 	ldrbne.w	r4, [r0, #-1]
+  8a:	f044 0401 	orrne.w	r4, r4, #1
+  8e:	f800 4c01 	strbne.w	r4, [r0, #-1]
+  92:	2a20      	cmp	r2, #32
+  94:	d1ef      	bne.n	76 <alt_int_global_init+0x76>
+  96:	3320      	adds	r3, #32
+  98:	f841 6b04 	str.w	r6, [r1], #4
+  9c:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  a0:	d1e3      	bne.n	6a <alt_int_global_init+0x6a>
+  a2:	2000      	movs	r0, #0
+  a4:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+  a6:	bf00      	nop
 	...
 
 Disassembly of section .text.alt_int_global_enable_ns:
@@ -878,33 +882,39 @@ Disassembly of section .text.alt_int_isr_register:
 
 00000000 <alt_int_isr_register>:
    0:	28ff      	cmp	r0, #255	; 0xff
-   2:	bf9f      	itttt	ls
-   4:	4b05      	ldrls	r3, [pc, #20]	; (1c <alt_int_isr_register+0x1c>)
-   6:	f843 1030 	strls.w	r1, [r3, r0, lsl #3]
-   a:	eb03 00c0 	addls.w	r0, r3, r0, lsl #3
-   e:	6042      	strls	r2, [r0, #4]
-  10:	bf94      	ite	ls
-  12:	2000      	movls	r0, #0
-  14:	f06f 0008 	mvnhi.w	r0, #8
-  18:	4770      	bx	lr
-  1a:	bf00      	nop
-  1c:	00000000 	.word	0x00000000
+   2:	b510      	push	{r4, lr}
+   4:	d80c      	bhi.n	20 <alt_int_isr_register+0x20>
+   6:	ee10 4fb0 	mrc	15, 0, r4, cr0, cr0, {5}
+   a:	b2e4      	uxtb	r4, r4
+   c:	4b06      	ldr	r3, [pc, #24]	; (28 <alt_int_isr_register+0x28>)
+   e:	eb00 2004 	add.w	r0, r0, r4, lsl #8
+  12:	f843 1030 	str.w	r1, [r3, r0, lsl #3]
+  16:	eb03 00c0 	add.w	r0, r3, r0, lsl #3
+  1a:	6042      	str	r2, [r0, #4]
+  1c:	2000      	movs	r0, #0
+  1e:	bd10      	pop	{r4, pc}
+  20:	f06f 0008 	mvn.w	r0, #8
+  24:	e7fb      	b.n	1e <alt_int_isr_register+0x1e>
+  26:	bf00      	nop
+  28:	00000000 	.word	0x00000000
 
 Disassembly of section .text.alt_int_isr_unregister:
 
 00000000 <alt_int_isr_unregister>:
    0:	28ff      	cmp	r0, #255	; 0xff
-   2:	4603      	mov	r3, r0
-   4:	bf97      	itett	ls
-   6:	2000      	movls	r0, #0
-   8:	f06f 0008 	mvnhi.w	r0, #8
-   c:	4a03      	ldrls	r2, [pc, #12]	; (1c <alt_int_isr_unregister+0x1c>)
-   e:	f842 0033 	strls.w	r0, [r2, r3, lsl #3]
-  12:	bf9c      	itt	ls
-  14:	eb02 03c3 	addls.w	r3, r2, r3, lsl #3
-  18:	6058      	strls	r0, [r3, #4]
-  1a:	4770      	bx	lr
-  1c:	00000000 	.word	0x00000000
+   2:	d80c      	bhi.n	1e <alt_int_isr_unregister+0x1e>
+   4:	ee10 3fb0 	mrc	15, 0, r3, cr0, cr0, {5}
+   8:	b2db      	uxtb	r3, r3
+   a:	4a06      	ldr	r2, [pc, #24]	; (24 <alt_int_isr_unregister+0x24>)
+   c:	eb00 2303 	add.w	r3, r0, r3, lsl #8
+  10:	2000      	movs	r0, #0
+  12:	f842 0033 	str.w	r0, [r2, r3, lsl #3]
+  16:	eb02 03c3 	add.w	r3, r2, r3, lsl #3
+  1a:	6058      	str	r0, [r3, #4]
+  1c:	4770      	bx	lr
+  1e:	f06f 0008 	mvn.w	r0, #8
+  22:	4770      	bx	lr
+  24:	00000000 	.word	0x00000000
 
 Disassembly of section .text.alt_int_util_cpu_count:
 
@@ -937,29 +947,31 @@ Disassembly of section .text.alt_int_handler_irq:
 
 00000000 <alt_int_handler_irq>:
    0:	b570      	push	{r4, r5, r6, lr}
-   2:	4e0f      	ldr	r6, [pc, #60]	; (40 <alt_int_handler_irq+0x40>)
-   4:	6833      	ldr	r3, [r6, #0]
-   6:	68dc      	ldr	r4, [r3, #12]
-   8:	f414 7f40 	tst.w	r4, #768	; 0x300
-   c:	f3c4 0509 	ubfx	r5, r4, #0, #10
-  10:	d10b      	bne.n	2a <alt_int_handler_irq+0x2a>
-  12:	4b0c      	ldr	r3, [pc, #48]	; (44 <alt_int_handler_irq+0x44>)
-  14:	f853 2035 	ldr.w	r2, [r3, r5, lsl #3]
-  18:	b122      	cbz	r2, 24 <alt_int_handler_irq+0x24>
-  1a:	eb03 03c5 	add.w	r3, r3, r5, lsl #3
-  1e:	4620      	mov	r0, r4
-  20:	6859      	ldr	r1, [r3, #4]
-  22:	4790      	blx	r2
-  24:	6833      	ldr	r3, [r6, #0]
-  26:	611c      	str	r4, [r3, #16]
-  28:	bd70      	pop	{r4, r5, r6, pc}
-  2a:	4807      	ldr	r0, [pc, #28]	; (48 <alt_int_handler_irq+0x48>)
-  2c:	f7ff fffe 	bl	0 <puts>
-  30:	4628      	mov	r0, r5
-  32:	f7ff fffe 	bl	0 <putHexa32>
-  36:	4805      	ldr	r0, [pc, #20]	; (4c <alt_int_handler_irq+0x4c>)
-  38:	f7ff fffe 	bl	0 <puts>
-  3c:	e7f2      	b.n	24 <alt_int_handler_irq+0x24>
-  3e:	bf00      	nop
+   2:	4e11      	ldr	r6, [pc, #68]	; (48 <alt_int_handler_irq+0x48>)
+   4:	ee10 2fb0 	mrc	15, 0, r2, cr0, cr0, {5}
+   8:	6833      	ldr	r3, [r6, #0]
+   a:	68dd      	ldr	r5, [r3, #12]
+   c:	f415 7f40 	tst.w	r5, #768	; 0x300
+  10:	f3c5 0409 	ubfx	r4, r5, #0, #10
+  14:	d10e      	bne.n	34 <alt_int_handler_irq+0x34>
+  16:	b2d2      	uxtb	r2, r2
+  18:	4b0c      	ldr	r3, [pc, #48]	; (4c <alt_int_handler_irq+0x4c>)
+  1a:	eb04 2402 	add.w	r4, r4, r2, lsl #8
+  1e:	f853 2034 	ldr.w	r2, [r3, r4, lsl #3]
+  22:	b122      	cbz	r2, 2e <alt_int_handler_irq+0x2e>
+  24:	eb03 04c4 	add.w	r4, r3, r4, lsl #3
+  28:	4628      	mov	r0, r5
+  2a:	6861      	ldr	r1, [r4, #4]
+  2c:	4790      	blx	r2
+  2e:	6833      	ldr	r3, [r6, #0]
+  30:	611d      	str	r5, [r3, #16]
+  32:	bd70      	pop	{r4, r5, r6, pc}
+  34:	4806      	ldr	r0, [pc, #24]	; (50 <alt_int_handler_irq+0x50>)
+  36:	f7ff fffe 	bl	0 <puts>
+  3a:	4620      	mov	r0, r4
+  3c:	f7ff fffe 	bl	0 <putHexa32>
+  40:	4804      	ldr	r0, [pc, #16]	; (54 <alt_int_handler_irq+0x54>)
+  42:	f7ff fffe 	bl	0 <puts>
+  46:	e7f2      	b.n	2e <alt_int_handler_irq+0x2e>
 	...
-  4c:	00000024 	.word	0x00000024
+  54:	00000024 	.word	0x00000024

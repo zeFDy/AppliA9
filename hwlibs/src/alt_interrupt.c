@@ -136,7 +136,8 @@ typedef struct INT_DISPATCH_s
 }
 INT_DISPATCH_t;
 
-static INT_DISPATCH_t alt_int_dispatch[ALT_INT_PROVISION_INT_COUNT];
+#define 	CORE_NUMBERS	2
+static INT_DISPATCH_t alt_int_dispatch[CORE_NUMBERS][ALT_INT_PROVISION_INT_COUNT];
 
 /* Distributer interface base address */
 static uint32_t alt_int_base_dist;
@@ -221,7 +222,9 @@ uint32_t get_current_cpu_num(void)
 
 ALT_STATUS_CODE alt_int_global_init()
 {
-    int i;
+    int 		i			=0;
+	uint32_t 	uiCoreId 	=get_current_cpu_num();	
+    
     /* Cache the distributor and CPU base addresses
      / See: Cortex-A9 MPCore TRM, section 1.5. */
     {
@@ -242,8 +245,8 @@ ALT_STATUS_CODE alt_int_global_init()
      / Initialize interrupt flags array */
     for (i = 0; i < ALT_INT_PROVISION_INT_COUNT; ++i)
     {
-        alt_int_dispatch[i].callback = 0;
-        alt_int_dispatch[i].context  = 0;
+        alt_int_dispatch[uiCoreId][i].callback = 0;
+        alt_int_dispatch[uiCoreId][i].context  = 0;
 
         alt_int_flag[i] = 0;
     }
@@ -907,9 +910,11 @@ ALT_STATUS_CODE alt_int_cpu_init()
     /* The ARM stack lowers in address as it is being used. 16 is the alignment
      / of the block. */
     //stack_irq = (uint32_t) &alt_int_stack_irq_block[cpu_num][sizeof(alt_int_stack_irq_block[0]) - 16];
-    stack_irq = (uint32_t) 0x10000;         // FDy
-    //stack_irq = (uint32_t) 0x3FFF0000;    // FDy - fix me !
-
+    if(cpu_num==0)		stack_irq = (uint32_t) 0x10000;         // FDy
+    //if(cpu_num==0)	stack_irq = (uint32_t) 0x3FFF0000;    	// FDy - fix me !
+	if(cpu_num==1)		stack_irq = (uint32_t) 0x11000;        	// FDy
+    //if(cpu_num==1)	stack_irq = (uint32_t) 0x3FFF1000;    	// FDy - fix me !
+	
     alt_int_fixup_irq_stack(stack_irq);
 
 #endif /* #if ALT_INT_PROVISION_STACK_SUPPORT */
@@ -1186,8 +1191,10 @@ ALT_STATUS_CODE alt_int_isr_register(ALT_INT_INTERRUPT_t int_id,
 {
     if ((uint32_t)int_id < ALT_INT_PROVISION_INT_COUNT)
     {
-        alt_int_dispatch[int_id].callback = callback;
-        alt_int_dispatch[int_id].context  = context;
+		uint32_t uiCoreId 	= get_current_cpu_num();	
+    
+        alt_int_dispatch[uiCoreId][int_id].callback = callback;
+        alt_int_dispatch[uiCoreId][int_id].context  = context;
 
         return ALT_E_SUCCESS;
     }
@@ -1201,8 +1208,10 @@ ALT_STATUS_CODE alt_int_isr_unregister(ALT_INT_INTERRUPT_t int_id)
 {
     if ((uint32_t)int_id < ALT_INT_PROVISION_INT_COUNT)
     {
-        alt_int_dispatch[int_id].callback = 0;
-        alt_int_dispatch[int_id].context  = 0;
+        uint32_t uiCoreId 	= get_current_cpu_num();	
+		
+		alt_int_dispatch[uiCoreId][int_id].callback = 0;
+        alt_int_dispatch[uiCoreId][int_id].context  = 0;
 
         return ALT_E_SUCCESS;
     }
@@ -1251,17 +1260,17 @@ void alt_int_handler_irq(void)
 
     //putc('.');
 
-    uint32_t icciar = alt_read_word(alt_int_base_cpu + 0xC);
-
-    uint32_t ackintid = ALT_INT_ICCIAR_ACKINTID_GET(icciar);
+    uint32_t icciar 	= alt_read_word(alt_int_base_cpu + 0xC);
+	uint32_t uiCoreId 	= get_current_cpu_num();	
+    uint32_t ackintid 	= ALT_INT_ICCIAR_ACKINTID_GET(icciar);
 
     //putc('-');
 
     if (ackintid < ALT_INT_PROVISION_INT_COUNT)
     {
-        if (alt_int_dispatch[ackintid].callback)
+        if (alt_int_dispatch[uiCoreId][ackintid].callback)
         {
-            alt_int_dispatch[ackintid].callback(icciar, alt_int_dispatch[ackintid].context);
+            alt_int_dispatch[uiCoreId][ackintid].callback(icciar, alt_int_dispatch[uiCoreId][ackintid].context);
         }
     }
     else
