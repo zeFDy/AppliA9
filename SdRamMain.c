@@ -146,7 +146,7 @@ void 		Cpu1Code(void)
 		//if(uiMainCounter%100==0)	puts("CORE1 kicks !\r\n");
 		if(uiMainCounter>=10)	
 		{
-			puts((char*)"\r\nCORE1: GblTimer =");
+			puts((char*)"CORE1: GblTimer =");
 			putHexa64(alt_globaltmr_get64());
 
 			unsigned int uiCurrentPrivateTimerValue 	=readl(0xFFFEC604);
@@ -226,7 +226,7 @@ void SdRamMain(void)
 	PutByte((uint8_t)affinity);
 	puts((char*)"\r\n");
 	if(affinity==0)	puts("CORE0: RUNNING ON CORE0\r\n");
-	puts((char*)"SP=");
+	puts((char*)"CORE0: SP=");
 	putHexa32(get_current_sp());
 	puts((char*)"\r\n");
 	
@@ -283,7 +283,7 @@ void SdRamMain(void)
 		}
 		#endif
 
-		DelayGblTimer(50000000);
+		//DelayGblTimer(50000000);
 		DelayGblTimer(500000);		// 500000uS -> 500mS
 
 		//uint64_t	ui64InitialValue = alt_globaltmr_get64();
@@ -319,7 +319,7 @@ void SdRamMain(void)
 		//if(iCounter%10=0)	
 		if(iCounter>=10)	
 		{
-			puts((char*)"\r\nCORE0: GblTimer =");
+			puts((char*)"CORE0: GblTimer =");
 			putHexa64(alt_globaltmr_get64());
 			
 		//	ui64InitialValue 							=get_ticks();

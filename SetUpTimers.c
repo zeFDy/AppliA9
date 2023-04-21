@@ -92,7 +92,7 @@ ALT_STATUS_CODE system_init(void)
 	
     ALT_STATUS_CODE status = ALT_E_SUCCESS;
 
-    puts("\n\r");
+    //puts("\n\r");
     puts("CORE0: System Initialization.\n\r");
 
     // Initialize global timer
@@ -315,8 +315,8 @@ void private_timer_isr_callback_core0(long unsigned int uliDummy, void* pvDummy)
     if(timerLoopCount_core0>10)
     {
         // Notify main thread
-        if(uiCoreNum==0x00)	{puts("\n\rCORE0: private_timer_isr_callback_core0()\n\r");}
-        if(uiCoreNum==0x01)	{puts("\n\rCORE1: private_timer_isr_callback_core0()\n\r");}
+        if(uiCoreNum==0x00)	{puts("CORE0: private_timer_isr_callback_core0()\n\r");}
+        if(uiCoreNum==0x01)	{puts("CORE1: private_timer_isr_callback_core0()\n\r");}
         //putc('N');
         Private_Timer_Interrupt_Fired_core0 = true;  // let main loop wait
         timerLoopCount_core0 =0;
@@ -361,8 +361,8 @@ void private_timer_isr_callback_core1(long unsigned int uliDummy, void* pvDummy)
     if(timerLoopCount_core1>10)
     {
         // Notify main thread
-        if(uiCoreNum==0x00)	{puts("\n\rCORE0: private_timer_isr_callback_core1()\n\r");}
-        if(uiCoreNum==0x01)	{puts("\n\rCORE1: private_timer_isr_callback_core1()\n\r");}
+        if(uiCoreNum==0x00)	{puts("CORE0: private_timer_isr_callback_core1()\n\r");}
+        if(uiCoreNum==0x01)	{puts("CORE1: private_timer_isr_callback_core1()\n\r");}
         //putc('N');
         Private_Timer_Interrupt_Fired_core1 = true;  // let main loop wait
         timerLoopCount_core1 =0;
@@ -376,8 +376,8 @@ ALT_STATUS_CODE private_timer_setup_core0(void)
     ALT_STATUS_CODE status = ALT_E_SUCCESS;
     Private_Timer_Interrupt_Fired_core0 = false;
 
-    puts("\n\r");
-    puts("INFO: CORE0: Private Timer Setup.\n\r");
+    //puts("\n\r");
+    puts("CORE0: Private Timer Setup.\n\r");
 
     // Set Private Timer to free-running was one-shot
     if(status == ALT_E_SUCCESS)
@@ -453,7 +453,7 @@ ALT_STATUS_CODE private_timer_setup_core1(void)
     ALT_STATUS_CODE status = ALT_E_SUCCESS;
     Private_Timer_Interrupt_Fired_core1 = false;
 
-    puts("\n\r");
+    //puts("\n\r");
     puts("CORE1: Private Timer Setup Core1.\n\r");
 
     // Set Private Timer to free-running was one-shot
@@ -537,12 +537,12 @@ ALT_STATUS_CODE global_timer_setup(void)
     ALT_STATUS_CODE status = ALT_E_SUCCESS;
     
     
-	puts("INFO : Global Timer Setup.\n\r");
+	puts("CORE0: Global Timer Setup.\n\r");
 
     // Start Global Timer
     if(status == ALT_E_SUCCESS)
     {
-        puts("INFO : Starting Global Timer.\n\r");
+        puts("CORE0: Starting Global Timer.\n\r");
         status = alt_globaltmr_start();
     }
 
