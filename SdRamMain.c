@@ -34,7 +34,7 @@ int timers_init_Core0(void);
 int timers_init_Core1(void);
 
 
-
+// normalement, uiValue est en us
 void 	DelayGblTimer(uint32_t uiValue)
 {		
 		uint64_t	ui64InitialValue = alt_globaltmr_get64();
@@ -100,12 +100,12 @@ void 		Cpu1Code(void)
 	
 	//*thisLedData = (unsigned int) (1 <<24);
 	uint32_t affinity = get_current_core_num();
-	puts("Cpu1Code affinity = 0x");
+	puts("CORE1: Cpu1Code affinity = 0x");
 	PutByte((uint8_t)affinity);
 	puts("\r\n");
-	if(affinity==1)	puts("RUNNING ON CORE1\r\n");
+	if(affinity==1)	puts("CORE1: RUNNING ON CORE1\r\n");
 	
-	puts("SP=");
+	puts("CORE1: SP=");
 	putHexa32(get_current_sp());
 	puts("\r\n");
 	//puts("Do not forget to setup private timer for Core1 !\r\n");
@@ -122,7 +122,8 @@ void 		Cpu1Code(void)
 		}
 		#endif
 
-		DelayGblTimer(50000000);
+		//DelayGblTimer(50000000);
+		DelayGblTimer(500000);		// 500000uS -> 500mS
 		
 		uiMainCounter++;
 		
@@ -166,7 +167,7 @@ void SdRamMain(void)
 	//volatile uint32_t*	ledData 			=(uint32_t *)0xFF709000;
 	//int 					iLed 				=0;
 	int 					iCounter 			=0;
-	uint64_t 				ui64InitialValue 	=0;
+	//uint64_t 				ui64InitialValue 	=0;
 		
 	// Semble etre OSC1TIMER0	
 	// timer init :
@@ -191,6 +192,8 @@ void SdRamMain(void)
 	puts("Version by FDy ("OUR_DATE_TIME_FULL")\n\r");	
 
 	puts("\n\r");
+	
+	#if false
 	puts("              ,   .-'\"'=;_  ,                \n\r");
 	puts("              |\\.'-~`-.`-`;/|                 \n\r");
 	puts("              \\.` '.'~-.` './                \n\r");
@@ -216,12 +219,13 @@ void SdRamMain(void)
 	puts(" .`   ``\"\"\"'''--`_)     (_'--'''\"\"\"``   `.   \n\r");
 	puts("(_(_(___...--'\"'`         `'\"'--...___)_)_)  \n\r");
 	puts("\n\r");
+	#endif
 
 	uint32_t affinity = get_current_core_num();
-	puts((char*)"SdRamMain affinity = 0x");
+	puts((char*)"CORE0: SdRamMain affinity = 0x");
 	PutByte((uint8_t)affinity);
 	puts((char*)"\r\n");
-	if(affinity==0)	puts("RUNNING ON CORE0\r\n");
+	if(affinity==0)	puts("CORE0: RUNNING ON CORE0\r\n");
 	puts((char*)"SP=");
 	putHexa32(get_current_sp());
 	puts((char*)"\r\n");
@@ -280,6 +284,8 @@ void SdRamMain(void)
 		#endif
 
 		DelayGblTimer(50000000);
+		DelayGblTimer(500000);		// 500000uS -> 500mS
+
 		//uint64_t	ui64InitialValue = alt_globaltmr_get64();
 
 		//while(1)

@@ -689,7 +689,7 @@ Disassembly of section .text.alt_int_cpu_init:
   50:	bd08      	pop	{r3, pc}
   52:	bf00      	nop
   54:	00000000 	.word	0x00000000
-  58:	0000000e 	.word	0x0000000e
+  58:	0000001c 	.word	0x0000001c
   5c:	00000000 	.word	0x00000000
 
 Disassembly of section .text.alt_int_cpu_uninit:

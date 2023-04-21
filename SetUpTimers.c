@@ -48,6 +48,9 @@
 // 1ms for private timer period
 #define PRIVATETIMERTICKVALUE	1
 
+// 200MHz / 200 pour avoir 1MHz -> 1us resolution
+#define GLOBAL_TIMER_PRESCALER	199
+	
 #define TIMER_LOAD_VALUE 32000
 
 
@@ -85,15 +88,18 @@ static __inline uint32_t get_current_core_num(void)
  */
 ALT_STATUS_CODE system_init(void)
 {
+
+	
     ALT_STATUS_CODE status = ALT_E_SUCCESS;
 
     puts("\n\r");
-    puts("INFO : System Initialization.\n\r");
+    puts("CORE0: System Initialization.\n\r");
 
     // Initialize global timer
-    puts("INFO : Setting up Global Timer.\n\r");
+    puts("CORE0: Setting up Global Timer.\n\r");
     if(!alt_globaltmr_int_is_enabled())
     {
+		alt_globaltmr_prescaler_set(GLOBAL_TIMER_PRESCALER);
 		status = alt_globaltmr_init();
     }
 
@@ -277,7 +283,8 @@ void private_timer_isr_callback_core0(long unsigned int uliDummy, void* pvDummy)
 	volatile unsigned int*	ledData 	= (unsigned int *)0xFF709000;
     //volatile unsigned int*	Uart0Data 	= (unsigned int *)0xFFC02000;
 	//*Uart0Data = (unsigned int) ('1');
-
+	uint32_t	uiCoreNum =get_current_core_num();
+	
     // Clear interrupt source don't care about the return value
     alt_gpt_int_clear_pending(ALT_GPT_CPU_PRIVATE_TMR);
 
@@ -291,14 +298,14 @@ void private_timer_isr_callback_core0(long unsigned int uliDummy, void* pvDummy)
         if(ledValue_core0==1) 
         {
             ledValue_core0 =0;
-            if(get_current_core_num()==0x00)	*ledData = (unsigned int) (0);
-            if(get_current_core_num()==0x01)	puts("H");
+            if(uiCoreNum==0x00)	{puts("CORE0: IRQ '1' core0 func\n\r");*ledData = (unsigned int) (0);}
+            if(uiCoreNum==0x01)	{puts("CORE1: IRQ '1' core0 func\n\r");}
         }
         else            
         {
             ledValue_core0 =1;
- 			if(get_current_core_num()==0x00)	*ledData = (unsigned int) (1 <<24);
-            if(get_current_core_num()==0x01)	puts("L");
+			if(uiCoreNum==0x00)	{puts("CORE0: IRQ '0' core0 func\n\r");*ledData = (unsigned int) (1 <<24);}
+            if(uiCoreNum==0x01)	{puts("CORE1: IRQ '0' core0 func\n\r");}
         }
 		
 		//ledPeriod = ledPeriod + LED_PERIOD_STEP;
@@ -308,8 +315,8 @@ void private_timer_isr_callback_core0(long unsigned int uliDummy, void* pvDummy)
     if(timerLoopCount_core0>10)
     {
         // Notify main thread
-        if(get_current_core_num()==0x00)	puts("\n\rCORE0: private_timer_isr_callback_core0()\n\r");
-        if(get_current_core_num()==0x01)	puts("\n\rCORE1: private_timer_isr_callback_core0()\n\r");
+        if(uiCoreNum==0x00)	{puts("\n\rCORE0: private_timer_isr_callback_core0()\n\r");}
+        if(uiCoreNum==0x01)	{puts("\n\rCORE1: private_timer_isr_callback_core0()\n\r");}
         //putc('N');
         Private_Timer_Interrupt_Fired_core0 = true;  // let main loop wait
         timerLoopCount_core0 =0;
@@ -322,7 +329,8 @@ void private_timer_isr_callback_core1(long unsigned int uliDummy, void* pvDummy)
 	volatile unsigned int*	ledData 	= (unsigned int *)0xFF709000;
     //volatile unsigned int*	Uart0Data 	= (unsigned int *)0xFFC02000;
 	//*Uart0Data = (unsigned int) ('1');
-
+	uint32_t	uiCoreNum =get_current_core_num();
+	
     // Clear interrupt source don't care about the return value
     alt_gpt_int_clear_pending(ALT_GPT_CPU_PRIVATE_TMR);
 
@@ -336,14 +344,14 @@ void private_timer_isr_callback_core1(long unsigned int uliDummy, void* pvDummy)
         if(ledValue_core1==1) 
         {
             ledValue_core1 =0;
-            if(get_current_core_num()==0x00)	*ledData = (unsigned int) (0);
-            if(get_current_core_num()==0x01)	puts("H");
+            if(uiCoreNum==0x00)	{puts("CORE0: IRQ '1' core1 func\n\r");*ledData = (unsigned int) (0);}
+            if(uiCoreNum==0x01)	{puts("CORE1: IRQ '1' core1 func\n\r");}
         }
         else            
         {
             ledValue_core1 =1;
- 			if(get_current_core_num()==0x00)	*ledData = (unsigned int) (1 <<24);
-            if(get_current_core_num()==0x01)	puts("L");
+ 			if(uiCoreNum==0x00)	{puts("CORE0: IRQ '0' core1 func\n\r");*ledData = (unsigned int) (1 <<24);}
+            if(uiCoreNum==0x01)	{puts("CORE1: IRQ '0' core1 func\n\r");}
         }
 		
 		//ledPeriod = ledPeriod + LED_PERIOD_STEP;
@@ -353,8 +361,8 @@ void private_timer_isr_callback_core1(long unsigned int uliDummy, void* pvDummy)
     if(timerLoopCount_core1>10)
     {
         // Notify main thread
-        if(get_current_core_num()==0x00)	puts("\n\rCORE0: private_timer_isr_callback_core1()\n\r");
-        if(get_current_core_num()==0x01)	puts("\n\rCORE1: private_timer_isr_callback_core1()\n\r");
+        if(uiCoreNum==0x00)	{puts("\n\rCORE0: private_timer_isr_callback_core1()\n\r");}
+        if(uiCoreNum==0x01)	{puts("\n\rCORE1: private_timer_isr_callback_core1()\n\r");}
         //putc('N');
         Private_Timer_Interrupt_Fired_core1 = true;  // let main loop wait
         timerLoopCount_core1 =0;
@@ -482,7 +490,7 @@ ALT_STATUS_CODE private_timer_setup_core1(void)
 		puts("\r\n");
         */
 		
-		uint32_t uiLoadVal = 199999;	// if periphClk is still 200MHz
+		uint32_t uiLoadVal = 199999;	// if periphClk is still 200MHz to have 1kHz -> 1ms
 		status = alt_gpt_counter_set(ALT_GPT_CPU_PRIVATE_TMR, uiLoadVal /*100000*/ /*1000000000*/);        
     }
 

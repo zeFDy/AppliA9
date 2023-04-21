@@ -907,8 +907,8 @@ ALT_STATUS_CODE alt_int_cpu_init()
 
 #if ALT_INT_PROVISION_STACK_SUPPORT
 
-	if(cpu_num==0)	puts("setup core0\r\n");
-	if(cpu_num==1)	puts("setup core1\r\n");
+	if(cpu_num==0)	puts("CORE0: alt_int_cpu_init()\r\n");
+	if(cpu_num==1)	puts("CORE1: alt_int_cpu_init()\r\n");
 
     /* The ARM stack lowers in address as it is being used. 16 is the alignment
      / of the block. */
