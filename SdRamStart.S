@@ -273,10 +273,41 @@ cpu_init_cp15_SdRamPart:
 //
 // IRQ - set LED & send carac for the moment
 //
-irq_SdRamPart:	push {r0-r7, lr}
+irq_SdRamPart:	
+		push {r0-r7, lr}
+
+		//uint32_t periphbase = get_periphbase();
+   		//mrc 	p15, 4, r0, c15, c0, 0		// r0 = periphbase;
+   		//alt_int_base_cpu  = periphbase + 0x0100;
+		//add		r0, r0, #0x0100
+
+		ldr 	r0, intBaseCpu
+
+		//uint32_t icciar 	= alt_read_word(alt_int_base_cpu + 0xC);
+		//add		r0, r0, 0x000C
+		ldr 	r1, [r0, #0x000C]
+		str 	r1, value
+		
+		check the icciar
+		
+		if not an IRQ from Private Timer : exit IRQ (branch to exitIrq)
+		
+		if it is an IRQ from Private Timer : clear the pending int
+		alt_gpt_int_clear_pending(ALT_GPT_TIMER_t tmr_id)
+		
+		//ldr 	r0, =#Counter
+		//ldr 	r1, [r0]
+		//add		r1, r1, #1
+		//str 	r1, [r0]
+
+		//cmp	r1, #1000
+		//blt 	exitIrq
+
+		//ldr 	r1, =#0
+		//str	r1, [r0]
 
 		//ldr r0, LedValue	/* 1<<24 */
-		//ldr r1, LedData	/* LedData port in memory */
+		//ldr r1, LedData		/* LedData port in memory */
 		//str r0, [r1, #0]
 
 		//ldr r0, UartValue	/* 'U' */
@@ -284,7 +315,7 @@ irq_SdRamPart:	push {r0-r7, lr}
 		//str r0, [r1, #0]
 		
 		// les IRQ passent par ici 
-		b 	exitIrq
+		//b 	exitIrq
 		
 	    //
 		// test core0/core1
@@ -294,24 +325,65 @@ irq_SdRamPart:	push {r0-r7, lr}
 		
 		bne JumpCore0Code			// non jump to JumpCore0Code
 		
-		ldr r0, ='1'				/* envoi 1 sur RS232 pour Core1 */
-		ldr r1, =0xFFC02000			/* UartData */ 
-		str r0, [r1, #0]
-		b 	exitIrq
+		ldr 	r0, =#CounterCore1
+		ldr 	r1, [r0]
+		add		r1, r1, #1
+		str 	r1, [r0]
+
+		cmp		r1, #1000
+		blt 	exitIrq
+
+		ldr 	r1, =#0
+		str		r1, [r0]		
+
+		ldr 	r1, =#IrqMessage
+		bl 		displayMsg
+		ldr 	r0, ='1'				/* envoi 1 sur RS232 pour Core1 */
+		ldr 	r1, =0xFFC02000			/* UartData */ 
+		str 	r0, [r1, #0]
+		
+		ldr 	r0, =10
+		str 	r0, [r1, #0]
+		ldr 	r0, =13
+		str 	r0, [r1, #0]
+
+		b 		exitIrq
 		
 	JumpCore0Code:
 		
-		ldr r0, ='0'				/* envoi 0 sur RS232 pour Core0 */
-		ldr r1, =0xFFC02000			/* UartData */ 
-		str r0, [r1, #0]
-		
+		ldr 	r0, =#CounterCore0
+		ldr 	r1, [r0]
+		add		r1, r1, #1
+		str 	r1, [r0]
 
-		
+		cmp	r1, #1000
+		blt 	exitIrq
+
+		ldr 	r1, =#0
+		str		r1, [r0]		
+
+		ldr 	r1, =#IrqMessage
+		bl 		displayMsg
+		ldr 	r0, ='0'				/* envoi 0 sur RS232 pour Core0 */
+		ldr 	r1, =0xFFC02000			/* UartData */ 
+		str 	r0, [r1, #0]
+			
+		ldr 	r0, =10
+		str 	r0, [r1, #0]
+		ldr 	r0, =13
+		str 	r0, [r1, #0]
+
 	exitIrq:
 	
 		//bx 	lr
-		bl 		alt_int_handler_irq
+		//bl	alt_int_handler_irq
 		
+		//alt_write_word(alt_int_base_cpu + 0x10, icciar); /* icceoir */
+
+		ldr 	r0, intBaseCpu
+		ldr 	r1,	value
+		str		r1, [r0, #0x0010]
+
 		pop		{R0-R7, LR}
 		subs	PC, LR, #4
 
@@ -319,6 +391,22 @@ lirq_SdRamPart:
 		bl	lirq_SdRamPart				/* on boucle ici (pour le moment) */
 
 
-UartValue:	.word 	'U'
-UartData:	.word	0xFFC02000
+displayMsg:		ldr 	r2, =0xFFC02000			/* UartData */ 
+displayMsgLoop:	ldrb 	r0, [r1],#1
+				//and 	r0, #0xFF
+				cmp 	r0, #0
+				beq 	displayMsgEnd
 
+				str 	r0, [r2, #0]
+				//add 	r1, r1, #1
+				b 		displayMsgLoop
+
+displayMsgEnd:	bx		lr
+
+UartValue:		.word 	'U'
+UartData:		.word	0xFFC02000
+intBaseCpu:		.word 	0xFFFEC100
+value:			.word 	0
+CounterCore0:	.word 	0
+CounterCore1:	.word 	0
+IrqMessage:		.asciz 	"IRQ on Core #"

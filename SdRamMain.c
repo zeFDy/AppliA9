@@ -1,4 +1,5 @@
 #include "common.h"
+#include "hwlibs/include/alt_mpu_registers.h"
 #include "hwlibs/include/alt_interrupt.h"
 #include "hwlibs/include/alt_globaltmr.h"
 #include "hwlibs/include/alt_timers.h"
@@ -7,6 +8,10 @@
 #include "hwlibs/include/socal/hps.h"
 #include "ourDateTime.h"
 #include "debugConsole.h"
+#include "hwlibs/include/socal/socal.h"
+
+// 200MHz / 200 pour avoir 1MHz -> 1us resolution
+#define GLOBAL_TIMER_PRESCALER	199
 
 // RESET MANAGER
 #define SOCFPGA_RSTMGR_ADDRESS	0xffd05000
@@ -80,7 +85,7 @@ static __inline uint32_t get_current_core_num(void)
 }
 
 
-uint64_t  get_ticks(void)
+uint64_t  	get_ticks(void)
 {
 	// semble etre OSC1TIMER0
 	unsigned int uiCurrentValue =	readl(CONFIG_SYS_TIMERBASE + 0x04);
@@ -109,6 +114,7 @@ void 		Cpu1Code(void)
 	putHexa32(get_current_sp());
 	puts("\r\n");
 	//puts("Do not forget to setup private timer for Core1 !\r\n");
+
 	timers_init_Core1();			
 	
 	while(1)
@@ -162,6 +168,7 @@ void 		Cpu1Code(void)
 	}
 }
 
+
 void SdRamMain(void)
 {
 	//volatile uint32_t*	ledData 			=(uint32_t *)0xFF709000;
@@ -193,7 +200,7 @@ void SdRamMain(void)
 
 	puts("\n\r");
 	
-	#if false
+	//#if false
 	puts("              ,   .-'\"'=;_  ,                \n\r");
 	puts("              |\\.'-~`-.`-`;/|                 \n\r");
 	puts("              \\.` '.'~-.` './                \n\r");
@@ -219,7 +226,7 @@ void SdRamMain(void)
 	puts(" .`   ``\"\"\"'''--`_)     (_'--'''\"\"\"``   `.   \n\r");
 	puts("(_(_(___...--'\"'`         `'\"'--...___)_)_)  \n\r");
 	puts("\n\r");
-	#endif
+	//#endif
 
 	uint32_t affinity = get_current_core_num();
 	puts((char*)"CORE0: SdRamMain affinity = 0x");
@@ -233,6 +240,17 @@ void SdRamMain(void)
 	
 	//alt_int_fixup_irq_stack(0x10000);								// Set IRQ Stack Pointer to 0x10000 -> Fix it !
 	//writel(0xFF /*priority_mask*/, ALT_GIC_BASE_CPU + 0x4); 		// Set priority mask to 0xFF so IRq are forwarded to CPU /* iccpmr */
+    //puts("\n\r");
+
+
+    // Initialize global timer
+    puts("CORE0: Setting up Global Timer.\n\r");
+    if(!alt_globaltmr_int_is_enabled())
+    {
+		alt_globaltmr_prescaler_set(GLOBAL_TIMER_PRESCALER);
+		int status = alt_globaltmr_init();
+    }
+
 	
 	timers_init_Core0();			
 	//puts("End of timer init...\n\r");
@@ -251,6 +269,7 @@ void SdRamMain(void)
 	//unreset cpu1
 	clrbits_le32(RSTMGR_MPUMODRESET, 1 << 1);		// cpu1=b1
 
+
     #if false
 	// Clock for private timer is PERIPHCLK
 	//volatile uint32_t*	privateTimerLoadValue 		= (uint32_t *)0xFFFEC600;
@@ -262,7 +281,9 @@ void SdRamMain(void)
 	//*privateTimerLoadValue 			=  500000000;			// 1s if clock is 200 MHz
 	//*privateTimerLoadValue 			= 2500000000;			
 	// si ok, faire un essai avec writel()
-	writel(1000000000, 0xFFFEC600);
+	//writel(1000000000, 0xFFFEC600);
+	//writel(2500000000, 0xFFFEC600);
+	writel(     5000000, 0xFFFEC600);
 	
 	// start private timer
 	//*privateTimerControl	= 3;					// start the timer without IRQ (=7 for IRQ)
@@ -271,8 +292,27 @@ void SdRamMain(void)
 													// b2 = IRQ (=1 IRQ is generated when value goes to 0)
 													// if IRQ is ON, interrupt ID29	is pending
 													// (when occurs) in Interrupt Distributor		
-	#endif
 	
+    
+	uint32_t            regmask;                    /* data mask */
+    volatile uint32_t   *regaddr;                   /* register address */
+	regaddr = (volatile uint32_t *) (ALT_CPU_PRIVATE_TMR_BASE + ALT_CPU_PRIV_TMR_CTRL_REG_OFFSET);
+    regmask = ALT_CPU_PRIV_TMR_ENABLE;
+	alt_write_word(regaddr, alt_read_word(regaddr) | regmask);
+        
+	alt_gpt_int_enable(ALT_GPT_CPU_PRIVATE_TMR);
+	#endif
+
+
+	#if 0
+	uint32_t status = alt_gpt_mode_set(ALT_GPT_CPU_PRIVATE_TMR, ALT_GPT_RESTART_MODE_PERIODIC);
+	uint32_t uiLoadVal = 199999;	// if periphClk is still 200MHz
+	status = alt_gpt_counter_set(ALT_GPT_CPU_PRIVATE_TMR, uiLoadVal /*100000*/ /*1000000000*/);    
+	status = alt_int_isr_register(ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE, new_private_timer_isr_callback_core0, NULL);
+	status = alt_gpt_int_enable(ALT_GPT_CPU_PRIVATE_TMR);
+	status = alt_gpt_tmr_start(ALT_GPT_CPU_PRIVATE_TMR);    
+	#endif
+
 	while(1)
 	{
 		#if false

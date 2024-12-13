@@ -576,11 +576,13 @@ int timers_init_Core0(void)
     *fiqVector2 = alt_int_handler_irq;           // essai FDy - surcharge directe du vecteur FIQ
     */
 
+    /*
     // System init
     if(status == ALT_E_SUCCESS)
     {
         status = system_init();
     }
+    */
 
 	//#if false
     // Setup Interrupt (for private timer)
