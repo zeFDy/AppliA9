@@ -39,6 +39,29 @@ int timers_init_Core0(void);
 int timers_init_Core1(void);
 
 
+/* Distributer interface base address */
+static uint32_t alt_int_base_dist;
+/* CPU interface base address */
+static uint32_t alt_int_base_cpu;
+
+static __inline uint32_t get_periphbase(void)
+{
+    uint32_t periphbase;
+
+    /* Read the Peripheral Base Address.
+     / See: Cortex-A9 TRM, section 4.3.24. */
+
+#if   defined(__ARMCOMPILER_VERSION)
+    __asm("MRC p15, 4, %[periphbase], c15, c0, 0" : [periphbase] "=r" (periphbase));
+#elif defined(__ARMCC_VERSION)
+    __asm("MRC p15, 4, periphbase, c15, c0, 0");
+#else
+    __asm("MRC p15, 4, %0, c15, c0, 0" : "=r" (periphbase));
+#endif
+
+    return periphbase;
+}
+
 // normalement, uiValue est en us
 void 	DelayGblTimer(uint32_t uiValue)
 {		
@@ -446,4 +469,23 @@ void hang(void)
 {
 	puts("### ERROR ### Please RESET the board ###\n");
 	for (;;);
+}
+
+void 	myIrqRoutine(void)
+{
+		
+		uint32_t periphbase = get_periphbase();
+        alt_int_base_dist = periphbase + 0x1000;
+        alt_int_base_cpu  = periphbase + 0x0100;
+		uint32_t icciar 	= alt_read_word(alt_int_base_cpu + 0xC);
+	
+		puts((char*)"myIrqRoutine() -> icciar =");
+		putHexa32(icciar);
+		puts("\r\n");
+
+		hang();
+
+		/*
+		alt_gpt_int_clear_pending(ALT_GPT_CPU_PRIVATE_TMR);
+		*/
 }

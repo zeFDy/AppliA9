@@ -277,27 +277,37 @@ irq_SdRamPart:
 		push {r0-r7, lr}
 
 		//uint32_t periphbase = get_periphbase();
-   		//mrc 	p15, 4, r0, c15, c0, 0		// r0 = periphbase;
+   		mrc 		p15, 4, r0, c15, c0, 0		// r0 = periphbase;
    		//alt_int_base_cpu  = periphbase + 0x0100;
 		//add		r0, r0, #0x0100
-
-		ldr 	r0, intBaseCpu
+		//ldr 		r0, intBaseCpu
 
 		//uint32_t icciar 	= alt_read_word(alt_int_base_cpu + 0xC);
 		//add		r0, r0, 0x000C
-		ldr 	r1, [r0, #0x000C]
-		str 	r1, value
+		ldr 		r1, [r0, #0x010C]
+		str 		r1, value
 		
-		check the icciar
+		// check the icciar
+		// normalement, c'est 0x3FF
+		// if not an IRQ from Private Timer : exit IRQ (branch to exitIrq)
+		ldr 		r0, =#0x3FF
+		and 		r2, r1, r0
+		cmp 		r2, r0
+		//bne 		badIrq	
 		
-		if not an IRQ from Private Timer : exit IRQ (branch to exitIrq)
+		//if it is an IRQ from Private Timer : clear the pending int
+		//alt_gpt_int_clear_pending(ALT_GPT_CPU_PRIVATE_TMR)
+		//-> alt_write_word(ALT_CPU_PRIVATE_TMR_BASE + ALT_CPU_PRIV_TMR_INT_STATUS_REG_OFFSET, ALT_CPU_PRIV_TMR_INT_STATUS);
+        /* Clear interrupt status bit by writing 0x00000001 to register */
 		
-		if it is an IRQ from Private Timer : clear the pending int
-		alt_gpt_int_clear_pending(ALT_GPT_TIMER_t tmr_id)
+		ldr 	r0, CpuTimeBase			// ALT_CPU_PRIVATE_TMR_BASE
+		ldr 	r1, =#0x00000001		// ALT_CPU_PRIV_TMR_INT_STATUS
+		str		r1, [r0, #0x0000000C] 	// ALT_CPU_PRIV_TMR_INT_STATUS_REG_OFFSET
 		
+
 		//ldr 	r0, =#Counter
 		//ldr 	r1, [r0]
-		//add		r1, r1, #1
+		//add	r1, r1, #1
 		//str 	r1, [r0]
 
 		//cmp	r1, #1000
@@ -306,24 +316,24 @@ irq_SdRamPart:
 		//ldr 	r1, =#0
 		//str	r1, [r0]
 
-		//ldr r0, LedValue	/* 1<<24 */
-		//ldr r1, LedData		/* LedData port in memory */
-		//str r0, [r1, #0]
+		//ldr 	r0, LedValue	/* 1<<24 */
+		//ldr 	r1, LedData		/* LedData port in memory */
+		//str 	r0, [r1, #0]
 
-		//ldr r0, UartValue	/* 'U' */
-		//ldr r1, UartData	/* UartData port in memory */
-		//str r0, [r1, #0]
+		//ldr 	r0, UartValue	/* 'U' */
+		//ldr 	r1, UartData	/* UartData port in memory */
+		//str 	r0, [r1, #0]
 		
 		// les IRQ passent par ici 
 		//b 	exitIrq
 		
 	    //
 		// test core0/core1
-		MRC p15, 0, r1, c0, c0, 5	// recuperation du coreX - Read CPU ID Register
-		and r1, #0xFF				// mask uniquement info coreX
-		cmp r1, #1					// running on core1 ?
+		MRC 	p15, 0, r1, c0, c0, 5	// recuperation du coreX - Read CPU ID Register
+		and 	r1, #0xFF				// mask uniquement info coreX
+		cmp 	r1, #1					// running on core1 ?
 		
-		bne JumpCore0Code			// non jump to JumpCore0Code
+		bne 	JumpCore0Code			// non jump to JumpCore0Code
 		
 		ldr 	r0, =#CounterCore1
 		ldr 	r1, [r0]
@@ -347,6 +357,7 @@ irq_SdRamPart:
 		ldr 	r0, =13
 		str 	r0, [r1, #0]
 
+		//bl	myIrqRoutine
 		b 		exitIrq
 		
 	JumpCore0Code:
@@ -372,17 +383,24 @@ irq_SdRamPart:
 		str 	r0, [r1, #0]
 		ldr 	r0, =13
 		str 	r0, [r1, #0]
+		//bl	myIrqRoutine
 
 	exitIrq:
 	
 		//bx 	lr
 		//bl	alt_int_handler_irq
 		
+		
 		//alt_write_word(alt_int_base_cpu + 0x10, icciar); /* icceoir */
 
-		ldr 	r0, intBaseCpu
-		ldr 	r1,	value
-		str		r1, [r0, #0x0010]
+		//ldr 	r0, intBaseCpu
+		//ldr 	r1,	value
+		//str	r1, [r0, #0x0010]
+
+		mrc		p15, 4, r0, c15, c0, 0		// r0 = periphbase;
+   		ldr 	r1, value
+		str 	r1, [r0, #0x0110]
+		
 
 		pop		{R0-R7, LR}
 		subs	PC, LR, #4
@@ -391,22 +409,95 @@ lirq_SdRamPart:
 		bl	lirq_SdRamPart				/* on boucle ici (pour le moment) */
 
 
-displayMsg:		ldr 	r2, =0xFFC02000			/* UartData */ 
-displayMsgLoop:	ldrb 	r0, [r1],#1
-				//and 	r0, #0xFF
-				cmp 	r0, #0
-				beq 	displayMsgEnd
+badIrq:				//mov 	r0, r1 						// icciar
+					//ldr 	r0, =0xDEADBEEF
+					//bl	displayHexa32
+					//ldr 	r1, =#BadIrqMessage
+					//bl	displayMsg
+					//bl	myIrqRoutine
+					b 		exitIrq	
 
-				str 	r0, [r2, #0]
-				//add 	r1, r1, #1
-				b 		displayMsgLoop
 
-displayMsgEnd:	bx		lr
+displayMsg:			ldr 	r2, =0xFFC02000			/* UartData */ 
+displayMsgLoop:		ldrb 	r0, [r1],#1
+					//and 	r0, #0xFF
+					cmp 	r0, #0
+					beq 	displayMsgEnd
+					str 	r0, [r2, #0]
+					//add 	r1, r1, #1
+					b 		displayMsgLoop
+displayMsgEnd:		bx		lr
+
+displayNibble:		// in R0
+					add 	r0, r0, #0x30
+					cmp 	r0, #0x39
+					ble 	okNibbleIsNumber
+					add 	r0, r0, #0x07
+okNibbleIsNumber:	ldr 	r1, =0xFFC02000			/* UartData */ 
+					str 	r0, [r1, #0]
+displayNibbleEnd:	bx		lr
+
+displayHexa32:		// in r0
+					mov 	r2, r0
+
+					ldr 	r0, ='0'
+					ldr 	r1, =0xFFC02000			/* UartData */ 
+					str 	r0, [r1, #0]
+
+					ldr 	r0, ='x'
+					ldr 	r1, =0xFFC02000			/* UartData */ 
+					str 	r0, [r1, #0]
+					
+					mov 	r0, r2
+					lsr 	r0, #24+4
+					and 	r0, #0x0f
+					bl 		displayNibble
+
+					mov 	r0, r2
+					lsr 	r0, #24
+					and 	r0, #0x0f
+					bl 		displayNibble
+
+					mov 	r0, r2
+					lsr 	r0, #16+4
+					and 	r0, #0x0f
+					bl 		displayNibble
+
+					mov 	r0, r2
+					lsr 	r0, #16
+					and 	r0, #0x0f
+					bl 		displayNibble
+
+					mov 	r0, r2
+					lsr 	r0, #8+4
+					and 	r0, #0x0f
+					bl 		displayNibble
+
+					mov 	r0, r2
+					lsr 	r0, #8
+					and 	r0, #0x0f
+					bl 		displayNibble
+
+					mov 	r0, r2
+					lsr 	r0, #0+4
+					and 	r0, #0x0f
+					bl 		displayNibble
+
+					mov 	r0, r2
+					//lsr 	r0, #0
+					and 	r0, #0x0f
+					bl 		displayNibble
+
+displayHexa32End:	bx		lr
+
+
 
 UartValue:		.word 	'U'
 UartData:		.word	0xFFC02000
 intBaseCpu:		.word 	0xFFFEC100
+CpuTimeBase:	.word	0xFFFEC600
 value:			.word 	0
 CounterCore0:	.word 	0
 CounterCore1:	.word 	0
 IrqMessage:		.asciz 	"IRQ on Core #"
+BadIrqMessage:	.asciz 	"Unkown IRQ !\r\n"

@@ -1266,9 +1266,9 @@ void alt_int_handler_irq(void)
 
     //putc('.');
 
-    //uint32_t icciar 	= alt_read_word(alt_int_base_cpu + 0xC);
+    uint32_t icciar 	= alt_read_word(alt_int_base_cpu + 0xC);
 	uint32_t uiCoreId 	= get_current_cpu_num();	
-    //uint32_t ackintid 	= ALT_INT_ICCIAR_ACKINTID_GET(icciar);
+    uint32_t ackintid 	= ALT_INT_ICCIAR_ACKINTID_GET(icciar);
 
 	
     //if(uiCoreId==0)	putc('0');
@@ -1301,5 +1301,5 @@ void alt_int_handler_irq(void)
     }
     #endif
 
-    //alt_write_word(alt_int_base_cpu + 0x10, icciar); /* icceoir */
+    alt_write_word(alt_int_base_cpu + 0x10, icciar); /* icceoir */
 }
