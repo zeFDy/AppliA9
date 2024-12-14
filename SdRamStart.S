@@ -288,12 +288,14 @@ irq_SdRamPart:
 		str 		r1, value
 		
 		// check the icciar
-		// normalement, c'est 0x3FF
+		// normalement, c'est 0x1D ? (verify with set int)
+		// -> ALT_INT_INTERRUPT_PPI_TIMER_PRIVATE = 29 = 0x1D
 		// if not an IRQ from Private Timer : exit IRQ (branch to exitIrq)
 		ldr 		r0, =#0x3FF
 		and 		r2, r1, r0
-		cmp 		r2, r0
-		//bne 		badIrq	
+		//ldr 		r0, =#0x01D
+		cmp 		r2, #0x01D
+		bne 		badIrq	
 		
 		//if it is an IRQ from Private Timer : clear the pending int
 		//alt_gpt_int_clear_pending(ALT_GPT_CPU_PRIVATE_TMR)
